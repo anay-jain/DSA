@@ -8,5 +8,3 @@ for _ in range(int(input())):
             memo[i]+=memo[i-coin]
             
     print(memo[n])
-
-    
