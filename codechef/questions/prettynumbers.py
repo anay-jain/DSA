@@ -1,3 +1,4 @@
+t = int(input())
 for _ in range(int(input())):
     count=0
     g,p = map(int,input().split())
