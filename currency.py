@@ -12,7 +12,7 @@ for i in range(1,n):
 for i in range(n):
     print()
     for j in range(n):
-        print(x[i][j],end="        ")
+        print(x[i][j],end="  \      ")
 
 t=int(input("From currency"))
 y=int(input("To currency"))
