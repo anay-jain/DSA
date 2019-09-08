@@ -8,4 +8,4 @@ def check(arr):
 
 if __name__ == '__main__':
     import sys
-    print(check(sys.argv[-1]))
+    print(check(sys.argv[-1]))\
