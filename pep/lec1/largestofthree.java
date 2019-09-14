@@ -1,8 +1,9 @@
-import java.util.*;
-
+import java.util.Scanner;
 public class largestofthree{
+    public static Scanner scn = new Scanner(System.in);
     public static void main(String[] args){
-        int a =2,b=3,c=34;
+        int a = scn.nextInt();
+        int b=3,c=34;
         if (a>b && a>c){
             System.out.println(a);
         }
