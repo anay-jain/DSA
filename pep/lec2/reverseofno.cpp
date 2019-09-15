@@ -2,13 +2,12 @@
 using namespace std;
 
 int main(){
-    int n,count=0;
+    int n,t=0,count=0;
     cin>>n;
     while(n){
-        n = n/10;
-        count++;
+       t= (t*10) + (n%10)
+       n= n/10;
     }
-    cout<<count;
-    cout<<(-1%5);
+    cout<<t;
     return 0;
 }
