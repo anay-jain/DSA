@@ -1,7 +1,7 @@
 #include<iostream>
 using namespace std;
 int main(){
-    int n=6;
+    int n=8;
     int nst=1;
     int nsp= n/2;
     for(int i=0;i<n/2;i++){
@@ -15,9 +15,9 @@ int main(){
 
 
         }
-        for(int csp1=0;csp1<nsp;csp1++){
-            cout<<" ";
-        }
+        // for(int csp1=0;csp1<nsp;csp1++){
+        //     cout<<" ";
+        // }
         cout<<endl;
         nst+=2;
 
