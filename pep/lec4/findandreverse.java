@@ -26,4 +26,7 @@ public class findandreverse{
             }
             return temp;
     }
+    public static void reverse(int[] arr, int i, int f){
+        
+    }
 }

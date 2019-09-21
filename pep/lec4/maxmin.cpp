@@ -42,9 +42,9 @@ int main(){
     cin>>n;
     vector<int> arr(5,0);
     input(arr);
-    int max1= max(arr);
-    cout<<"Maximum value is "<<max1<<endl;
-    cout<<"Minimum value is "<<min(arr)<<endl;
+    // int max1= max(arr);
+    // cout<<"Maximum value is "<<max1<<endl;
+    // cout<<"Minimum value is "<<min(arr)<<endl;
     int f;
     cin>>f;
     cout<<find(arr,f);
