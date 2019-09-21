@@ -29,12 +29,12 @@ void input(vector<int>& arr){
     }
 }
 int find(vector<int>& arr, int n ){
-    for(int i:arr){
-        if(n==i){
+    for(int i=1;i<arr.size();i++){
+        if(n==arr[i]){
             return i;
         }
     }
-
+    return -1;
 }
 
 int main(){
