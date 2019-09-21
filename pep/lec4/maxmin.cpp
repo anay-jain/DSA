@@ -28,6 +28,14 @@ void input(vector<int>& arr){
         cin>>arr[i];
     }
 }
+int find(vector<int>& arr, int n ){
+    for(int i:arr){
+        if(n==i){
+            return i;
+        }
+    }
+
+}
 
 int main(){
     int n;
@@ -37,5 +45,8 @@ int main(){
     int max1= max(arr);
     cout<<"Maximum value is "<<max1<<endl;
     cout<<"Minimum value is "<<min(arr)<<endl;
+    int f;
+    cin>>f;
+    cout<<find(arr,f);
     return 0;
 }
