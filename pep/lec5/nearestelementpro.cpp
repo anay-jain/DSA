@@ -17,12 +17,16 @@ int binarysearch(vector<int>& v,int data , int si,int ei){
         }
         else if(v[mid] > data){
             ei = mid-1;
+            
         }
         else{
+            int temp=v.size()-1;
             si= mid+1;
+           
         }
-        
+       
     }
+     if()
     return -1;
 }
 

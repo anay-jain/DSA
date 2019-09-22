@@ -1,7 +1,7 @@
 #include<iostream>
 #include<vector>
 using namespace std;
-
+//MY soln
 int binarysearch(vector<int>& v,int data , int si,int ei){
     while(si<=ei){
         int mid=(si+ei)/2;
@@ -17,12 +17,25 @@ int binarysearch(vector<int>& v,int data , int si,int ei){
         }
         else if(v[mid] > data){
             ei = mid-1;
+            if(ei<0){
+                return v[0];
+            }
         }
         else{
+            int temp=v.size();
             si= mid+1;
+            if(si>=temp){
+                return v[temp];
+            }
         }
-        
+       
     }
+     if(data-v[ei]>=v[si]-data){
+            return si;
+        }
+        else{
+            return ei;
+        }
     return -1;
 }
 
