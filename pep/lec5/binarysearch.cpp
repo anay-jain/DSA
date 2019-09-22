@@ -2,18 +2,12 @@
 #include<vector>
 using namespace std;
 
-int binarysearch(vector<int>& v,int data , int si,int ei){
+bool binarysearch(vector<int>& v,int data , int si,int ei){
     while(si<=ei){
         int mid=(si+ei)/2;
-        
+         cout<<v[mid];
         if(data == v[mid]){
-            if(mid-1>0 && v[mid-1]==v[mid]){
-                ei = mid-1; // for lowerbound
-                // for upper bound -> si = mid+1
-            }
-            else{
-                return mid;
-            }
+            return true;
         }
         else if(v[mid] > data){
             ei = mid-1;
@@ -22,7 +16,7 @@ int binarysearch(vector<int>& v,int data , int si,int ei){
             si= mid+1;
         }
     }
-    return -1;
+    return false;
 }
 
 void input(vector<int>& v ,int n){
