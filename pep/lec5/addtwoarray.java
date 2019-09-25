@@ -7,6 +7,6 @@ public class addtwoarray{
 
     }
     public static int[] addarray(int[] v){
-        
+        // some code
     }
 }
