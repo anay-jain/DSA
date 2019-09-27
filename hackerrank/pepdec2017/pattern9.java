@@ -10,9 +10,10 @@ public class pattern9{
             for(int csp=1;csp<=nsp;csp++){
                 System.out.print(" ");
             }
-            int nstval= nsp;
+            int nstval= nst;
             for(int cst=1;cst <=(2*nst+1);cst++){
                 System.out.print(nstval);
+                nstval++;
             }
             if(i<=n/2){
                 nsp--;
