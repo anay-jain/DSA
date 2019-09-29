@@ -35,11 +35,18 @@ public class addtwoarray{
 
         }
         
-        for(int it : arr3){
-                if(arr3[0]!=0){
-                System.out.print(it + " ");
+        for(int it =0;it< arr3.length;it++){
+            if(it==0){
+                if(arr3[it]==0){
+                    continue;
                 }
-        }
+                else{
+                    System.out.print(arr[it] + " ");
+                }
+            }
+            System.out.print(arr[it] + " ");
+            
+    }
     }
     public static void arrinput(int[] arr, int n){
         for(int it=0;it<n;it++){
