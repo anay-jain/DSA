@@ -12,32 +12,32 @@ public class exitpoint{
     public static void exit(int[][] v){
         int dir=0 , row=0,col=0;
         while(true){ // an infinte loop which will only break in inner break condition
-            dir += (dir + v[row][col])%4;
+            dir = (dir + v[row][col])%4;
             if(dir==0){
                 col++;
-                if(col>=v.length){
-                    System.out.println("Row : " + row + "Col " + col);
+                if(col == v.length){
+                    System.out.println("Row : " + row + "Col " + (col-1));
                     break;
                 }
             }
             if(dir==1){
                 row++;
-                if(row>=v.length){
-                    System.out.println("Row : " + row + "Col " + col);
+                if(row ==v.length){
+                    System.out.println("Row : " + (row-1) + "Col " + col);
                     break;
                 }
             }
             if(dir==2){
                 col--;
-                if(col<0){
-                    System.out.println("Row : " + row + "Col " + col);
+                if(col== -1){
+                    System.out.println("Row : " + row + "Col " + (col+1));
                     break;
                 }
             }
             if(dir==3){
                 row--;
-                if(row<0){
-                    System.out.println("Row : " + row + "Col " + col);
+                if(row == -1){
+                    System.out.println("Row : " + (row+1) + "Col " + col);
                     break;
                 }
             }
