@@ -3,8 +3,8 @@ import java.util.Scanner;
 public class rotationofnopro{
     public static Scanner scn = new Scanner(System.in);
     public static void main(String[] args){
-        int a = scn.nextInt();
         int b = scn.nextInt();
+        int a = scn.nextInt();
         System.out.println(rotation(a,b));
 
 
@@ -21,6 +21,10 @@ public class rotationofnopro{
     }
 
     public static int rotation(int a , int k){
+        if(a==0){
+            return 0;
+        }
+        else{
         int digit = reverseOfNo(a);
         k=k%digit;
         int mul=1,div=1;
@@ -37,7 +41,7 @@ public class rotationofnopro{
         a/=div;
         return (rem*mul) + a;
 
-
+    }
     }
 
 }
