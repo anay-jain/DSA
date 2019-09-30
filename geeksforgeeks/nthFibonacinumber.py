@@ -1,3 +1,4 @@
+
 def fib(n):
     memo = [0] * (n+1) # declaring all variables to 0 upto n 
     memo[0] , memo[1] = 0 , 1
