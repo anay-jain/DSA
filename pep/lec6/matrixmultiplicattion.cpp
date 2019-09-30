@@ -32,7 +32,6 @@ void mm(vector<vector<int>> &v , vector<vector<int>> &v1){
             for(int row=0;row<n;row++){
                 for(int k=0;k<m;k++){
                     ans[row][col] += (v[row][k] * v1[k][col]);
-                    // cout<<ans[row][col]<<" ";
                 }
             }
         }
