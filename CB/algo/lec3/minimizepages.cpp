@@ -30,14 +30,14 @@ int bs(vector<int> &v,int student){
         
         cout<<pagesmin<< "  to "<<pagesmax<<endl; 
         int stu = student;
-        int stud=stu;
+        // int stu;
         int start=0;
         initailize(pages);    
-          for(int m=0;m<stu;m++)
+          while(stu--)
     {
         cout<<"hello";
         // pages[stu]=0;
-        for(int i =start;i<v.size()-stud-1;i++){
+        for(int i =start;i<v.size()-stu+1;i++){
             if(v[i]+ pages[stu]<=mid){
                 pages[stu]+=v[i];
                 start++;
@@ -49,10 +49,10 @@ int bs(vector<int> &v,int student){
             
             
         }
-    stud--;
+    // stud--;
     }
 
-     if(v[start]==v[v.size()-1]){
+     if(start==v.size()){
         pagesmax = mid; 
     }
     else{
