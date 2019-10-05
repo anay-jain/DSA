@@ -43,6 +43,16 @@ void selection(vector<int> &v){
             }
         }
     }
+}
+void modifiedselection(vector<int> &v){
+    int n = v.size();
+    for(int i=0;i<n;i++){
+        for(int j=i+1;j<n;j++){
+            if(v[i]>v[j]){
+                swap(v,i,j);
+            }
+        }
+    }
 }    
 void modifiedbubble(vector<int> &v){
     int n = v.size();
@@ -51,6 +61,7 @@ void modifiedbubble(vector<int> &v){
         for(int j=1;j<n-i;j++){
             if(v[j-1]>v[j]){
                 swap(v,j-1,j);
+                
                 flag=true;
             }
            
