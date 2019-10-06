@@ -1,50 +1,68 @@
 #include<iostream>
 #include<vector>
-
 using namespace std;
 
+int stairs(int n){
+    if(n==0){
+        return 1;
+    }
+    int count=0;
+    if(n-1>=0){
+        count+=stairs(n-1);
+    }
+    if(n-2>=0){
+        count+=stairs(n-2);
 
+    }
+    if(n-3>=0){
+        count+=stairs(n-3);
+    }
+    return count;
+}
+int maximumele(vector<int>& arr,int vidx){
+    if(vidx==arr.size()){
+        return arr[vidx];
+    }
+    int recAns = maximumele(arr,vidx+1);
+    return max(recAns,arr[vidx]) ;
+}
+int lastindex(vector<int> &arr,int vidx,int data){
+    // we will return index and -1
+    
+    if(vidx==arr.size()) return -1;
+    int recAns= lastindex(arr,vidx+1,data);
+    if(recAns != -1){
+        return recAns;
+    }
+    else{
+        return (arr[vidx]==data?vidx:-1);
+    }
+
+}   
+vector<int> allindex(vector<int> &arr,int vidx,int data,int size){
+    if(vidx==arr.size()){
+        // a good chance to create an array that will intialze only one time
+        vector<int>aindex(size,0);
+        return aindex;
+    }
+    // before recursive calls , count all times we have number qual to data
+    if(data==arr[vidx]){
+        size++;
+    }
+    vector<int> aindex=allindex(arr,vidx+1,data,size);
+    //after recursive calls , put equal data element 
+    if(arr[vidx]==data){
+        aindex[size] = vidx;
+    }
+    return aindex;
+}
 void display(vector<int> &arr,int vidx){
     if(vidx==arr.size()){
         return;
     }
-    cout<<arr[vidx]<<" ";
+    cout<<arr[vidx]<<" "; // above the function calls
     display(arr,vidx+1);
 }
-
-
-int maximumele(vector<int> &arr,int vidx){
-    int temp= 0;
-    if(vidx==arr.size()){
-        return temp;
-    }
-    
-    temp = maximumele(arr,vidx+1);
-    temp=temp>arr[vidx]?temp:arr[vidx];
-   
-    
-}
-int lastindexfromlast(vector<int> &arr, int vidx,int data){
-     if(data==arr[vidx]){
-        return vidx;
-    }
-    if(vidx==-1) return 0;
-    lastindexfromlast(arr,vidx-1,data);
-    // return res;
-   
-    
-}
-int lastindex(vector<int> &arr,int vidx,int data){
-    int temp=0;
-    if(vidx==arr.size()){
-        return temp;
-    }
-    if(
-        temp==arr[vidx])
-    return 0;
-
-}
-
 bool findele(vector<int> &arr,int vidx ,int data){
     if(vidx==arr.size()){
         return false; // we havent founded that element and the array ends
@@ -54,28 +72,19 @@ bool findele(vector<int> &arr,int vidx ,int data){
     }
     return findele(arr,vidx+1,data);
 }
-int jumps(int n,int count){
-   int count=0;
-    if(n>0) return 0;
-    if(n==0) return 1 ;
-    int count1 = jumps(n-1,count)+jumps(n-2,count)+jumps(n-3,count);
-    return count1+1;
 
+void solve()
+{   vector<int> arr={10,6,8,10,4,5,5,6,8,-3,2,12,5,8,3};    
+    // display(arr,0);
+    // findele(arr,0,2);
+    // cout<<maximumele(arr,0);
+    // cout<<lastindex(arr,0,8);
+    // vector<int> a = allindex(arr,0,8,0);
+    // display(a,0);
+    cout<<stairs(4);
+    
 }
-void solve(){
-    //  vector<int> arr={10,6,8,10,4,5,5,6,8,-3,2,12,5,8,3};
-    //  cout<<maximumele(arr,0);
-    //  cout<<findele(arr,0,3);
-    // basic();
-    // cout<<lastindex(arr,14,8);
-    cout<<jumps(4,0);
-}
-
-
-int main(int args , char **argv){
+int main(){
     solve();
-    return 0;
-
-
     return 0;
 }
