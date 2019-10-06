@@ -3,6 +3,16 @@
 
 using namespace std;
 
+
+void display(vector<int> &arr,int vidx){
+    if(vidx==arr.size()){
+        return;
+    }
+    cout<<arr[vidx]<<" ";
+    display(arr,vidx+1);
+}
+
+
 int maximumele(vector<int> &arr,int vidx){
     int temp= 0;
     if(vidx==arr.size()){
@@ -35,14 +45,14 @@ int lastindex(vector<int> &arr,int vidx,int data){
 
 }
 
-bool findele(vector<int> &arr, int vidx,int data){
-    if(vidx==arr.size()) return false;
-    if(data==arr[vidx]){
+bool findele(vector<int> &arr,int vidx ,int data){
+    if(vidx==arr.size()){
+        return false; // we havent founded that element and the array ends
+    }
+    if(arr[vidx]==data){
         return true;
     }
-    
     return findele(arr,vidx+1,data);
-
 }
 int jumps(int n,int count){
    int count=0;
