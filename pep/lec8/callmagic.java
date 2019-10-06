@@ -9,7 +9,7 @@ public class callmagic{
         int count =0;
         if(n<=1){
             System.out.println("Base : "+ n  + "Count : " + count);
-            return n;
+            return n+1;
         }
        
         System.out.println("Pre : " + n + "Count : " + count);
