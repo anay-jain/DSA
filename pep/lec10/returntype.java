@@ -6,7 +6,7 @@ public class returntype{
 
     }
 
-    public static ArrayList subseq(ArrayList str, int size){
+    public static ArrayList subseq(str){
         // if(str.size()==0){
         //     return 
         // }
