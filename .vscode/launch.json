@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - returntype",
+            "request": "launch",
+            "mainClass": "returntype",
+            "projectName": "PI_19595a6c"
+        }
+    ]
+}
