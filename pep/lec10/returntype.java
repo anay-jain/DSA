@@ -2,10 +2,11 @@ import java.util.ArrayList;
 public class returntype{
 
     public static void main(String[] args){
-        ArrayList <String> ans = subseq("ABC");
-        for(String s: ans){
-            System.out.print(s + " ");
-        }
+        // ArrayList <String> ans = subseq("ABC");
+        // for(String s: ans){
+        //     System.out.print(s + " ");
+        // }
+            System.out.println(removeHi("hidsahdioshdiashihihdhasihd"));
     }
 
     public static ArrayList <String> subseq(String word){
@@ -26,5 +27,25 @@ public class returntype{
         }
         return finalans;
     }
+    public static String removeHi(String word){
+        // make a string which will store all non Hi 
+        if(word.length()==0){
+            return "";
+        }
+        
+        // base case;
+       
+        if((word.length()>1) && (word.charAt(0)=='h') &&(word.charAt(1)=='i')){
+            String ans = word.substring(2);
+            return removeHi(ans);
+        }
+        else{
+            char ch = word.charAt(0);
+             String ans = word.substring(1);
+            return ch+removeHi(ans);
+        }
 
+       
+
+    }
 }
