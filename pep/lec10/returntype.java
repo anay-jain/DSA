@@ -1,50 +1,30 @@
 import java.util.ArrayList;
-
 public class returntype{
 
     public static void main(String[] args){
-         System.out.println(subseq("ABC")); 
-
-
+        ArrayList <String> ans = subseq("ABC");
+        for(String s: ans){
+            System.out.print(s + " ");
+        }
     }
 
-    public static ArrayList <String> subseq( String str){
-        if(str.length()==0){
-            ArrayList base = new ArrayList<>();
-            base.add("");
+    public static ArrayList <String> subseq(String word){
+        if(word.length()==0){
+            ArrayList <String> base = new ArrayList<> ();
+            base.add(" ");
             return base;
         }
+        char ch = word.charAt(0);
+        String ros = word.substring(1);
 
-        char ch = str.charAt(0);
-        String ros = str.substring(1);
-
-        ArrayList <String> resArray = subseq(ros);
-        // now we will creare  a new array that will haave all value of res array;
-        ArrayList <String> myAns = new ArrayList<>(); // we will copy all elements to another array
-        myAns.addAll(resArray); // if element not taken
-
-        for(String s : resArray){
-            myAns.add(ch+s); // if element taken
+        ArrayList <String> recAns = subseq(ros);
+        // at every recusrive iteration we are making a new array and copying values to it thorugh addall fn
+        ArrayList <String> finalans = new ArrayList<>();
+        finalans.addAll(recAns);
+        for(String s: recAns){
+            finalans.add(ch+s);
         }
-        return myAns;
-
-
-
-
-        // if(str.size()==0){
-        //     return 
-        // }
-        // ArrayList str1 = subseq(str,size-1);
-        //     print
-        // return str1;
-        
+        return finalans;
     }
-    public static String removeHi(String ques){
-        if(hi){
-            String res  = ques.substring(beginIndex)
-        }
 
-
-    }
-    
 }
