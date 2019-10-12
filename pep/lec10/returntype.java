@@ -7,8 +7,9 @@ public class returntype{
         //     System.out.print(s + " ");
         // }
             // System.out.println(removeHi("hidsahdioshdiashihihdhasihd"));
-            System.out.println(dontremoveHit("hijhkhit"));
-    }
+            // System.out.println(dontremoveHit("hijhkhit"));
+            System.out.println(countchars("aaabbbsst",1));
+        }
 
     public static ArrayList <String> subseq(String word){
         if(word.length()==0){
@@ -56,15 +57,41 @@ public class returntype{
 
         if(word.length()>=3 && word.substring(0, 3).equals("hit")){
             String hit = word.substring(0,3);
-            return hit+word.substring(3);
+            return hit+dontremoveHit(word.substring(3));
         }
         if(word.length()>=2 && word.substring(0, 2).equals("hi")){
-            return word.substring(2);
+            return dontremoveHit(word.substring(2));
         }
         else{
             char ch = word.charAt(0);
-            return ch+word.substring(1);
+            return ch+dontremoveHit(word.substring(1));
         }
+      
+    }
+    public static String countchars(String word,int count){
+        if(word.length()==0){
+            return "";
+        }
+        
+        char ch = word.charAt(0);
+        if(word.length()>1 && ch==word.charAt(1)){
+            count++;
+            // System.out.print(count + " ");
+            return countchars(word.substring(1),count);
+        }
+        else{
+            String chs = "";
+            chs+=ch;
+            if(count!=1){
+        
+            chs += Integer.toString(count);
+                
+            }
+           count=1;
+            return chs+ countchars(word.substring(1),count);
+        }
+
+        
 
     }
 }
