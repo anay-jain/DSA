@@ -8,8 +8,32 @@ public class returntype{
         // }
             // System.out.println(removeHi("hidsahdioshdiashihihdhasihd"));
             // System.out.println(dontremoveHit("hijhkhit"));
-            System.out.println(countchars("aaabbbsst",1));
+            // System.out.println(countchars("aaaabbbcde7",1));
+            // System.out.println(duplicates("aaaabbbccccdddd"));
+            brackets("(w(co)rd)", 0, 0, "");
         }
+
+        public static String brackets(String word,int idx , int count,String res){
+
+            // base case
+            if(idx==word.length()){
+                return "";
+            }
+            
+            if(word.charAt(idx)=='('){
+                res.add(idx);
+                return brackets(word,idx+1,count +1,res);
+            }                                                                                                 
+            if(word.charAt(idx)==')'){
+                return brackets(word, idx+1, count-1,res);
+            }
+            if(count ==0){
+                res="";
+                return idx + brackets(word, idx+1, count, res);
+            }
+
+        }
+
 
     public static ArrayList <String> subseq(String word){
         if(word.length()==0){
@@ -92,6 +116,21 @@ public class returntype{
         }
 
         
+        }
+        public static String duplicates(String word){
+            if(word.length()==0){
+                return "";
+            }
+            char ch=word.charAt(0);
+            if(word.length()>1 && ch==word.charAt(1)){
+                return duplicates(word.substring(1));
+            }
+            else{
+                return ch+duplicates(word.substring(1));
+            }
+        
+        
+        }
 
-    }
+       
 }
