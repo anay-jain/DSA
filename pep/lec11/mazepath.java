@@ -1,12 +1,13 @@
 import java.util.ArrayList;
 public class mazepath{
     public static void main(String[] args){
-        ArrayList <String> ans = mazepathmulti(0,0,2,2);
+        ArrayList <String> ans = floodfill(0,0,3,3);
         for(String s: ans){
             System.out.print(s + " ");
         }
         // System.out.println(mazepathhei(0, 0, 2,2));
             
+
     }
 
       public static ArrayList <String> mazepath1(int sr,int sc,int er,int ec){
@@ -18,13 +19,13 @@ public class mazepath{
         }
         ArrayList <String> ans = new ArrayList<>();
         if(sr<er){
-        ArrayList <String> horizontal = mazepath1(sr+1, sc, er, ec);
-        for(String s: horizontal){
-            ans.add("h" + s);
+        ArrayList <String> horizontal = mazepath1(sr+1, sc, er, ec); // returned ans becomes horizontal 
+        for(String s: horizontal){ 
+            ans.add("h" + s); // and then we are adding previous ans + h to the current ans 
         }
     }
         if(sc<ec){
-        ArrayList <String> vertical = mazepath1(sr,sc+1,er,ec);
+        ArrayList <String> vertical = mazepath1(sr,sc+1,er,ec); // returnded ans becomes vertical too
         for(String s: vertical){
             ans.add("v"+s);
         }
@@ -83,7 +84,7 @@ public class mazepath{
             ans.add("v" + i+s);
         }
     }
-        for(int i=1;i<= sc+i && i<=sr+i ;i++){
+        for(int i=1;i+sc<= ec && i+sr<=er ;i++){
             ArrayList <String> diagonal = mazepathmulti(sr+1,sc+1,er,ec);
             for(String s: diagonal){
                 ans.add("d"+i+s);
@@ -92,6 +93,6 @@ public class mazepath{
     
         return ans;
       }
-
+     
 
 }
