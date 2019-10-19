@@ -2,7 +2,7 @@ import java.util.ArrayList;
 public class mazepath_problem{
 
     public static void main(String[] args){
-        System.out.println(floodfill_1(0, 0,2, 2, new boolean [3][3]));
+        System.out.println(floodfill_generic(0, 0,2, 2, new boolean [3][3]));
 
     }
     public static ArrayList <String> mazepath_simple(int sr , int sc, int ec, int er ){
@@ -119,6 +119,36 @@ public class mazepath_problem{
                 }
             }
             isdone[sr][sc]=false;   
+            return ans;
+        }
+        public static boolean isValid(int x, int y , int er , int ec, boolean[][] isdone){
+            if(x>=0 && y>=0 && x<=er && y<=ec && !isdone[x][y]){
+                return true;
+            }
+            return false;
+        }
+        public static ArrayList <String> floodfill_generic(int sr , int sc , int er , int ec, boolean[][] isdone ){
+            // base case
+            if(sr==er && sc==ec){
+                ArrayList <String> base = new ArrayList<>();
+                base.add("");
+                return base;
+            }
+            isdone[sr][sc] =true;
+            int[][] dir = {{0,1},{1,1},{1,0},{1,-1},{0,-1},{-1,-1},{-1,0},{-1,1}};
+            String[] dirName= {"U","1","R","2","D","3","L","4"};
+            ArrayList <String> ans = new ArrayList<>();
+            for(int i=0;i<dir.length;i++){
+                int x = sr + dir[i][0];
+                int y = sc+ dir[i][1];
+                if(isValid(x,y,er,ec,isdone)){
+                    ArrayList<String> ref = floodfill_generic(x, y, er, ec, isdone);
+                    for(String s: ref){
+                        ans.add(dirName[i]+s);
+                    }
+                }
+            }
+            isdone[sr][sc]= false ; // this is backtracking   you revert all the changes you donern 
             return ans;
         }
     
