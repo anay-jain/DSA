@@ -40,59 +40,42 @@ public class mazepath{
         return ans;
       }
 
-
-      public static int mazepathhei(int sr,int sc,int er,int ec){
-          int maxhei = 0;
-
-        if(sr==er && sc==ec){
-            return 0;
-        }
-
-        if(sr<er){
-        maxhei =  Math.max(maxhei,mazepathhei(sr+1, sc, er, ec));
-       
-    }
-        if(sc<ec){
-        maxhei = Math.max(maxhei , mazepathhei(sr,sc+1,er,ec));
-      
-    }
-        if(sc<ec && sr<er){
-        maxhei = Math.max(maxhei , mazepathhei(sr+1,sc+1,er,ec));
-        
-        }
-    
-        return maxhei+1;
-      }
-
-      public static ArrayList <String> mazepathmulti(int sr,int sc,int er,int ec){
-
-        if(sr==er && sc==ec){
+ public static ArrayList<String> mazepath_multi(int sr, int sc ,int er ,int ec){
+        if(sr==er && sc == ec){
             ArrayList <String> base = new ArrayList<>();
             base.add("");
             return base;
         }
-        ArrayList <String> ans = new ArrayList<>();
-        for(int i=1;sr+i<=er;i++){
-        ArrayList <String> horizontal = mazepathmulti(sr+1, sc, er, ec);
-        for(String s: horizontal){
-            ans.add("h"+ i + s);
+        ArrayList<String> ans = new ArrayList<>();
+        for(int i =1;i+sr<=er;i++){
+            // can be written as (int i = sc ; i<ec;i++)
+            // call be written as mazepath_2(i,sr,er,ec)
+            ArrayList <String> horizontal = mazepath_multi(sr+i,sc,er,ec);
+            for(String s : horizontal){
+                ans.add("h"+s);
+            }
         }
-    }
-        for(int i=1;sc+i<=ec;i++){
-        ArrayList <String> vertical = mazepathmulti(sr,sc+1,er,ec);
-        for(String s: vertical){
-            ans.add("v" + i+s);
-        }
-    }
-        for(int i=1;i+sc<= ec && i+sr<=er ;i++){
-            ArrayList <String> diagonal = mazepathmulti(sr+1,sc+1,er,ec);
-            for(String s: diagonal){
-                ans.add("d"+i+s);
-            }  
-        }
-    
+        for(int i =1;i+sc<=ec;i++){
+            ArrayList <String> vertical = mazepath_multi(sr, sc+i, ec, er);
+            for(String s : vertical){
+                ans.add("v" + s);
+            }
+        }   
         return ans;
-      }
-     
+    }
+    public static int mazepath_simple_height(int sr, int sc , int er , int ec){
+        // base
+        if(sr==er && sc==ec){
+            return 0;
+        }
+        int maxHei = 0;
+        if(sr<er){
+            maxHei = Math.max(maxHei , mazepath_simple_height(sr+1, sc, er, ec));
+        }
+        if(sc<ec){
+            maxHei = Math.max(maxHei , mazepath_simple_height(sr, sc+1, er, ec));
+        }
+        return maxHei + 1;
+    }
 
 }
