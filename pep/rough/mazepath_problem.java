@@ -151,5 +151,9 @@ public class mazepath_problem{
             isdone[sr][sc]= false ; // this is backtracking   you revert all the changes you donern 
             return ans;
         }
-    
+        // public static boolean[][] knighttour(int sr , int sc , int boxSize , int[][] path,int count){
+        //     if(count==boxSize-1){
+
+        //     }
+        }
 }

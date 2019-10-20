@@ -29,7 +29,7 @@ public class sudoku{
         }
     }
     public static int[][] sodukuproblem(int [][] board){
-        
+        ]
         
     }
 
