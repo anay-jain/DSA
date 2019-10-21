@@ -5,32 +5,36 @@ public class permutationofstring{
         // String[][] dirname = {{"1","a"},{"2","b"},{"3","c"},{"4","d"},{"5","e"},{"6","f"},{"7","g"},{"8","i"},{"9","j"},{"10","k"},{"11","m"}};
         System.out.println(encoding("2343"));
     }
-    public static ArrayList<String> permutation(String ques){
+   public static ArrayList<String> permuation(String ques){
+        // base case
         if(ques.length()==0){
             ArrayList <String> base = new ArrayList<>();
-            // base.add("");
             return base;
         }
+     
         if(ques.length()==1){
             ArrayList <String> base = new ArrayList<>();
             base.add(ques);
             return base;
         }
-        ArrayList <String> myans = new ArrayList<>(); 
-        char ch = ques.charAt(0);
+           char ch= ques.charAt(0);
         ques = ques.substring(1);
-       
-           
-            ArrayList <String> ref = permutation(ques);
-            for(String s: ref){
-                 for(int i=0;i<=s.length();i++){
-            String pre = s.substring(0,i);
-            String post = s.substring(i);
-                myans.add(pre+ch+post);
+        // rec 
+        // we have to pass every string thats why we have taken string loop above
+        ArrayList <String> ans = new ArrayList<>();
+        ArrayList <String> recAns = permuation(ques);
+        for(String s: recAns){
+            for(int i =0;i<=s.length();i++){
+                String pre = s.substring(0, i);
+                String post =s.substring(i);
+                ans.add(pre+ch+post);
+
             }
-            }
-    
-    return myans;
+        }
+        return ans ;
+
+
+        
     }
     // public static boolean isValid(String[][] dirname , String res){
     //     // int q = res.charAt(1) -'a';
