@@ -45,7 +45,7 @@ public class permutationpro{
        }
        char ch = ques.charAt(0);
     //    ques= ques.substring(1);
-       ArrayList<String> ans = new ArrayList<>();
+       Array    List<String> ans = new ArrayList<>();
        if(ch=='0'){
            return encoding(ques.substring(1));
 

@@ -16,7 +16,17 @@ void pattern1(int n){
     nst++;
 }
 }
+void bionomailpattern(int n ){
+    for(int i=0;i<=n;i++){
+        float nck=1;
+        for(int k=0;k<=i;k++){
+            cout<<nck<<" ";
+            nck=(nck*(i-k))/(k+1)];
+        }
+        cout<<endl;
+    }
+}
 int main(){
-    pattern1(5);
+    bionomailpattern(5);
     return 0;
 }
