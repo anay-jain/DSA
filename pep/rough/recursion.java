@@ -39,9 +39,27 @@ public class recursion{
         }
         return ans;
     }
-    
+    public static ArrayList<String> subsequences(String ques){
+        if(ques.length()==0){
+            // returns an empty array list
+            ArrayList<String> base = new ArrayList<>();
+            base.add("");
+            return base;
+        }
+        char ch = ques.charAt(0);
+        ques = ques.substring(1);
+        ArrayList <String> myans = new ArrayList<>();
+        // if not , then answer will be only on string;
+        ArrayList<String> recAns = subsequences(ques);
+        myans.addAll(recAns);
+        for(String s: recAns){
+            myans.add(ch+s);
+        }
+        return myans;
+    }
     public static void main(String[] args){
-        int[] arr={4,265,15,265,265,26,56,25,3};
-        System.out.println(allindex(arr, 0, 265, 0));
+        // int[] arr={4,265,15,265,265,26,56,25,3};
+        // System.out.println(allindex(arr, 0, 265, 0));
+        System.out.println(subsequences("abc"));
     }
 }
