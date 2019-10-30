@@ -20,7 +20,7 @@ void bubble(vector <int> &v , vector<int> &no){
             break;
      }
     }
-    
+
 }
 int bitsets(int n ){
       int l =0,count=0;
