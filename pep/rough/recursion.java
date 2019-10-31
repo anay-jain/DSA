@@ -57,9 +57,29 @@ public class recursion{
         }
         return myans;
     }
+    public static String removeHi(String ques){
+       
+        if(ques.length()==0){
+            return "";
+        }
+        char ch1 = ques.charAt(0);
+        if(ques.length()==1){
+            
+            return ch1+"";
+        }
+    //    string = " " and char = ' '
+        char ch2 = ques.charAt(1);
+        // ArrayList <String> ans = new ArrayList<>();
+        if(ch1=='h' && ch2=='i'){
+            return removeHi(ques.substring(2));
+        }
+        else{
+            return ch1+ removeHi(ques.substring(1));
+        }
+    }
     public static void main(String[] args){
         // int[] arr={4,265,15,265,265,26,56,25,3};
         // System.out.println(allindex(arr, 0, 265, 0));
-        System.out.println(subsequences("abc"));
+        System.out.println(removeHi("hifskhsdifhsdifsdihj"));
     }
 }
