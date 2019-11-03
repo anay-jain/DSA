@@ -54,7 +54,7 @@ int main(){
     int n =10;
     int t =n;
     vector <bool> check{false,false,false,false};
-    cout<<coin_changetargetpermu(arr,check,n,"");
+    // cout<<coin_changetargetpermu(arr,check,n,"");
     // cout<<coin_changecombination(arr,n,t,"")
     // cout<<coin_change_target(arr,0,n,"");
     return 0;
