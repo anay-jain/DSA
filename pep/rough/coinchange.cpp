@@ -63,9 +63,26 @@ int coin_change_unique_coin_permutation(vector<int> &arr , int vidx , int n , st
     }
     return count;
 }
+void divide_array_in_equal_sum(vector<int> &arr,int vidx ,string arr1 ,string arr2, int sum1 , int sum2){
+    if(vidx==arr.size()){
+        if(sum1==sum2){
+        cout<<arr1<<" = "<<arr2<<endl;
+        // return 
+        
+    }
+        return ;
+    }
+    
+    divide_array_in_equal_sum(arr,vidx +1 ,arr1+" "+to_string(arr[vidx]),arr2,sum1+arr[vidx],sum2);
+    divide_array_in_equal_sum(arr, vidx+1 ,arr1,arr2+" "+to_string(arr[vidx]),sum1,sum2+arr[vidx]);
+    // return ;
+
+}
 int main(){
-    vector<int> arr={2,3,5,7};
-    vector<bool> check(arr.size(), false);
-   coin_change_unique_coin_permutation(arr, 0,10,"",check);
+    vector<int> arr1={2,3,5,7};
+    vector<bool> check(arr1.size(), false);
+//    coin_change_unique_coin_permutation(arr1, 0,10,"",check);
+    vector<int> arr={10,20,30,40,50,60,70};
+    divide_array_in_equal_sum(arr,0,"","",0,0);
     return 0; 
 }
