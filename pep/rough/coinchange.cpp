@@ -78,6 +78,7 @@ void divide_array_in_equal_sum(vector<int> &arr,int vidx ,string arr1 ,string ar
     // return ;
 
 }
+
 int main(){
     vector<int> arr1={2,3,5,7};
     vector<bool> check(arr1.size(), false);
