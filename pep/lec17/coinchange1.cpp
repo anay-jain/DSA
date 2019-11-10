@@ -49,6 +49,18 @@ int coin_change_target(vector<int>arr ,int vidx, int  n,string ans){
     }
     return count;
 }
+int coin_change_target_permu(vector<int>arr ,int vidx, int  n,string ans){
+
+    int count=0;
+    if(arr[vidx]<=n){
+        int a = arr[vidx];
+        count += coin_change_target(arr,0,n-a,ans+to_string(a));
+        count += coin_change_target(arr,vidx+1,n,ans);
+        
+    }
+    return count;
+}
+
 int main(){
     vector <int> arr={2,3,5,7};
     int n =10;
@@ -56,6 +68,7 @@ int main(){
     vector <bool> check{false,false,false,false};
     // cout<<coin_changetargetpermu(arr,check,n,"");
     // cout<<coin_changecombination(arr,n,t,"")
-    // cout<<coin_change_target(arr,0,n,"");
+    // cout<<coin_change_target_permu(arr,0,n,"");
+
     return 0;
 }
