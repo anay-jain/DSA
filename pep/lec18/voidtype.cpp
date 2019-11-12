@@ -179,16 +179,52 @@ int nqueen_permu02_target(int boxes , int tnq, int qloc , int qpsf , vector<bool
     count+=nqueen_permu02_target(boxes , tnq , qloc +1 , qpsf , loc , ans);
     return count;
 }
-void nqueen(){
+bool isSafeToPlace(vector<vector<bool>> &boxes , int x , int y){
+    int dir[4][2]={{0,-1},{-1,-1},{-1,0},{-1,1}};
+    for(int d=0;d<4;d++){
+        for(int rad=1;rad<boxes[0].size();rad++){
+            int r = x + rad* dir[d][0];
+            int c = y + rad* dir[d][1];
+            if(r>=0 && c>=0 && r<boxes.size() && c<boxes[0].size() && boxes[r][c]){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+int nqueen(vector<vector<bool>> &loc , int tnq ,int qloc ,int qpsf , string ans){
+    int totalsqaures = loc.size()*loc[0].size();
+
+    if(tnq==qpsf){
+        cout<<ans<<endl;
+        return 1;
+    }
+  
+int count=0;
+for(int i =qloc+1 ;i<totalsqaures;i++){
+    int x = i/loc[0].size();
+    int y =i%loc[0].size();
+    if(!isSafeToPlace(loc,x,y)){
+        loc[x][y]=true;
+        count+=nqueen(loc,tnq,i,qpsf+1,ans+"B"+to_string(x)+","+to_string(y)+"Q"+to_string(qpsf)+" ");
+        loc[x][y]=false;
+    }
+    
+}
+return count;
+}
+void nqueen_all(){
     // cout<<nqueen_combi_01(7,3,-1,0,"");
-    vector<bool> loc(8,false);
+    // vector<bool> loc(8,false);
+    vector<vector<bool>> loc(4,vector<bool> (4,false));
     // cout<<nqueen_permu_01(7,3,loc,0,"");
     // cout<<nqueen_combi02_target(7,3,0,0,"");
-    cout<<nqueen_permu02_target(7,3,0,0,loc,"");
+    // cout<<nqueen_permu02_target(7,3,0,0,loc,"");
+    cout<<nqueen(loc , 4,-1,0,"");
 }
 void solve(){
     // basicques();
-    nqueen();
+    nqueen_all();
 }
 
 int main(){
