@@ -57,7 +57,7 @@ void compression(string ques, string ans, int count){
     }
 
 }
-
+// ===============================================================================================
 void mazepath(int sr , int sc , int er , int ec , string ans){
     if(sr==er && sc==ec){
         cout<<ans<<" ";
@@ -99,22 +99,8 @@ for(int i=1;i<=6 && i+start<=n;i++){
 }
     return c;
 }
-void permuation_withrep(string s,string ans){
-    
-}
-void mazepath_question(){
-//  mazepath_multi(0,0,2,2,"");
-// cout<<board_path(0,10);
 
-}
-void basicques(){
-    // subseq("abc","");
-    // removeHi("hishshi" ,"");
-    // removeduplicates("aaaaabbbcc" , "");
-    // compression("aabbccc","", 0);
-    // mazepath_question();
-    //
-}
+// ============================================================================================================
 int nqueen_combi_01(int boxes , int tnq , int qloc , int qpsf,string ans ){
 if(tnq==qpsf || qloc==boxes ){
     if(tnq==qpsf){
@@ -212,6 +198,20 @@ for(int i =qloc+1 ;i<totalsqaures;i++){
     
 }
 return count;
+}
+// ===================================================================================================
+void mazepath_question(){
+//  mazepath_multi(0,0,2,2,"");
+// cout<<board_path(0,10);
+
+}
+void basicques(){
+    // subseq("abc","");
+    // removeHi("hishshi" ,"");
+    // removeduplicates("aaaaabbbcc" , "");
+    // compression("aabbccc","", 0);
+    // mazepath_question();
+    //
 }
 void nqueen_all(){
     // cout<<nqueen_combi_01(7,3,-1,0,"");
