@@ -99,8 +99,60 @@ for(int i=1;i<=6 && i+start<=n;i++){
 }
     return c;
 }
+//=========coin change============================================================================
+int coinchange_01_permu(vector<int> &coins , int target , string ans){
+    if(target==0){
+        cout<<ans<<endl;
+        return 1;
+    }
+    int count=0;
+    for(int i=0;i<coins.size();i++){
+        if(target>=coins[i])
+        count+=coinchange_01_permu(coins , target-coins[i],ans+to_string(coins[i]));
+    }
+    return count;
+}
+int coinchange_01_combi(vector<int> &coins,int vidx , int target , string ans){
+    if(target==0){
+        cout<<ans<<endl;
+        return 1;
+    }
+    int count=0;
+    for(int i = vidx ; i<coins.size();i++){
+        if(target>=coins[i])
+        count+=coinchange_01_combi(coins , i , target-coins[i],ans+to_string(coins[i]));
+    }
+    return count;
+}
+int coinchange_01_combi_unique(vector<int> &coins,int vidx , int target , string ans){
+    if(target==0){
+        cout<<ans<<endl;
+        return 1;
+    }
+    int count=0;
+    for(int i = vidx ; i<coins.size();i++){
+        if(target>=coins[i])
+        count+=coinchange_01_combi_unique(coins ,i+1, target-coins[i],ans+to_string(coins[i]));
+    }
+    return count;
+}
 
-// ============================================================================================================
+int coinchange_01_permu_unique(vector<int> &coins ,vector<bool> &coinsUsed, int target , string ans){
+    if(target==0){
+        cout<<ans<<endl;
+        return 1;
+    }
+    int count=0;
+    for(int i=0;i<coins.size();i++){
+        if(target>=coins[i] && !coinsUsed[i]){
+        coinsUsed[i]=true;
+        count+=coinchange_01_permu_unique(coins ,coinsUsed, target-coins[i],ans+to_string(coins[i]));
+        coinsUsed[i]=false;
+        }
+  }
+    return count;
+}
+// =======nqueen======================================================================================
 int nqueen_combi_01(int boxes , int tnq , int qloc , int qpsf,string ans ){
 if(tnq==qpsf || qloc==boxes ){
     if(tnq==qpsf){
@@ -213,18 +265,27 @@ void basicques(){
     // mazepath_question();
     //
 }
+void coinchange(){
+    vector<int>coins = {2,3,5,7};
+    vector<bool>coinsUsed(4,false);
+    // cout<<coinchange_01_permu(coins,10,"");
+    // cout<<coinchange_01_permu_unique(coins,coinsUsed,10,"");
+    // cout<<coinchange_01_combi_unique(coins,0,10,"");
+
+}
 void nqueen_all(){
     // cout<<nqueen_combi_01(7,3,-1,0,"");
     // vector<bool> loc(8,false);
-    vector<vector<bool>> loc(4,vector<bool> (4,false));
+    // vector<vector<bool>> loc(4,vector<bool> (4,false));
     // cout<<nqueen_permu_01(7,3,loc,0,"");
     // cout<<nqueen_combi02_target(7,3,0,0,"");
     // cout<<nqueen_permu02_target(7,3,0,0,loc,"");
-    cout<<nqueen(loc , 4,-1,0,"");
+    // cout<<nqueen(loc , 4,-1,0,"");
 }
 void solve(){
     // basicques();
-    nqueen_all();
+    // nqueen_all();
+    coinchange();
 }
 
 int main(){
