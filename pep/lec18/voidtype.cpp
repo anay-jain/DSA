@@ -99,6 +99,8 @@ for(int i=1;i<=6 && i+start<=n;i++){
 }
     return c;
 }
+//==========equi set=============================================================================
+
 //=========coin change============================================================================
 int coinchange_01_permu(vector<int> &coins , int target , string ans){
     if(target==0){
@@ -150,6 +152,66 @@ int coinchange_01_permu_unique(vector<int> &coins ,vector<bool> &coinsUsed, int 
         coinsUsed[i]=false;
         }
   }
+    return count;
+}
+int coinchange_combi_target(vector<int> coins , int vidx , int target , string ans){
+ if(target==0 || vidx==coins.size()){
+     if(target==0){
+          cout<<ans<<endl;
+        return 1;
+     }
+       return 0;
+    }
+    int count=0;
+    if(target-coins[vidx]>=0)
+    count+=coinchange_combi_target(coins , vidx, target-coins[vidx],ans+to_string(coins[vidx]));
+    count+=coinchange_combi_target(coins, vidx +1, target , ans);
+    return count;
+}
+int coinchange_permu_target(vector<int> coins , int vidx , int target , string ans){
+ if(target==0 || vidx==coins.size()){
+     if(target==0){
+          cout<<ans<<endl;
+        return 1;
+     }
+       return 0;
+    }
+    int count=0;
+    if(target-coins[vidx]>=0)
+    count+=coinchange_permu_target(coins ,0, target-coins[vidx],ans+to_string(coins[vidx]));
+    count+=coinchange_permu_target(coins, vidx +1, target , ans);
+    return count;
+}
+int coinchange_combi_target_unique(vector<int> coins , int vidx , int target , string ans){
+ if(target==0 || vidx==coins.size()){
+     if(target==0){
+          cout<<ans<<endl;
+        return 1;
+     }
+       return 0;
+    }
+    int count=0;
+    if(target-coins[vidx]>=0)
+    count+=coinchange_combi_target_unique(coins , vidx+1, target-coins[vidx],ans+to_string(coins[vidx]));
+    count+=coinchange_combi_target_unique(coins, vidx +1, target , ans);
+    return count;
+}
+int coinchange_permu_target_unqiue(vector<int> coins,vector<bool> coinUsed , int vidx , int target , string ans){
+ if(target==0 || vidx==coins.size()){
+     if(target==0){
+          cout<<ans<<endl;
+        return 1;
+     }
+       return 0;
+    }
+    int count=0;
+    if(target-coins[vidx]>=0 && !coinUsed[vidx]){
+        coinUsed[vidx]=true;
+        count+=coinchange_permu_target_unqiue(coins ,coinUsed,0, target-coins[vidx],ans+to_string(coins[vidx]));
+
+        coinUsed[vidx]=false;
+    }
+    count+=coinchange_permu_target_unqiue(coins, coinUsed, vidx +1, target , ans);
     return count;
 }
 // =======nqueen======================================================================================
@@ -271,6 +333,9 @@ void coinchange(){
     // cout<<coinchange_01_permu(coins,10,"");
     // cout<<coinchange_01_permu_unique(coins,coinsUsed,10,"");
     // cout<<coinchange_01_combi_unique(coins,0,10,"");
+    // cout<<coinchange_combi_target(coins , 0,10,"");
+    //  cout<<coinchange_permu_target(coins , 0,10,"");
+    cout<<coinchange_permu_target_unqiue(coins , coinsUsed , 0, 10 ,"");
 
 }
 void nqueen_all(){
