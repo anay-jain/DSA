@@ -99,8 +99,87 @@ for(int i=1;i<=6 && i+start<=n;i++){
 }
     return c;
 }
-//==========equi set=============================================================================
+//===================================================================================================
+int boardPath(int s, int d, string ans)
+{
+    if (s == d)
+    {
+        cout << ans << endl;
+        return 1;
+    }
 
+    int count = 0;
+    for (int dice = 1; dice <= 6 && s + dice <= d; dice++)
+    {
+        count += boardPath(s + dice, d, ans + to_string(dice));
+    }
+
+    return count;
+}
+//=================permutatition===================================================================
+int permutation_01(string word , string ans){
+    if(word.length()==0){
+        cout<<ans<<endl;
+        return 1;
+    }
+    int count=0;
+    for(int i=0;i<word.length();i++){
+        char ch = word[i];
+        string ros = word.substr(0,i)+word.substr(i+1);
+        count+=permutation_01(ros,ans+ch);
+    }
+    return count;
+}
+int subseq_02(string word, string ans){
+     
+    if(word.length()==0){
+       cout<<ans<<endl;
+        return 1;
+    }
+    int count=0;
+    char ch=word[0];
+    count+=subseq_02(word.substr(1),ans+ch);
+    count+=subseq_02(word.substr(1),ans);
+    return count;
+}
+int permuation_02_withoutrep(string word , string ans){
+
+     if(word.length()==0){
+        cout<<ans<<endl;
+        return 1;
+    }
+    int count=0;
+    vector<bool> check(26,false);
+    
+   
+    for(int i=0;i<word.length();i++){
+        char ch = word[i];
+         if(!check[ch-'a']){
+             check[ch-'a']=true;
+        string ros = word.substr(0,i)+word.substr(i+1);
+        count+=permuation_02_withoutrep(ros,ans+ch);
+         }
+
+    }
+    return count;
+
+
+}
+//==========equi set=============================================================================
+int equiset(vector<int> &arr , int vidx, int sum1 , int sum2 , string arr1 , string arr2){
+    if(vidx==arr.size()){
+        if (sum1==sum2){
+        cout<<arr1 <<" = "<<arr2<<endl;
+        return 1;
+        }
+        return 0;
+        }
+        
+    int count=0;
+    count +=equiset(arr , vidx+1,sum1+arr[vidx], sum2 , arr1+to_string(arr[vidx])+ " ",arr2);
+    count+= equiset(arr, vidx+1 , sum1 ,sum2+arr[vidx],arr1, arr2+to_string(arr[vidx])+" ");
+    return count;
+}
 //=========coin change============================================================================
 int coinchange_01_permu(vector<int> &coins , int target , string ans){
     if(target==0){
@@ -303,7 +382,7 @@ int nqueen(vector<vector<bool>> &loc , int tnq ,int qloc ,int qpsf , string ans)
 int count=0;
 for(int i =qloc+1 ;i<totalsqaures;i++){
     int x = i/loc[0].size();
-    int y =i%loc[0].size();
+    int y = i%loc[0].size();
     if(!isSafeToPlace(loc,x,y)){
         loc[x][y]=true;
         count+=nqueen(loc,tnq,i,qpsf+1,ans+"B"+to_string(x)+","+to_string(y)+"Q"+to_string(qpsf)+" ");
@@ -311,8 +390,36 @@ for(int i =qloc+1 ;i<totalsqaures;i++){
     }
     
 }
+}
+int nqueen_target(vector<vector<bool>> &loc ,int vidx,  int tnq  ,int qpsf , string ans){
+    int totalsqaures = loc.size()*loc[0].size();
+
+    if(tnq==qpsf || vidx==totalsqaures){
+       if(tnq==qpsf){
+        cout<<ans<<endl;
+        return 1;
+       }
+       return 0;
+    }
+  
+int count=0;
+
+    int x = vidx/loc[0].size();
+    int y = vidx%loc[0].size();
+    if(!isSafeToPlace(loc,x,y)){
+        loc[x][y]=true;
+        count+=nqueen_target(loc,vidx+1,tnq,qpsf+1,ans+"B"+to_string(x)+","+to_string(y)+"Q"+to_string(qpsf)+" ");
+        loc[x][y]=false;
+    }
+    count+=nqueen_target(loc,vidx+1,tnq,qpsf,ans);
+    
+
 return count;
 }
+//=========crypto==========================================================================
+    
+
+
 // ===================================================================================================
 void mazepath_question(){
 //  mazepath_multi(0,0,2,2,"");
@@ -335,22 +442,35 @@ void coinchange(){
     // cout<<coinchange_01_combi_unique(coins,0,10,"");
     // cout<<coinchange_combi_target(coins , 0,10,"");
     //  cout<<coinchange_permu_target(coins , 0,10,"");
-    cout<<coinchange_permu_target_unqiue(coins , coinsUsed , 0, 10 ,"");
+    // cout<<coinchange_permu_target_unqiue(coins , coinsUsed , 0, 10 ,"");
+    // vector<int> arr={10,20,30,40,50,60,70,80};
+    // cout<<equiset(arr,0,0,0,"","");
 
+}
+void permutation_types(){
+    // cout<<permutation_01("abc","");
+    // cout<<subseq_02("abc","");
+    cout<<permuation_02_withoutrep("abab","");
 }
 void nqueen_all(){
     // cout<<nqueen_combi_01(7,3,-1,0,"");
     // vector<bool> loc(8,false);
-    // vector<vector<bool>> loc(4,vector<bool> (4,false));
+    vector<vector<bool>> loc(4,vector<bool> (4,false));
     // cout<<nqueen_permu_01(7,3,loc,0,"");
     // cout<<nqueen_combi02_target(7,3,0,0,"");
     // cout<<nqueen_permu02_target(7,3,0,0,loc,"");
     // cout<<nqueen(loc , 4,-1,0,"");
+    cout<<nqueen_target(loc,0,4,0,"");
+}
+void crypto(){
+
 }
 void solve(){
     // basicques();
     // nqueen_all();
-    coinchange();
+    // coinchange();
+    // permutation_types();
+    crypto()''
 }
 
 int main(){
