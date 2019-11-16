@@ -2,7 +2,7 @@
 #include<vector>
 #include<string>
 #include<climits>
-
+#include<math.h>
 using namespace std;
 void subseq(string ques , string ans){
     if(ques.length()==0){
@@ -506,7 +506,7 @@ int wordbreak(string word , string ans){
     }
     string temp ="";
     int count=0;
-    for(int i=0;i<word.length;i++){
+    for(int i=0;i<word.length();i++){
         temp+=word[i];
         if(isInDict(temp)){
             count += wordbreak(word.substr(i+1),ans+temp+" ");
@@ -516,6 +516,93 @@ int wordbreak(string word , string ans){
     return count;
 }
 //=======soduku with bit masking =====================================================================
+//   vector<vector<int>> board(8,vector<int>(8,0));
+
+//  int board[][] = {{3, 0, 6, 5, 0, 8, 4, 0, 0},
+//          {0, 0, 0, 0, 0, 0, 0, 0, 0},
+//          {0, 8, 7, 0, 0, 0, 0, 3, 1},
+//          {0, 0, 3, 0, 1, 0, 0, 8, 0},
+//          {9, 0, 0, 8, 6, 3, 0, 0, 5},
+//          {0, 5, 0, 0, 9, 0, 6, 0, 0},
+//          {1, 3, 0, 0, 0, 0, 2, 5, 0},
+//          {0, 0, 0, 0, 0, 0, 0, 7, 4},
+//          {0, 0, 5, 2, 0, 6, 3, 0, 0}};
+          
+
+// bool issodukuvalid(int x , int y , int num){
+//     for(int i=0;i<8;i++){
+//             if(board[x][i]==num){
+//                 return true;
+//             }
+//             if(board[i][y]==num){
+//                 return true;
+//             }
+//     }
+//         int r=(x/3)*3;
+//          int c=(y/3)*3;
+//          for(int row=0;row<3;row++){
+//             for(int col=0;col<3;col++){
+//                 if(board[r+row][c+col]==num) return true;
+//             }
+//          }
+
+//     return false;
+
+// }
+// int soduku(int vidx){
+//    if(vidx==81){
+//     //    for(int vec : board){
+//     //        for(int ele : vec){
+//     //            cout<<ele<<" ";
+//     //        }
+//     //        cout<<endl;
+//     //    }
+//        return 1;
+//    }
+//     int x = vidx/9;
+//     int y = vidx%9;
+//     int count=0;
+//     if(board[x][y]!=0){
+//     count+=soduku(vidx+1);
+// }
+// else{
+//     for(int i=1;i<10;i++){
+//         if(issodukuvalid(x,y,i)){
+//         board[x][y]=i;
+//         count+=soduku(vidx+1);
+//         board[x][y]=0;
+//         }
+       
+   
+//     }
+// }
+// return count;
+    
+// }
+//============ max points =========================================================================
+int max_points(vector<int> &arr , int vidx){
+    if(vidx==arr.size()){
+        return 0;
+    }
+    
+   int temp =  max_points(arr,vidx+1);
+   if(vidx==0 ){
+        temp = max(temp,arr[vidx]*arr[vidx+1]);
+    }
+    else if(vidx==arr.size()-1){
+
+        temp = max(temp,arr[vidx-1]*arr[vidx]);
+        
+    }
+    else{
+         temp = max(temp,arr[vidx-1]*arr[vidx]*arr[vidx+1]);
+        
+       
+       
+    }
+    // cout<<vidx<<" "<<temp;
+     return temp;
+}
 
 // ===================================================================================================
 void mazepath_question(){
@@ -569,7 +656,10 @@ void solve(){
     // nqueen_all();
     // coinchange();
     // permutation_types();
-    crypto_ques();
+    // crypto_ques();
+    // soduku(-1);
+    vector<int> arr={2,3,6,7,8};
+    cout<<max_points(arr,0);
 }
 
 int main(){
