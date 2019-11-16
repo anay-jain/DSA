@@ -417,8 +417,105 @@ int count=0;
 return count;
 }
 //=========crypto==========================================================================
-    
+string str1 ="send";
+string str2="more";
+string str3="money";
+string stradd=str1+str2+str3;
+string str="";
+vector<int> maping(26,-1);
+vector<bool> numUsed(10,false);
 
+
+
+int decodeword(string somestr){
+   int codeans=0;
+    int t=1;
+    for(int i=0;i<somestr.length();i++){
+        int no = somestr[i]-'a';
+        int num=maping[no];
+        codeans = codeans*10 + num;
+        // t*=10;
+
+    }
+    // cout<<codeans<<endl;
+    return codeans;
+}
+int crypto(string str , int idx){
+    if(idx==str.length()){
+        int a = decodeword(str1),b=decodeword(str2),c=decodeword(str3);
+        if(a+b==c){
+        // if(decodeword(str1)+decodeword(str2)==decodeword(str3)){
+            for(int encodenum=0;encodenum<26;encodenum++){
+                if(encodenum!=-1){
+                    // cout<<(char)encodenum+'a'<<" "<<maping[encodenum]<<endl;
+                }
+            }
+            return 1;
+        }
+        return 0;
+    }
+    char ch = str[idx];
+    int count= 0;
+    for(int i=0 ; i<10;i++){
+        if(numUsed[i]==false){
+        numUsed[i]=true;
+        // int t = str[i]-'a';
+        // char ch = str[i];
+        maping[ch-'a']=i;
+        cout<<"idx "<<idx<<" "<<"i "<<i<<endl;
+        // cout<<maping[ch-'a'];
+        count+=crypto(str,idx+1);
+        maping[ch-'a']=-1;
+        numUsed[i]=false;
+    }
+    }
+    return count;
+    }
+
+void freqmap1(){
+   
+    vector<int> freqmap(26,0);
+    for(int i=0;i<stradd.length();i++){
+        // int idx = str[i];
+        int idx=stradd[i]-'a';
+        freqmap[idx]++;
+    }
+    for(int i=0;i<26;i++){
+        if(freqmap[i]!=0){
+          
+            str+=(char)(i+'a');
+            
+        }
+    }
+ 
+}
+vector <string> Dict={"i","like","mangoes"};
+bool isInDict(string word){
+    for(string ele: Dict){
+        if(ele.compare(word)==0){
+            return 1;
+        }
+        
+    }
+    return 0;
+}
+int wordbreak(string word , string ans){
+    if(word.length()==0){
+        cout<<ans<<endl;
+        return 1;
+    }
+    string temp ="";
+    int count=0;
+    for(int i=0;i<word.length;i++){
+        temp+=word[i];
+        if(isInDict(temp)){
+            count += wordbreak(word.substr(i+1),ans+temp+" ");
+
+        }
+    }
+    return count;
+}
+//=======soduku with bit masking =====================================================================
 
 // ===================================================================================================
 void mazepath_question(){
@@ -462,7 +559,9 @@ void nqueen_all(){
     // cout<<nqueen(loc , 4,-1,0,"");
     cout<<nqueen_target(loc,0,4,0,"");
 }
-void crypto(){
+void crypto_ques(){
+    freqmap1();
+    cout<<crypto(str, 0);
 
 }
 void solve(){
@@ -470,7 +569,7 @@ void solve(){
     // nqueen_all();
     // coinchange();
     // permutation_types();
-    crypto()''
+    crypto_ques();
 }
 
 int main(){
