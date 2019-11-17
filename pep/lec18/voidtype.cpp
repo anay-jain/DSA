@@ -580,28 +580,27 @@ int wordbreak(string word , string ans){
     
 // }
 //============ max points =========================================================================
-int max_points(vector<int> &arr , int vidx){
+int max_points(vector<int> &arr , int vidx, int temp){
     if(vidx==arr.size()){
-        return 0;
+        return temp;
+       
     }
-    
-   int temp =  max_points(arr,vidx+1);
-   if(vidx==0 ){
-        temp = max(temp,arr[vidx]*arr[vidx+1]);
+    if(vidx==0 ){
+        temp += arr[vidx]*arr[vidx+1];
     }
     else if(vidx==arr.size()-1){
-
-        temp = max(temp,arr[vidx-1]*arr[vidx]);
-        
+        temp += arr[vidx-1]*arr[vidx];
     }
     else{
-         temp = max(temp,arr[vidx-1]*arr[vidx]*arr[vidx+1]);
-        
-       
-       
+         temp += arr[vidx-1]*arr[vidx]*arr[vidx+1];
     }
+    int finalans=0;
+    for(int i =vidx+1; i<arr.size();i++){
+//    int finalans =  ;
+   finalans = max(temp,max_points(arr,vidx+1,temp));
+}
     // cout<<vidx<<" "<<temp;
-     return temp;
+     return finalans;
 }
 
 // ===================================================================================================
@@ -658,8 +657,8 @@ void solve(){
     // permutation_types();
     // crypto_ques();
     // soduku(-1);
-    vector<int> arr={2,3,6,7,8};
-    cout<<max_points(arr,0);
+    vector<int> arr={3,1,5,8};
+    cout<<max_points(arr,0,0);
 }
 
 int main(){
