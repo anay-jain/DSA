@@ -4,19 +4,19 @@ public class tns{
     
     public static void main(String[] args){
 
-        int[] arr={0,1,0,1,1,1,0,1,0,1,1,1,0};
+        int[] arr={44,45,2,6,14,1,5,1,2,3,2,5,1,5,2,2,8,54};
         // int[] arr2 ={1};
         // int arrnew[] = mergesort(arr, 0,arr.length);
         // displayarr(arrnew);
        
-        int[] sortarr= sortoneandzero(arr);
-        displayarr(sortarr);
-        
+        // int[] sortarr= sortoneandzero(arr);
+        // displayarr(sortarr);
+        pivot(arr, 0, arr.length, 11);
     }
-    public static void swap(int a , int b){
-        int temp = a;
-        a=b;
-        b= temp;
+    public static void swap(int[] arr , int a , int b){
+        int temp = arr[a];
+        arr[a]=arr[b];
+        arr[b]= temp;
     }
     public static int[] sortoneandzero(int[] arr){
         int i=0,j=arr.length-1,k=0;
@@ -42,7 +42,21 @@ public class tns{
         return arr;
       
     }
-    
+    // public static void swap0_1_2(int[] arr){
+    //     int 
+    // }
+    public static void pivot(int[] arr , int si , int ei , int pivot ){
+        int itr = 0;
+        int pt=0;
+        while(itr<arr.length){
+            if(arr[itr] < pivot){
+                swap( arr,  pt ,  itr);
+                pt++;
+            }
+            itr++;
+        }
+        displayarr(arr);
+    }
 
     public static int[] mergesort(int[] arr , int li , int ri){
         if(ri-li==0){
