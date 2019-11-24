@@ -42,9 +42,7 @@ public class tns{
         return arr;
       
     }
-    // public static void swap0_1_2(int[] arr){
-    //     int 
-    // }
+   
     public static void pivot(int[] arr , int si , int ei , int pivot ){
         int itr = 0;
         int pt=0;
