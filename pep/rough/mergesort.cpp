@@ -3,7 +3,7 @@
 using namespace std;
 void swap(vector<int> &arr , int pi , int si){
     int temp=arr[pi];
-    arr[pi]=arr[si];
+        arr[pi]=arr[si];
     arr[si]=temp;
 }
 void sort0and1(vector<int> &arr ){
@@ -16,10 +16,21 @@ void sort0and1(vector<int> &arr ){
         p1++;
     }
 }
-void sort012(vector<int> &arr){
-    int p0=0,p1=0,p2=arr.size();
+// void sort012(vector<int> &arr){
+//     int p0=0,p1=0,p2=arr.size();
     
+// }
+void pivot(vector<int> &arr, int pivot){
+    int itr  =0,p1=0;
+    while(itr<arr.size()){
+        if(arr[itr]<pivot){ // left condition..
+            swap(arr,p1,itr);
+            p1++;
+        }
+        itr++;
+    }
 }
+
 vector<int> mergesortedarray( vector<int> &left , vector<int> &right){
     int n = left.size()+ right.size();
     vector<int> arr(n,0);
