@@ -3,7 +3,7 @@
 using namespace std;
 void swap(vector<int> &arr , int pi , int si){
     int temp=arr[pi];
-        arr[pi]=arr[si];
+    arr[pi]=arr[si];
     arr[si]=temp;
 }
 void sort0and1(vector<int> &arr ){
