@@ -16,7 +16,7 @@ public class returntype{
             return base;
         }
         char ch = ques.charAt(0);
-        String ros = ques.substring(1);
+        Sstring ros = ques.substring(1);
         ArrayList<String> finalans = new ArrayList<>();
         ArrayList<String> reference = subseq(ros);
         for(String s: reference){
@@ -26,5 +26,15 @@ public class returntype{
 
         return finalans;
 
+    }
+    //==========compression=================================================================
+    public static string compression(String ques ,int count){
+        if(ques.length()==0){
+            return "";
+        }
+        if(ques.length()>1 && q){
+
+        }
+        
     }
 }
