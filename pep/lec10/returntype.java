@@ -112,6 +112,7 @@ public class returntype{
                 
             }
            count=1;
+           
             return chs+ countchars(word.substring(1),count);
         }
 
