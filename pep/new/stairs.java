@@ -91,7 +91,7 @@ public class stairs{
     }
     public static int goldmine(int[][] arr){
         int[][] maxi = new int[arr.length][arr[0].length];
-        for(j=arr[0].length-1;j>=0;j--){
+        for(j=arr[0c].length-1;j>=0;j--){
             for(int i=arr.length-1;i>=0;i--){
                 
                 
