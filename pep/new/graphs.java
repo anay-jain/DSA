@@ -330,7 +330,7 @@ public static void belman(ArrayList<ArrayList<edge>> graphs){
         // display(graph);
         boolean[] isvisited = new boolean[7];
         // System.out.println(printpath(graph, 0, 4, isvisited));
-        // printpath(graph, "", 0, 6, isvisited,0);
+        // printpath(graphcd, "", 0, 6, isvisited,0);
         // ArrayList<Integer> nodes = new ArrayList<>();
         // ceilpath(graph, "", 0,6, isvisited, 0,39);
         // System.out.println(maxpath + " @ " + maxcosts);

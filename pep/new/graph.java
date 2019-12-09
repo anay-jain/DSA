@@ -655,7 +655,7 @@ class graph{
 					
 					
 				}else{
-					if(disc[src]<=low[nbr]){
+					if(disc[src]<=cdlow[nbr]){
 						ap[src]=true;
 						if(disc[src]<low[nbr]){
 							System.out.println(src+" to "+nbr);
