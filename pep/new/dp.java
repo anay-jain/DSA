@@ -208,7 +208,29 @@ public class dp{
 
         return max;
     }
+    public static void mcm(int[] arr){
+        int[][] memo = new int[arr.length-1][arr.length-1];
+        for(int gap =0;gap<=arr.length-1;gap++){
+            for(int i =0,j=gap+i;j<arr.length-1;j++,i++){
+                if(gap==0){
+                    memo[i][j]=0;
+                }
+                else if(gap==1){
+                    memo[i][j]=arr[j]*arr[j-1]*arr[j+1];
+                }
+                else{
+                memo[i][j] = Integer.MAX_VALUE;
+                for(int k =i;k<j;k++){
+                    
+                    memo[i][j]=Math.min(memo[i][j],memo[i][k]+memo[k+1][j]+(arr[i]*arr[j+1]*arr[k+1]));
+                }
+            }
+            }
+        }
+      
+         
 
+    }
     public static void minimumjumps(int[] jump){
         int[] memo = new int[jump.length];
         for(int i=jump.length-1;i>=0;i--){

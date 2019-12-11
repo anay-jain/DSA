@@ -1,13 +1,27 @@
 import java.util.Scanner;
 public class subsplay{
     public static Scanner  scn= new Scanner(System.in);
-    public static int mcm(int[] arr){
-        int[][] memo = new int[arr.length][arr.length];
-        for(int gap =0;gap<=arr.length;gap++){
-            for(int i =0,j=gap+i;j<=arr.length;i++){
-                
+    public static void mcm(int[] arr){
+        int[][] memo = new int[arr.length-1][arr.length-1];
+        for(int gap =0;gap<=arr.length-1;gap++){
+            for(int i =0,j=gap+i;j<arr.length-1;j++,i++){
+                if(gap==0){
+                    memo[i][j]=0;
+                }
+                else if(gap==1){
+                    memo[i][j]=arr[j]*arr[j-1]*arr[j+1];
+                }
+                else{
+                memo[i][j] = Integer.MAX_VALUE;
+                for(int k =i;k<j;k++){
+                    
+                    memo[i][j]=Math.min(memo[i][j],memo[i][k]+memo[k+1][j]+(arr[i]*arr[j+1]*arr[k+1]));
+                }
+            }
             }
         }
+        display(memo);
+         
 
     }
     public static int  subs(String a){
@@ -53,15 +67,16 @@ public class subsplay{
         }
     }
     public static void main(String[] args){
-        int tc = scn.nextInt();
-        while(tc!=0){
-            int n = scn.nextInt();
-            scn.nextLine();
-           String s = scn.nextLine();
-          System.out.println(subs(s));
-          tc--; 
-          }
-   
+        // int tc = scn.nextInt();
+        // while(tc!=0){
+        //     int n = scn.nextInt();
+        //     scn.nextLine();
+        //    String s = scn.nextLine();
+        //   System.out.println(subs(s));
+        //   tc--; 
+        //   }
+        int[] arr = {40, 20, 30, 10, 30};
+            mcm(arr);
     }
 
 }   
