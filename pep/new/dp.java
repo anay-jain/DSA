@@ -4,20 +4,20 @@ public class dp{
         // System.out.println(mazepath_dp(3, 3));
         // int[] coins = {2,3,5}
         //  System.out.println(coin_Change_dp_combi(coins, 7));
-        // int[] costs={0,3,5,6,15,10,25,12,24};
-        // System.out.println(rod_cutting(costs));
-        int[] costs={10,22,33,1,2,68,40,60,1};
-        int[] coins={10,22,9,33,21,50,41,60,80};
-        int[] jumps={3,0,2,2,0,4,0,3,1,2,0,1};
+        int[] costs={0,3,5,6,15,10,25,12,24};
+        System.out.println(rod_cutting(costs));
+        // int[] costs={10,22,33,1,2,68,40,60,1};
+        // int[] coins={10,22,9,33,21,50,41,60,80};
+        // int[] jumps={3,0,2,2,0,4,0,3,1,2,0,1};
         // minimumjumps(jumps);
-        int[] coins1={2,3,5,6,1};
-        int[] wts = {2,5,1,3,4};
-        int[] price = {15,14,10,45,30};
-        int capacity=7;
+        // int[] coins1={2,3,5,6,1};
+        // int[] wts = {2,5,1,3,4};
+        // int[] price = {15,14,10,45,30};
+        // int capacity=7;
     //    System.out.println(targetpossible(coins1, 17)); 
         // System.out.println(longestincreasingsubsequence(coins));
         // System.out.println(maximumcommonsequence("abcd", "aecd"));
-        System.out.println(eggdrop(7, 2));
+        // System.out.println(eggdrop(7, 2));
     }
     public static int fibo_memo(int n, int[] strg){
         if(n==0 || n==1){
