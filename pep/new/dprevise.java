@@ -192,7 +192,7 @@ public class dprevise{
                     memo[i][j]=true;
                   
                 }
-                else if((j-arr[i-1])>=0 && memo[i][j-arr[i-1]]==true){
+                else if((j-arr[i-1])>=0 && memo[i-1][j-arr[i-1]]==true){
                     memo[i][j] = true;
                     
                 }
@@ -200,6 +200,31 @@ public class dprevise{
         }
         display(memo);
     }
+    private static void targetSum(int[] arr, int t) {
+		boolean[][] strg = new boolean[arr.length+1][t + 1];
+		 for (int i = 0; i < strg.length; i++) {
+			for (int j = 0; j < strg[0].length; j++) {
+				if (i == 0 && j == 0) {
+					strg[i][j] = true;
+				} else if (i == 0) {
+					strg[i][j] = false;
+				} else if (j == 0) {
+					strg[i][j] = true;
+				} else {
+					if (strg[i - 1][j] == true) {
+						strg[i][j] = true;
+					} else if (j >= arr[i - 1] && strg[i - 1][j - arr[i - 1]] == true)
+					//ask about strg[i-1][j-arr[i-1]==true
+					{
+						strg[i][j] = true;
+					}
+				}
+			}
+        }
+        display(strg);
+		System.out.println(strg[strg.length - 1][strg[0].length - 1]);
+	}
+
     public static void main(String[] args){
         // int[] coins={2,3,5};
         // System.out.println(stairsproblem(7, coins));
@@ -216,5 +241,7 @@ public class dprevise{
         // System.out.println(longestpalidromicsubsequence("babad"));
         int[] arr = {2,3,5,6,1};
         targetquestion(arr, 12);
+        System.out.println("--------------------------------------------------");
+        targetSum(arr,12);
     }
 }
