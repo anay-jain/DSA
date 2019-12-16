@@ -185,9 +185,9 @@ public class dprevise{
     public static void targetquestion(int[] arr,int target){
         boolean[][] memo = new boolean[arr.length+1][target+1];
         memo[0][0]=true;
-      
+        for(int i=1;i<=arr.length;i++){
             for(int j=0;j<=target;j++){
-                for(int i=1;i<=arr.length;i++){
+             
                 if(memo[i-1][j]==true){
                     memo[i][j]=true;
                   
