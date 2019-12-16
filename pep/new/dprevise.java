@@ -1,4 +1,12 @@
 public class dprevise{
+    public static void display(boolean[][] arr ){
+        for(int i=0;i<arr.length;i++){
+            for(int j =0;j<arr[0].length;j++){
+                System.out.print(arr[i][j]+ " ");
+            }
+            System.out.println("");
+        }
+    }
     public static int stairsproblem(int n , int[] coins){
         int[] memo= new int[n+1];
         memo[0]=1;
@@ -22,6 +30,7 @@ public class dprevise{
         }
     return memo[memo.length-1];
     }
+    
     public static int longestincreasingsubarray(int[] arr){
         int[] memo = new int[arr.length];
         int max=0;
@@ -101,16 +110,111 @@ public class dprevise{
          
 
     }
+    public static int countoflongestpalidromicsubsequence(String s){
+        int[][] memo= new int[s.length()][s.length()];
+        for(int gap=0;gap<memo.length;gap++){
+            for(int i=0,j=gap+i;j<memo.length;i++,j++){
+                if(gap==0){
+                    memo[i][j]=1;
+                }
+                else if(gap==1){
+                    if(s.charAt(i)==s.charAt(j)){
+                        memo[i][j]=3;
+                    }
+                    else{
+                        memo[i][j]=2;
+                    }
+                }
+                else{
+                    if(s.charAt(i)==s.charAt(j)){
+                    memo[i][j]= memo[i][j-1]+memo[i+1][j]+1;
+                    }
+                    else{
+                        memo[i][j]=memo[i][j-1]+memo[i+1][j]-memo[i+1][j-1];
+                    }
+                }
+            }
+        }
+        // display(memo);
+        return memo[0][memo[0].length-1];
+    }
+    public static int longestpalidromicsubsequence(String s){
+        int[][] memo= new int[s.length()][s.length()];
+        for(int gap=0;gap<memo.length;gap++){
+            for(int i=0,j=gap+i;j<memo.length;i++,j++){
+                if(gap==0){
+                    memo[i][j]=1;
+                }
+                else if(gap==1){
+                    if(s.charAt(i)==s.charAt(j)){
+                        memo[i][j]=2;
+                    }
+                    else{
+                        memo[i][j]=1;
+                    }
+                }
+                else{
+                    if(s.charAt(i)==s.charAt(j)){
+                    memo[i][j]= memo[i+1][j-1]+2;
+                    }
+                    else{
+                        memo[i][j]=Math.max(memo[i+1][j-1],Math.max(memo[i+1][j],memo[i][j-1]));
+                    }
+                }
+            }
+        }
+        // display(memo);
+        return memo[0][memo[0].length-1];
+    }
+    public static int minimumjumps(int[] arr){
+        int[] memo = new int[arr.length];
+        for(int i=0;i<arr.length;i++){
+            memo[i]=Integer.MAX_VALUE;
+        }
+        for(int i=0;i<arr.length;i++){
+        memo[0]=0;
+            for(int j=1;j<=arr[i];j++){
+                if(i+j<arr.length){
+                    memo[i+j]=Math.min(memo[i+j], memo[i]+1);
+                }
+            }
+            System.out.print(memo[i]+"  ");
+        }
+        return memo[arr.length-1];
+    }
+    public static void targetquestion(int[] arr,int target){
+        boolean[][] memo = new boolean[arr.length+1][target+1];
+        memo[0][0]=true;
+      
+            for(int j=0;j<=target;j++){
+                for(int i=1;i<=arr.length;i++){
+                if(memo[i-1][j]==true){
+                    memo[i][j]=true;
+                  
+                }
+                else if((j-arr[i-1])>=0 && memo[i][j-arr[i-1]]==true){
+                    memo[i][j] = true;
+                    
+                }
+            }
+        }
+        display(memo);
+    }
     public static void main(String[] args){
         // int[] coins={2,3,5};
         // System.out.println(stairsproblem(7, coins));
-        int[] arr={0,3,5,6,15,10,25,12,24};
+        // int[] arr={0,3,5,6,15,10,25,12,24};
         // int[] arr ={10,22,9,33,21,50,41,60,80};
         // System.out.println(rodcutting(arr));
         // System.out.println(longestincreasingsubsequence(arr));
         // System.out.println(longestincreasingsubarray(arr));
         // int[] coins={10,22,9,33,21,50,41,60,80};
-        int[] coins={10,22,33,1,2,68,40,60,1};
-        System.out.println(bitonicsubsequence(coins));
+        // int[] coins={10,22,33,1,2,68,40,60,1};
+        // int[] jumps={3,0,2,2,0,4,0,3,1,2,0,1};
+        // System.out.println(minimumjumps(jumps));
+        // System.out.println(bitonicsubsequence(coins));
+        // System.out.println(longestpalidromicsubsequence("babad"));
+        int[] arr = {2,3,5,6,1};
+        targetquestion(arr, 12);
     }
 }

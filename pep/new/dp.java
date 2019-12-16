@@ -6,7 +6,7 @@ public class dp{
         //  System.out.println(coin_Change_dp_combi(coins, 7));
         int[] costs={0,3,5,6,15,10,25,12,24};
         System.out.println(rod_cutting(costs));
-        // int[] costs={10,22,33,1,2,68,40,60,1};
+        //  J 
         // int[] coins={10,22,9,33,21,50,41,60,80};
         // int[] jumps={3,0,2,2,0,4,0,3,1,2,0,1};
         // minimumjumps(jumps);
