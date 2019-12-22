@@ -1,4 +1,7 @@
+import java.util.Scanner;
+
 public class dprevise{
+    public static Scanner scn= new Scanner(System.in);
     public static void display(boolean[][] arr ){
         for(int i=0;i<arr.length;i++){
             for(int j =0;j<arr[0].length;j++){
@@ -223,8 +226,49 @@ public class dprevise{
         }
         display(strg);
 		System.out.println(strg[strg.length - 1][strg[0].length - 1]);
-	}
-
+    }
+    public static int  adjacentbitcounts(int n,int k,int first,  int[][][] memo){
+            if(n==0){
+                return 0;
+            }
+            if(k<0){
+                return 0;
+            }
+            if(n==1){
+                if(k==0){
+                return 1; 
+                }
+                else if(k<0){
+                    return 0;
+                }
+                else{
+                    return 0;
+                }
+            }
+            if(memo[n][k][first]!=0){
+                return memo[n][k][first];
+            }
+            int ans=0;
+            if(first==1)
+            ans += (adjacentbitcounts(n-1, k-1, 1, memo)+adjacentbitcounts(n-1, k,0, memo) );
+            else
+            ans +=(adjacentbitcounts(n-1, k, 1, memo)+adjacentbitcounts(n-1, k,0, memo));
+            // System.out.println(ans);
+            return  memo[n][k][first]=ans;
+    }   
+    public static void adjacentbitcountshelper(){
+        int t=scn.nextInt();
+        while(t!=0){
+            int n , k ;
+            n=scn.nextInt();
+            k=scn.nextInt();
+            int memo[][][] = new int[n+1][k+1][2+1];
+            int ans = adjacentbitcounts(n, k, 1, memo);
+            ans+=adjacentbitcounts(n , k, 0, memo);
+            System.out.println(ans);
+            t--;
+        }
+    }
     public static void main(String[] args){
         // int[] coins={2,3,5};
         // System.out.println(stairsproblem(7, coins));
@@ -239,9 +283,10 @@ public class dprevise{
         // System.out.println(minimumjumps(jumps));
         // System.out.println(bitonicsubsequence(coins));
         // System.out.println(longestpalidromicsubsequence("babad"));
-        int[] arr = {2,3,5,6,1};
-        targetquestion(arr, 12);
-        System.out.println("--------------------------------------------------");
-        targetSum(arr,12);
+        // int[] arr = {2,3,5,6,1};
+        // targetquestion(arr, 12);
+        // System.out.println("--------------------------------------------------");
+        // targetSum(arr,12);
+        adjacentbitcountshelper();
     }
 }
