@@ -20,7 +20,7 @@ public static class pairgraph{
 
     }
 }    
-public static class bpspair{
+public static class bfspair{
     int node;
     int wsf ;
     String psf;
@@ -45,29 +45,29 @@ public static class bpspair{
             System.out.println("");
         }
     }
-    public static boolean haspath(ArrayList<ArrayList<edge>> graph,int s , int d  boolean[] isvisited){
-        if(s==d){
-            return true;
-        }
-        isvisited[s]=true;
-        boolean ans =false;
-        for(int i=0;i<graph.size();i++){
-            for(int j =0;j<graph.get(i).size();j++){
-                if(isvisited[graph.get(i).get(j).v2]==false){
-                   ans = haspath(graph,graph.get(i).get(j).v2 , d , isvisited);
-                   if(ans == true){
-                       return true;
-                   }
-                }
-            }
-        }
-        isvisited[s]= false;
+    // public static boolean haspath(ArrayList<ArrayList<edge>> graph,int s , int d  boolean[] isvisited){
+    //     if(s==d){
+    //         return true;
+    //     }
+    //     isvisited[s]=true;
+    //     boolean ans =false;
+    //     for(int i=0;i<graph.size();i++){
+    //         for(int j =0;j<graph.get(i).size();j++){
+    //             if(isvisited[graph.get(i).get(j).v2]==false){
+    //                ans = haspath(graph,graph.get(i).get(j).v2 , d , isvisited);
+    //                if(ans == true){
+    //                    return true;
+    //                }
+    //             }
+    //         }
+    //     }
+    //     isvisited[s]= false;
 
-    }
-    public static void bipartitegraph(bfspair root , int[] isvisited){
+    // }
+    public static void bipartitegraph(int root , int[] isvisited){
         LinkedList<pairgraph> que = new LinkedList<>();
-        pairgraph temp = new pairgraph(0,1);
-        que.addLast(root);
+        pairgraph temp = new pairgraph(root,0);
+        que.addLast(temp);
         // int level=1;
 
         while(que.isEmpty()){
@@ -113,7 +113,7 @@ public static class bpspair{
         addedge(graph, 4, 5, 3);
         addedge(graph, 4, 6, 8);
         addedge(graph, 5, 6, 3);
-
-        display(graph);
+        bipartitegraph(0, new int[7]);
+        // display(graph);
     }
 }

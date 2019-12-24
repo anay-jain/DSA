@@ -142,6 +142,50 @@ public class graphlec{
         }
         System.out.println(ceilans);
     }
+    public static class pairgraph{
+        int node;
+        int clr =0 ;
+        pairgraph(int node , int clr){
+            this.node = node;
+            this.clr = clr;
+        }
+        pairgraph(){
+    
+        }
+    }
+    public static void bipartitegraph(int root , int[] isvisited){
+        LinkedList<pairgraph> que = new LinkedList<>();
+        pairgraph temp = new pairgraph(root,0);
+        que.addLast(temp);
+        // int level=1;
+
+        while(que.isEmpty()){
+            // int setno = level%2;
+            int size = que.size();
+            // while(size-->0)
+            pairgraph crntnode = que.removeFirst();
+            if(isvisited[crntnode.node]!=0){
+                if(isvisited[crntnode.node]!=crntnode.color){
+                    System.out.println("not bipartite");
+                }
+                else{
+                    System.out.println("bipartite");
+                }
+                continue;
+            }
+            isvisited[crntnode.node]=crntnode.color;
+        
+            for(edge e: graph[crntnode.node]){
+                if(isvisited[e.v2]==0){
+                    pairgraph newpair = new pairgraph(e.v2, (crntnode.color+1)%2);
+                    que.addLast(newpair);
+                }
+            }
+            
+        } 
+
+        
+        }
 public static void main(String[] args){
     for(int i =0;i<graph.length;i++){
         graph[i]= new ArrayList<edge>();
