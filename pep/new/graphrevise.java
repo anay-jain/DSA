@@ -11,10 +11,10 @@ public class graphrevise{
     }
 public static class pairgraph{
     int node;
-    int clr =0 ;
-    pairgraph(int node , int clr){
+    int color =0 ;
+    pairgraph(int node , int color  ){
         this.node = node;
-        this.clr = clr;
+        this.color= color;
     }
     pairgraph(){
 
@@ -113,7 +113,7 @@ public static class bfspair{
         addedge(graph, 4, 5, 3);
         addedge(graph, 4, 6, 8);
         addedge(graph, 5, 6, 3);
-        bipartitegraph(0, new int[7]);
+        bipartitegra(0, new int[7]);
         // display(graph);
     }
 }
