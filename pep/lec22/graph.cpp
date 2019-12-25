@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<list>
+#include<queue>
 using namespace std;
 class edge{
     public:
@@ -38,6 +39,65 @@ void display(){
 
     }
 }
+//==================================================================================================
+class bfspair{
+    public:
+    int v;
+    int wt;
+    string psf;
+    bfspair(int v , int wt , string psf){
+        this->v=v;
+        this->wt=wt;
+        this->psf=psf;
+    }
+    bfspair(){
+
+    }
+};
+
+int bfs(int src , vector<bool> isvisited){
+    list<bfspair *> que;
+    bfspair* src1 = new bfspair(src,0, src+" ");
+    que.push_back(src1);
+     int level=1;
+        int size = que.size();
+        bool iscompleted =false;
+        int count =0;
+    while(!que.empty()){
+       
+       
+            bfspair* rpair = que.front();que.pop_front();
+            if(isvisited[rpair->v]){
+                count++;
+                continue;
+            }
+            isvisited[rpair->v]=true;
+            for(edge* e : graph[rpair->v]){
+
+                if(!isvisited[e->v]){
+                bfspair* nbr = new bfspair(rpair->v , rpair->wt,rpair->psf+to_string(rpair->v));
+                que.push_back(nbr);
+                }
+            }
+            
+    }
+    return count;
+}
+    void gcchelper(vector<bool>& isvisited){
+    int cycle=0;
+    int component =0;
+    for(int i=0;i<7;i++){
+        if(!isvisited[i]){
+            cout<<i<<" ";
+        cycle = bfs(i,isvisited);
+        component++;
+        // cout<<"cycle encointered on"<<i;
+        }
+        
+    }
+    cout<<"no of comp "<<component;
+}
+
 //=======bipartite graph=============================================================================
 class partitepair{
     public:
@@ -84,6 +144,69 @@ void bipartitegraph(int src,vector<int>& isvisited){
     }
     
 }   
+//=== dikstra ==============================================================================
+vector<vector<edge *>> dgraph;
+void addedge1(int u , int v , int wt){
+    dgraph[u].push_back(new edge(v,wt));
+}
+class dpair{
+    public:
+    int vtx;
+    int pvtx;
+    int wt ;
+    int wsf;
+    string psf ="";
+    dpair(int vtx , int pvtx , int wt , int wsf , string psf){
+        this->vtx =vtx;
+        this->pvtx =pvtx;
+        this->wt=wt;
+        this->wsf=wsf;
+        this->psf =psf;
+        
+    }
+    dpair(){
+
+        }
+        bool operator<(const dpair& o) const{
+            return this->wsf>o.wsf;
+        }
+};
+void dikshtra(int src , vector<bool> isvisited){
+        priority_queue<dpair *> que;
+        dpair* src1= new dpair(src,-1,0,0,"0");
+        que.push(src1);
+        int dest=6;
+        while(!que.empty()){
+            dpair* rpair = que.top();que.pop();
+            if(isvisited[rpair->vtx]) continue;
+            if(rpair->vtx==dest){
+                cout<<rpair->psf<<" -> "<<rpair->wsf;
+            }
+            isvisited[rpair->vtx]=true;
+            if(rpair->pvtx!=-1){
+                addedge1(rpair->vtx , rpair->pvtx, rpair->wt);
+            }
+            for(edge* e : graph[rpair->vtx]){
+                dpair* nbr = new dpair(e->v, rpair->vtx , e->wt , rpair->wsf+e->wt , rpair->psf+to_string(e->v));
+                que.push(nbr);
+            }
+        }
+}
+//==== kruskal===============================================================================
+class kpair{
+    int vtx;
+    int pvtx;
+    int wt;
+    kpair(int vtx , int pvtx , int wt){
+        this->vtx = vtx;
+        this->pvtx = pvtx;
+        this->wt =wt;
+    }
+    kpair(){
+
+    }
+    
+};
 
 void solve(){
 
@@ -93,18 +216,23 @@ int main(){
     for(int i=0;i<7;i++){
         vector<edge *> ar;
         graph.push_back(ar);
+        vector<edge *> ar1;
+        dgraph.push_back(ar1);
     }
     addedge(0, 1, 10);
     addedge(1, 2, 10);
     addedge(2, 3, 40);
     addedge(0, 3, 10);
-    addedge(3, 4, 2);
+    // addedge(3, 4, 2);
     addedge(4, 5, 2);
     addedge(5, 6, 8);
     addedge(4, 6, 3);
 
     // display();
-    vector<int> isvisited(7,-1);
-    bipartitegraph(0,isvisited);
+    // vector<int> isvisited(7,-1);
+    // bipartitegraph(0,isvisited);
+    vector<bool> isvisited(7,false);
+    // dikshtra(0,isvisited);
+    gcchelper(isvisited);
     return 0;
 }
