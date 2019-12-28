@@ -13,6 +13,7 @@ public  class graph{
 
         }
     }
+    
     static ArrayList<ArrayList<edge>>  graph= new ArrayList<>();
     public static void addedge(int u , int v , int wt){
         if(u<0 || v<0 || u>graph.size() || v>graph.size())
@@ -81,6 +82,9 @@ public  class graph{
             level++;
         }
     }
+    public static void khanalgo(){
+        f
+    }
     public static void main(String args[]){
         for(int i=0;i<7;i++){
             graph.add(new ArrayList<edge>());
@@ -95,7 +99,7 @@ public  class graph{
         addedge(4,6,3);
         addedge(5,6,8);
         // display();
-        shortestpath(0,6, new boolean[7]);
+        // shortestpath(0,6, new boolean[7]);
     }
 
     
