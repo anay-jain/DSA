@@ -27,11 +27,14 @@ void display(){
         cout<<endl;
     }
 }
-// void topologicalseries(int src , vector<bool> isvisited){
+void topologicalhelper(){
+    vector<int> ishelper(graph.size());
+}
+void topologicalseries(int src , vector<bool> isvisited){
     
  
         
-// }
+}
 void khanalgo(){
     vector<int> inedge(graph.size(),0);
     for(int i=0;i<graph.size();i++){
