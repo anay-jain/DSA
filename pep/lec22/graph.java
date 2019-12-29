@@ -82,9 +82,10 @@ public  class graph{
             level++;
         }
     }
-    public static void khanalgo(){
-        f
+    public static void toplogicalseries(){
+        
     }
+   
     public static void main(String args[]){
         for(int i=0;i<7;i++){
             graph.add(new ArrayList<edge>());
