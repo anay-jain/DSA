@@ -19,7 +19,6 @@ public  class graph{
         if(u<0 || v<0 || u>graph.size() || v>graph.size())
         return;
 
-
         graph.get(u).add(new edge(v , wt));
         graph.get(v).add(new edge(u , wt));
 
@@ -82,8 +81,17 @@ public  class graph{
             level++;
         }
     }
-    public static void toplogicalseries(){
-        
+    public static void topologicalhelper(ArrayList<ArrayList<edge>> graph){
+     boolean[] isvisited = new boolean[graph.size()];
+     for(int i=0;i<graph.size();i++){
+         if(isvisited[i]==false){
+             toplogicalseries(i);;
+         }
+     }
+    }
+    public static void toplogicalseries(int src){
+        // dfs
+        for(int i=0;i<graph.get(src);i++)
     }
    
     public static void main(String args[]){
