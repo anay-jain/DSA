@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Vector;
 public  class graph{
     public static class edge{
         int v;
@@ -20,7 +21,7 @@ public  class graph{
         return;
 
         graph.get(u).add(new edge(v , wt));
-        graph.get(v).add(new edge(u , wt));
+        // graph.get(v).add(new edge(u , wt));
 
     }   
     public static class bfspair{
@@ -83,15 +84,42 @@ public  class graph{
     }
     public static void topologicalhelper(ArrayList<ArrayList<edge>> graph){
      boolean[] isvisited = new boolean[graph.size()];
+     boolean[] cycle  = new boolean[graph.size()];
+     ArrayList<Integer> stck = new ArrayList<>();
      for(int i=0;i<graph.size();i++){
          if(isvisited[i]==false){
-             toplogicalseries(i);;
+            if(toplogicalseries(i,isvisited, cycle, stck)== true){
+                System.out.println("cycle");
+                return ;
+            }
          }
      }
+     for(Integer e : stck){
+         System.out.print(e+"->");
+     }
+
     }
-    public static void toplogicalseries(int src){
+    public static boolean toplogicalseries(int src , boolean[] isvisited,boolean[] cycle,ArrayList<Integer>stck){
         // dfs
-        for(int i=0;i<graph.get(src);i++)
+        isvisited[src]=true;
+        
+        boolean res = false;
+        cycle[src]=true;
+        for(int i=0;i<graph.get(src).size();i++){
+            int nbr = graph.get(src).get(i).v;
+            if(isvisited[nbr]==false){
+                res = res || toplogicalseries(nbr, isvisited,cycle,stck);
+
+            }
+            if(cycle[nbr]==true){
+                // System.out.println(" it contains cycle");
+                return true; // agar upar laagte to ye kabhi access ni hota kyuki false call kabhi agti hi ni
+            }
+        }
+        // System.out.print(src+" ->"); ratther than priniting i am sotring it in stack
+        stck.add(src);
+        cycle[src]=false;
+        return res;
     }
    
     public static void main(String args[]){
@@ -99,14 +127,37 @@ public  class graph{
             graph.add(new ArrayList<edge>());
         }
 
-        addedge(0,3,10);
-        addedge(0,1,10);
-        addedge(1,2,10);
-        addedge(2,3,40);
-        addedge(3,4,2);
-        addedge(4,5,2);
-        addedge(4,6,3);
-        addedge(5,6,8);
+        // addedge(0,3,10);
+        // addedge(0,1,10);
+        // addedge(1,2,10);
+        // addedge(2,3,40);
+        // addedge(3,4,2);
+        // addedge(4, 3, 8);
+        // addedge(4,5,2);
+        // addedge(4,6,3);
+        // addedge(5,6,8);
+
+    // graph 2 =======================================================    
+        addedge(0, 1, 1);
+        addedge(0, 5, 1);
+        addedge(4, 5, 1);
+        addedge(4, 6, 1);
+        addedge(1, 2, 2);
+        addedge(2, 3, 1);
+        addedge(6, 3, 1);
+        // addedge(3, 1, 21);
+
+    // graph 3 =========================================================
+    // addedge(0, 3, 1);
+    // addedge(0, 2, 1);
+    // addedge(1, 2, 1);
+    // addedge(1, 5, 1);
+    // addedge(3, 4, 1);
+    // addedge(4, 6, 1);
+    // addedge(5, 6, 1);
+
+        
+        topologicalhelper(graph);
         // display();
         // shortestpath(0,6, new boolean[7]);
     }
