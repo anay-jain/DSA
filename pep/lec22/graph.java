@@ -121,6 +121,7 @@ public  class graph{
         cycle[src]=false;
         return res;
     }
+    public static khanalgo
    
     public static void main(String args[]){
         for(int i=0;i<7;i++){
