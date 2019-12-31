@@ -77,7 +77,33 @@ public class dynamic{
            }
         return memo[sr][sc];
        }
-    public static void main(String[] args){
+       public static int multimp( int er , int ec , int[][] dp){
+           dp[er-1][ec-1]=1;
+          
+               for(int i=er-1;i>=0;i--){
+                for(int j=ec-1;j>=0;j--){
+                    for(int jumps =1;jumps<er;jumps++){
+                    if(j+jumps<=ec)
+                    dp[i][j]+=dp[i][j+jumps];
+                    if(i+jumps<=er)
+                    dp[i][j]+=dp[i+jumps][j];
+                    if(i+jumps<=er&& j+jumps<=ec)
+                    dp[i][j]+=dp[i+jumps][j+jumps];
+                }
+               }
+           }
+           return dp[0][0];
+       }
+       public static void display(int[][] arr ){
+           for(int i=0;i<arr.length;i++){
+               for(int j=0;j<arr[0].length;j++){
+                   System.out.print(arr[i][j]+" ");
+
+               }
+               System.out.println(" ");
+           }
+       }
+       public static void main(String[] args){
         // int[][] idn={{1,1},{1,0}};
         // int[][] newans  = apower2(idn,5);
         // System.out.println(newans[0][1]);
@@ -86,10 +112,12 @@ public class dynamic{
         // memo[0]=1;
         // System.out.println(target,jumpstabu(5));
         // System.out.println(targetjumpsmemo(memo , 5));
-        int er =1000,ec=1000;
+        int er =3,ec=3;
         int[][] memo = new int[er+1][ec+1];
-       System.out.println( mp_memo(0, 0, er, ec, memo));
-        System.out.println(callsdp+ " " + classaddhidp+" and" + callsrec);
+    //    System.out.println( mp_memo(0, 0, er, ec, memo));
+        // System.out.println(callsdp+ " " + classaddhidp+" and" + callsrec);
+        System.out.println(multimp( er, ec, memo));
+        display(memo);
     }
     
 }

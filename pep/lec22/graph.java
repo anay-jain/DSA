@@ -121,7 +121,46 @@ public  class graph{
         cycle[src]=false;
         return res;
     }
-    public static khanalgo
+    public static void khanalgo(){
+        // incoming edge vector
+        LinkedList<Integer>que = new LinkedList<>();
+       int[] inedge = new int[graph.size()];
+        for(int i=0;i<graph.size();i++){
+            for(int j=0;j<graph.get(i).size();j++){
+                int nbr = graph.get(i).get(j).v;
+                    inedge[nbr]++;
+            }
+            
+        }
+        for(int i=0;i<graph.size();i++){
+            if(inedge[i]==0){
+                que.addLast(i);
+            }
+        }
+        while(!que.isEmpty()){
+            int rpair = que.remove();
+            System.out.print(rpair+" ");
+            for(int i=0;i<graph.get(rpair).size();i++){
+                int nbr = graph.get(rpair).get(i).v;
+                inedge[nbr]--;
+                if(inedge[nbr]==0){
+                    que.addLast(nbr);
+                    
+                }
+            }
+        }
+        }
+        public static void cosaraju_topologicalhelper(ArrayList<ArrayList<Integer>> vertex){
+            boolean[] vis = new boolean[vertex.size()];
+            boolean[] cycle =new boolean[vertex.size()];
+            boolean res = false;
+            for(int i=0;i<vertex.size();i++){
+                
+            }
+        }
+        public static int[] cosaraju_topological(ArrayList<ArrayList<Integer>> vertex){
+            
+        }
    
     public static void main(String args[]){
         for(int i=0;i<7;i++){
@@ -158,9 +197,12 @@ public  class graph{
     // addedge(5, 6, 1);
 
         
-        topologicalhelper(graph);
+        // topologicalhelper(graph);
+        // khanalgo();
         // display();
         // shortestpath(0,6, new boolean[7]);
+        ArrayList<ArrayList<Integer>> vertex =new ArrayList<>();
+
     }
 
     
