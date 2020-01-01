@@ -1,6 +1,6 @@
 import java.util.Scanner;
 public class dynamic{
-
+    
     static int[][] mul(int[][] F , int [][] M){
         int x =  F[0][0]*M[0][0] + F[0][1]*M[1][0]; 
         int y =  F[0][0]*M[0][1] + F[0][1]*M[1][1]; 
@@ -79,7 +79,8 @@ public class dynamic{
        }
        public static int multimp( int er , int ec , int[][] dp){
            dp[er-1][ec-1]=1;
-          
+          // we handled 4 areas by adding an extra dimension so we dont need 4 areas
+        
                for(int i=er-1;i>=0;i--){
                 for(int j=ec-1;j>=0;j--){
                     for(int jumps =1;jumps<er;jumps++){
@@ -94,6 +95,13 @@ public class dynamic{
            }
            return dp[0][0];
        }
+       public static void input(int[][] arr){
+        for(int i=0;i<arr.length;i++){
+            for(int j=0;j<arr[0].length;j++){
+                System.out.println(":s");
+            }
+        }
+       }
        public static void display(int[][] arr ){
            for(int i=0;i<arr.length;i++){
                for(int j=0;j<arr[0].length;j++){
@@ -103,6 +111,32 @@ public class dynamic{
                System.out.println(" ");
            }
        }
+       public static int costinmp(int[][] arr){
+        int er = arr.length-1 , ec=arr[0].length-1;
+        int[][] dp = new int[arr.length][arr[0].length];
+        for(int i=arr.length-1;i>=0;i--){
+            for(int j =arr[0].length-1;j>=0;j--){
+                if(i==er && j==ec){
+                    dp[i][j]=arr[er][ec];
+                }
+                else if(i==er){
+                    dp[i][j]=dp[i][j+1]+arr[i][j];
+                }
+                else if(j==ec){
+                    dp[i][j]=dp[i+1][j]+arr[i][j];
+                }
+                else{
+                    dp[i][j]= arr[i][j]+ Math.min(dp[i+1][j],dp[i][j+1]);
+                }
+                
+            }
+
+        }
+        display(dp);
+        return dp[0][0];
+        // System.out.println(dp[0][0]);
+       }
+
        public static void main(String[] args){
         // int[][] idn={{1,1},{1,0}};
         // int[][] newans  = apower2(idn,5);
@@ -112,12 +146,14 @@ public class dynamic{
         // memo[0]=1;
         // System.out.println(target,jumpstabu(5));
         // System.out.println(targetjumpsmemo(memo , 5));
-        int er =3,ec=3;
+        int er =4,ec=4;
         int[][] memo = new int[er+1][ec+1];
     //    System.out.println( mp_memo(0, 0, er, ec, memo));
         // System.out.println(callsdp+ " " + classaddhidp+" and" + callsrec);
-        System.out.println(multimp( er, ec, memo));
-        display(memo);
+        int[][] arr= {{2,3,0,4},{0,6,5,2},{8,0,3,7},{2,0,4,2}};
+        System.out.println(costinmp(arr));
+        // System.out.println(multimp( er, ec, memo));
+        // display(memo);
     }
     
 }

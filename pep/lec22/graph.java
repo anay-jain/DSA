@@ -150,17 +150,39 @@ public  class graph{
             }
         }
         }
-        public static void cosaraju_topologicalhelper(ArrayList<ArrayList<Integer>> vertex){
-            boolean[] vis = new boolean[vertex.size()];
-            boolean[] cycle =new boolean[vertex.size()];
-            boolean res = false;
-            for(int i=0;i<vertex.size();i++){
-                
-            }
-        }
-        public static int[] cosaraju_topological(ArrayList<ArrayList<Integer>> vertex){
+        // public static void cosaraju_topologicalhelper(){
+        //     boolean[] vis = new boolean[vertex.size()];
+        //     boolean[] cycle =new boolean[vertex.size()];
+        //     boolean res = false;
+        //     for(int i=0;i<graph.size();i++){
+        //         if(vis[i]==false)
+        //         cosaraju_topological(i,vis , cycle );
+        //         // if(res==true){
+        //         //     break;
+        //         // }
+        //     }
+        // }
+        // public static boolean cosaraju_topological(int src , boolean[] vis , boolean[] cycle){
+        //     // dfs approach 
+        //     cycle[src]=true;
+        //     boolean res = false;
+        //     vis[src]=true;
+        //     for(int i=0;i<graph.get(src).size();i++){
+        //         int nbr = graph.get(src).get(i).v;
+        //         if(cycle[nbr]==true)
+        //         return true;
+        //         if(vis[nbr]==false)
+        //         res = res || cosaraju_topological(nbr, vis, cycle);
+        //         if(res==true){
+        //             return true;
+        //         }
+        //     }
+
+        //     cycle[src]=false;
+        //     return res;
+
             
-        }
+        // }
    
     public static void main(String args[]){
         for(int i=0;i<7;i++){
