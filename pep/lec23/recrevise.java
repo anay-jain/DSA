@@ -17,36 +17,75 @@ public class recrevise{
         return finalans;
     }
   static int max=0;
-    public static ArrayList<String> mazepath(int sr , int sc , int er , int ec,int count, boolean[][] isvisited){
-        if(sr==er && sr == ec){
-            ArrayList<String> base = new ArrayList<>();
-            max = Math.max(max,count);
-            base.add("");
-            return base;
-        }
-        isvisited[sr][sc]=true;
-        ArrayList<String> myresult = new ArrayList<>();
-        for(int i=0;i<cord.length;i++){
-            int x = sr + cord[i][0];
-            int y = sc+ cord[i][1];
+    // public static ArrayList<String> mazepath(int sr , int sc , int er , int ec,int count, boolean[][] isvisited){
+    //     if(sr==er && sr == ec){
+    //         ArrayList<String> base = new ArrayList<>();
+    //         max = Math.max(max,count);
+    //         base.add("");
+    //         return base;
+    //     }
+    //     isvisited[sr][sc]=true;
+    //     ArrayList<String> myresult = new ArrayList<>();
+    //     for(int i=0;i<cord.length;i++){
+    //         int x = sr + cord[i][0];
+    //         int y = sc+ cord[i][1];
             
-            if(x>=0 && y>=0 && x<=er && y<=ec && isvisited[x][y]==false){
-                ArrayList<String>  recans = mazepath(x, y, er, ec,count+1, isvisited);
-                for(String s: recans){
-                    myresult.add(dir[i]+s);
-                }
-            }
-        }
-        isvisited[sr][sc]=false;
-        return myresult;
-    }
+    //         if(x>=0 && y>=0 && x<=er && y<=ec && isvisited[x][y]==false){
+    //             ArrayList<String>  recans = mazepath(x, y, er, ec,count+1, isvisited);
+    //             for(String s: recans){
+    //                 myresult.add(dir[i]+s);
+    //             }
+    //         }
+    //     }
+    //     isvisited[sr][sc]=false;
+    //     return myresult;
+    // }
     static int[][] cord = {{0,1},{1,0},{-1,0},{0,-1}};
-    static String[] dir = {"R","D","U","L"};
-    
+    static int coin_Change_uniqPer(int target, int[] coins ,String ans , boolean[] vis){
+        if(target==0){
+            System.out.println(ans);
+            return 1;
+            // ArrayList<String> base = new ArrayList<>();
+            // // base.add("");
+            // // return base;
+        }
+        if(target<0){
+            return 0;
+        }
+        int count=0;
+        for(int i =0;i<coins.length;i++){
+            vis[i]=true;
+            count+=coin_Change_uniqPer(target-coins[i], coins, ans+" "+coins[i],vis);
+            vis[i]=false;
+            }
+            return count;
+    }
+    public static int coins_target(int[] coins , int idx , int currentarget , int target , String ans){
+        if(idx==coins.length && currentarget==target){
+            System.out.println(ans);
+            return 1;
+        }
+        if(coins.length<=idx ){
+            return 0;
+        }
+        if(target<currentarget){
+            return 0;
+        }
+        int count=0;
+
+        count+=coins_target(coins, idx, currentarget+coins[idx], target, ans+""+coins[idx]);
+        count+=coins_target(coins, idx+1, currentarget, target, ans);
+
+        return count;
+
+    }
     public static void main(String[] args){
-        boolean[][] isvisited = new boolean[5][5];
-        System.out.println(mazepath(0, 0, 4, 4 ,0, isvisited));
-        System.out.println(max);
+        // boolean[][] isvisited = new boolean[5][5];
+        // System.out.println(mazepath(0, 0, 4, 4 ,0, isvisited));
+        // System.out.println(max);
             // System.out.println(subseq("abc"));
+            int coins[]= {2,3,5,7};
+                coins_target(coins, 0, 0, 10, "");
+            // System.out.println(coin_Change_uniqPer(10, coins, "", new boolean[coins.length]));
     }
 }
