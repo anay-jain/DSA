@@ -173,6 +173,28 @@ public class recrevise{
         }
         return count;
     }
+
+     public static int nqueencombieff(boolean[][] box , int row, int qnf , boolean[] vis,String ans){
+        if(qnf==0 || row==box.length){
+            if(qnf==0){
+                System.out.println(ans);
+                return 1;
+            }
+            return 0;
+        }
+        int count=0;
+        for(int col =0;col<box[0].length;col++){
+            
+            if(issafe(box, row, col)){
+                box[row][col]=true;
+                // System.out.println("fe");
+                count+=nqueencombieff(box, row+1, qnf-1, vis, ans+"b("+row+","+col+") ");
+                box[row][col]=false;
+            }
+        }
+        return count;
+    }
+    public static int nqueenbest()
     public static void main(String[] args){
         // boolean[][] isvisited = new boolean[5][5];
         // System.out.println(mazepath(0, 0, 4, 4 ,0, isvisited));
@@ -182,10 +204,10 @@ public class recrevise{
             //     coins_target(coins, 0, 0, 10, "");
             // System.out.println(coin_Change_uniqPer(10, coins, "", new boolean[coins.length]));
             boolean[][] box = new boolean[4][4];
-            System.out.println(nqueenpermu(box, 0, 4, new boolean[box.length],  ""));
-        
+            // System.out.println(nqueenpermu(box, 0, 4, new boolean[box.length],  ""));
+            System.out.println(nqueencombieff(box, 0, 4, new boolean[box.length], ""));
             // queencombi2d(0, 3, 0,3, "");
-    
+            
     
         }
 }
