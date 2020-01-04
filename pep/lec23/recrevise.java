@@ -194,7 +194,59 @@ public class recrevise{
         }
         return count;
     }
-    public static int nqueenbest()
+    public static boolean issafebits(int r , int c ,int row , int col , int cdiag , int adiag , int colsize){
+        int rowmask =0;
+        int colmask =0;
+        int cdiagmask =0;
+        int adiagmask =0;
+        rowmask = 1<<c;
+        colmask = 1<<r;
+        cdiagmask = 1<< (r-c+colsize-1);
+        adiagmask =1<<(r+c);
+
+        if((row & rowmask)!=0 ||  (col & colmask)!=0 || (cdiag & cdiagmask)!=0 || (adiag & adiagmask)!=0 ){
+            return false;
+        }
+        return true;
+    }
+    public static int nqueenbestbits(int rrow , int row , int col , int cdiag , int adiag , int idx ,int tnq,  int colsize, String ans){
+    if(tnq==0 || rrow==colsize){
+        if(tnq==0){
+            System.out.println(ans);
+            return 1;
+        }
+        return 0;
+    }        
+    int rowmask =0;
+    int colmask =0;
+    int cdiagmask =0;
+    int adiagmask =0;
+    for(int c=0;c<colsize;c++){
+       
+        rowmask = 1<<c;
+        colmask = 1<<rrow;
+        cdiagmask = 1<< (rrow-c+colsize-1);
+        adiagmask =1<<(rrow+c);
+
+        if(issafebits(rrow, c, row, col, cdiag, adssssssiag, colsize)){
+
+            count+=nqueenbestbits(rrow+1,row, c, cdiag, adiag, idx, tnq, colsize, ans);
+
+
+        }
+    }
+    return count;
+    }
+    public static boolean sudokuissafe(int[][] box, int num , int row , int col){
+        for(int c=0;c<9;c++){
+            if(num==box[row][c]) return false;
+        }
+        for(int r=0;r<9;r++){
+            if(num==box[r][col]) return false;
+        }
+        int xrow = (row/3)*3;
+        int                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+    }
     public static void main(String[] args){
         // boolean[][] isvisited = new boolean[5][5];
         // System.out.println(mazepath(0, 0, 4, 4 ,0, isvisited));
