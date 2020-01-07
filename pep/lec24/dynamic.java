@@ -130,13 +130,52 @@ public class dynamic{
                 }
                 
             }
+         
+        // System.out.println(dp[0][0]);
+       }   display(dp);
+        return dp[0][0];
 
         }
-        display(dp);
-        return dp[0][0];
-        // System.out.println(dp[0][0]);
-       }
-
+        public static void minimumjumps(int[] arr ){
+            int[] memo = new int[arr.length];
+            for(int i=arr.length-2;i>=0;i--){
+                int min=10000;
+                if(arr[i]==0){
+                    memo[i]=10000;
+                }
+                for(int j=i+1;j<arr[i]+i+1 && j<arr.length;j++){
+                //    System.err.println("f");
+                   
+                        min = Math.min(memo[j], min);
+                    
+                }
+                memo[i]=min+1;
+                System.out.print(memo[i]+" ");
+                
+            }
+            System.out.println(memo[0]);
+        }
+        
+        public static int longestpalisubs(String str){
+            int[][] memo = new int[str.length()][str.length()];
+            for(int gap=0;gap<str.length();gap++){
+                for(int i=0,j=gap;j<str.length();i++,j++){
+                    if(gap==0){
+                        memo[i][j]=1;
+                    }
+                    else if(gap==1 && str.charAt(i)==str.charAt(j)){
+                        memo[i][j]=2;
+                    }
+                    else if(str.charAt(i)==str.charAt(j)){
+                        memo[i][j]  
+                    }
+                    else{
+                       memo[i][j]= Math.max(memo[i+1][j],memo[i][j-1])+2;
+                    }
+                }
+            }
+            return memo[0][str.length()-1];
+        }
        public static void main(String[] args){
         // int[][] idn={{1,1},{1,0}};
         // int[][] newans  = apower2(idn,5);
@@ -146,14 +185,18 @@ public class dynamic{
         // memo[0]=1;
         // System.out.println(target,jumpstabu(5));
         // System.out.println(targetjumpsmemo(memo , 5));
-        int er =4,ec=4;
-        int[][] memo = new int[er+1][ec+1];
+        // int er =4,ec=4;
+        // int[][] memo = new int[er+1][ec+1];
     //    System.out.println( mp_memo(0, 0, er, ec, memo));
         // System.out.println(callsdp+ " " + classaddhidp+" and" + callsrec);
-        int[][] arr= {{2,3,0,4},{0,6,5,2},{8,0,3,7},{2,0,4,2}};
-        System.out.println(costinmp(arr));
+        // int[][] arr= {{2,3,0,4},{0,6,5,2},{8,0,3,7},{2,0,4,2}};
+        // System.out.println(costinmp(arr));
         // System.out.println(multimp( er, ec, memo));
-        // display(memo);
+        // // display(memo);
+        // int[] arr1 = {1,3,0,4,0,0,2,1,1,0};
+        // minimumjumps(arr1);
+        System.out.println(longestpalisubs("babad"));
+        
     }
     
 }
