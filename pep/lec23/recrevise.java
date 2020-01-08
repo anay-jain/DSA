@@ -187,41 +187,81 @@ public class recrevise{
         }
         return true;
     }
-    public static int nqueenbestbits(int rrow , int row , int col , int cdiag , int adiag , int idx ,int tnq,  int colsize, String ans){
-    if(tnq==0 || rrow==colsize){
-        if(tnq==0){
-            System.out.println(ans);
-            return 1;
+    // trow -> total row
+    // aur jinka hme track kar rkhana hai vo hm attribute mei lenge
+    // jese row , col , cdiag , adiag
+    static int rowarr=0;
+    static int colarr=0;
+    static int cdiagarr =0;
+    static int adiagarr=0;
+// combi method , no need of vis
+    public static int nqueenbits(int row , int trow ,int tcol, int tnq , String ans){
+        if(row==trow){
+            if(tnq==0){
+                System.out.println(ans);
+                return 1;
+            }
+            return 0;
+
         }
-        return 0;
-    }        
-    int rowmask =0;
-    int colmask =0;
-    int cdiagmask =0;
-    int adiagmask =0;
-    int count=0;
-    for(int c=0;c<colsize;c++){
+        int count=0;
+        // har row ke lie 4 col ki calls niklegi
+        for(int c=0;c<tcol;c++){
+            int rowmask = 1<<row;
+            int colmask = 1<<c;
+            int cdiagmask =1<<(row+c-1);
+            int adiadmask = 1<<(tcol-1 + row-c);
+            if((rowarr & rowmask)==0 && (colarr & colmask)==0 && (cdiagarr & cdiagmask)==0 && (adiagarr & adiadmask) ==0){ 
+                rowarr ^= rowmask;
+                colarr ^= colmask;
+                cdiagarr ^= cdiagmask;
+                adiagarr ^= adiadmask;
+                count+=nqueenbits(row+1, trow, tcol, tnq-1, ans+"Row"+row+"Col"+c+"Q"+tnq);
+                rowarr ^= rowmask;
+                colarr ^= colmask;
+                cdiagarr ^= cdiagmask;
+                adiagarr ^= adiadmask;
+        
+        }
+    
+    }
+        return count;
+    }
+    // public static int nqueenbestbits(int rrow , int row , int col , int cdiag , int adiag , int idx ,int tnq,  int colsize, String ans){
+    // if(tnq==0 || rrow==colsize){
+    //     if(tnq==0){
+    //         System.out.println(ans);
+    //         return 1;
+    //     }
+    //     return 0;
+    // }        
+    // int rowmask =0;
+    // int colmask =0;
+    // int cdiagmask =0;
+    // int adiagmask =0;
+    // int count=0;
+    // for(int c=0;c<colsize;c++){
        
-        rowmask = 1<<c; // not needed in optimized version
-        colmask = 1<<rrow;
-        cdiagmask = 1<< (rrow-c+colsize-1);
-        adiagmask =1<<(rrow+c);
+    //     rowmask = 1<<c; // not needed in optimized version
+    //     colmask = 1<<rrow;
+    //     cdiagmask = 1<< (rrow-c+colsize-1);
+    //     adiagmask =1<<(rrow+c);
 
-        // if(issafebits(rrow, c, row, col, cdiag, adssssssiag, colsize)){ not needed
-            if((row & rowmask)==0 &&  (col & colmask)==0 && (cdiag & cdiagmask)==0 && (adiag & adiagmask)==0 ){
-                // this if gives us surity that we  can use XOR as there will be 0 at kth pos
-                // if it enters into if condition
-                // for xor condition we have to know that whehter kth is  set or not
+    //     // if(issafebits(rrow, c, row, col, cdiag, adssssssiag, colsize)){ not needed
+    //         if((row & rowmask)==0 &&  (col & colmask)==0 && (cdiag & cdiagmask)==0 && (adiag & adiagmask)==0 ){
+    //             // this if gives us surity that we  can use XOR as there will be 0 at kth pos
+    //             // if it enters into if condition
+    //             // for xor condition we have to know that whehter kth is  set or not
 
-            count+=nqueenbestbits(rrow+1,row, c, cdiag, adiag, idx, tnq, colsize, ans);
+    //         count+=nqueenbestbits(rrow+1,row, c, cdiag, adiag, idx, tnq, colsize, ans);
 
 
-        }
+    //     }
          
 
-    }
-    return count;
-    }
+    // }
+    // return count;
+    // }
     // SEND MORE MONEY
     static String str1 ="send";
     static String str2 = "more";
@@ -319,6 +359,10 @@ public class recrevise{
 
         return count;
     }
+    
+    public static int sudoku(){
+
+    }
 
  public static void crypto(){
     String str = str1+str2+str3;
@@ -352,6 +396,8 @@ public class recrevise{
         // crypto();
         // System.out.println(permutation("abc", ""));
         // System.out.println(permutationwithoutrep("aba", ""));
-        System.out.println(equiset(0, 0, 0, "", ""));
+        // System.out.println(equiset(0, 0, 0, "", ""));
+        System.out.println(   nqueenbits(0, 4, 4, 4, ""));
+     
     }
 }
