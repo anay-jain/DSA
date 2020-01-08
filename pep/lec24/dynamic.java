@@ -167,7 +167,7 @@ public class dynamic{
                         memo[i][j]=2;
                     }
                     else if(str.charAt(i)==str.charAt(j)){
-                        memo[i][j]  
+                          
                     }
                     else{
                        memo[i][j]= Math.max(memo[i+1][j],memo[i][j-1])+2;
@@ -176,6 +176,16 @@ public class dynamic{
             }
             return memo[0][str.length()-1];
         }
+        public static int singlepairup(int n){
+            int[] memo = new int[n+1];
+            memo[0]=1;memo[1]=1;
+            for(int i=2;i<memo.length;i++){
+                memo[i]=memo[i-1]+memo[i-2]*(i+1);
+                // System.out.print(memo[i]+" ");
+            }
+            return memo[n];
+        }
+        
        public static void main(String[] args){
         // int[][] idn={{1,1},{1,0}};
         // int[][] newans  = apower2(idn,5);
@@ -195,7 +205,8 @@ public class dynamic{
         // // display(memo);
         // int[] arr1 = {1,3,0,4,0,0,2,1,1,0};
         // minimumjumps(arr1);
-        System.out.println(longestpalisubs("babad"));
+        // System.out.println(longestpalisubs("babad"));
+        System.out.println(singlepairup(5));
         
     }
     

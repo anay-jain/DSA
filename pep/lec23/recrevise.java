@@ -17,29 +17,7 @@ public class recrevise{
         return finalans;
     }
   static int max=0;
-    // public static ArrayList<String> mazepath(int sr , int sc , int er , int ec,int count, boolean[][] isvisited){
-    //     if(sr==er && sr == ec){
-    //         ArrayList<String> base = new ArrayList<>();
-    //         max = Math.max(max,count);
-    //         base.add("");
-    //         return base;
-    //     }
-    //     isvisited[sr][sc]=true;
-    //     ArrayList<String> myresult = new ArrayList<>();
-    //     for(int i=0;i<cord.length;i++){
-    //         int x = sr + cord[i][0];
-    //         int y = sc+ cord[i][1];
-            
-    //         if(x>=0 && y>=0 && x<=er && y<=ec && isvisited[x][y]==false){
-    //             ArrayList<String>  recans = mazepath(x, y, er, ec,count+1, isvisited);
-    //             for(String s: recans){
-    //                 myresult.add(dir[i]+s);
-    //             }
-    //         }
-    //     }
-    //     isvisited[sr][sc]=false;
-    //     return myresult;
-    // }
+ 
     static int[][] cord = {{0,1},{1,0},{-1,0},{0,-1}};
     static int coin_Change_uniqPer(int target, int[] coins ,String ans , boolean[] vis){
         if(target==0){
@@ -286,29 +264,79 @@ public class recrevise{
         }
         return count;
     }
-    
-    public static int placeintwoset(int sumarr1 , int sumarr2, int idx , int[] arr){
-        if(idx==arr.length)
-        if(sumarr1==sumarr2){
-        // if(countnum(arr1)==countnum(arr2)){
+    public static int permutation(String ques , String ans){
+        if(ques.length()==0){
+            System.out.println(ans);
             return 1;
         }
         int count=0;
-        count+=placeintwoset(sumarr1+arr[idx] , sumarr2 , idx+1 , arr);
-        count+=placeintwoset(sumarr1, sumarr2+arr[idx], idx+1, arr);
+        
+        for(int i=0;i<ques.length();i++){
+            String nstr = ques.substring(0, i)+ques.substring(i+1);
+            count+=permutation(nstr,ans+ques.charAt(i));
+        }
+    
+    return count;
+    }
+    // if vis in attribute then -> 1 rec call par frq pdta hai
+    // if vis in preorder ek level par frq padta hai
+    public static int permutationwithoutrep(String ques , String ans){
+        if(ques.length()==0){
+            System.out.println(ans);
+            return 1;
+        }
+        int count=0;
+        
+        int seen =0;
+        
+        for(int i=0;i<ques.length();i++){
+            String nstr = ques.substring(0, i)+ques.substring(i+1);
+            int k = ques.charAt(i) -'a';
+            int mask=1<<k;
+            if((seen & mask) ==0){
+                seen|=mask;
+            count+=permutationwithoutrep(nstr,ans+ques.charAt(i));
+            }
+            
+        }
+    
+    return count;
+    
+    
+    }
+    static int[] arr  = {10,20,30,40,50,60,70,80};
+    public static int equiset(int idx , int sum1 , int sum2 , String set1 , String set2){
+        if(idx == arr.length ){ 
+            if(sum1==sum2){
+            System.out.println(set1+" = "+set2);
+            return 1;
+            }
+            return 0;
+        }
+        int count=0;
+        count+=equiset(idx+1, sum1+arr[idx], sum2, set1+ " "+arr[idx], set2);
+        count+=equiset(idx+1, sum1, sum2+arr[idx], set1, set2+" "+arr[idx]);
+
         return count;
     }
 
-    // public static boolean sudokuissafe(int[][] box, int num , int row , int col){
-    //     for(int c=0;c<9;c++){
-    //         if(num==box[row][c]) return false;
-    //     }
-    //     for(int r=0;r<9;r++){
-    //         if(num==box[r][col]) return false;
-    //     }
-    //     int xrow = (row/3)*3;
-    //     int 
-    // }
+ public static void crypto(){
+    String str = str1+str2+str3;
+    int[] freqmap = new int[26];
+    for(int i=0;i<str.length();i++){
+        freqmap[str.charAt(i)-'a']++;
+    }
+    String ans="";
+    for(int i=0;i<26;i++){
+        if(freqmap[i]!=0){
+            
+            ans=ans+ (char)(i+'a');
+        }
+    }
+    
+    System.out.println(ans);
+    System.out.println(cryptopermu(ans, 0));
+  }
     public static void main(String[] args){
         // boolean[][] isvisited = new boolean[5][5];
         // System.out.println(mazepath(0, 0, 4, 4 ,0, isvisited));
@@ -321,19 +349,9 @@ public class recrevise{
             // System.out.println(nqueenpermu(box, 0, 4, new boolean[box.length],  ""));
             // System.out.println(nqueencombieff(box, 0, 4, new boolean[box.length], ""));
             // queencombi2d(0, 3, 0,3, "");
-        String str = str1+str2+str3;
-        int[] freqmap = new int[26];
-        for(int i=0;i<str.length();i++){
-            freqmap[str.charAt(i)-'a']++;
-        }
-        String ans="";
-        for(int i=0;i<26;i++){
-            if(freqmap[i]!=0){
-                
-                ans=ans+ (char)(i+'a');
-            }
-        }
-        System.out.println(ans);
-        System.out.println(cryptopermu(ans, 0));
+        // crypto();
+        // System.out.println(permutation("abc", ""));
+        // System.out.println(permutationwithoutrep("aba", ""));
+        System.out.println(equiset(0, 0, 0, "", ""));
     }
 }
