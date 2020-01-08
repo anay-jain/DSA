@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 public class recrevise{
     public static ArrayList<String> subseq(String s){
         if(s.length()==0){
@@ -359,10 +359,32 @@ public class recrevise{
 
         return count;
     }
-    
-    public static int sudoku(){
+    // public static boolean issafesudoku(int[][] board , int num , int x , int y){
+    //     for(int i =0;i<board.length;i++){
 
-    }
+    //     }
+    // }
+
+    // public static int sudoku(int[][] board , int idx){
+    //     if(idx==board.length*board[0].length){
+    //     for(int i=0;i<board.length;i++){
+    //         for(int j =0;j<board[0].length;j++){
+    //             System.out.print(board[i][j]+" ");
+    //         }
+    //         System.out.println("");
+    //     }
+    //      return 1;
+    //     }
+    //    int count=0;
+    //     for(int num=1;num<10;num++){
+    //         if(board[i][j]==0 && issafesudoku(board , num , x ,y)){
+
+    //         }
+            
+    //     }
+    //    return count;
+
+    // }
 
  public static void crypto(){
     String str = str1+str2+str3;
@@ -381,6 +403,58 @@ public class recrevise{
     System.out.println(ans);
     System.out.println(cryptopermu(ans, 0));
   }
+  static String[] dict={"i" , "like","sam","samsung","man","go","mango","ice","cream","and","icecream"};
+  public static ArrayList<String>word_arr = new ArrayList<>(Arrays.asList(dict));
+  // have to inculde arrays
+  static String sentence ="ilikeicecreamandmango";
+  public static boolean ispresent(String ans){
+      if(word_arr.contains(ans)){
+            //   System.out.println(ans);
+              return true;
+          }
+      
+      return false;
+  }
+  
+  public static int wordbreak(String sen,String word ,  String ans){
+      if(sen.length()==0){
+          if(word.length()==0){
+              System.out.println(ans);
+              return 1;
+          }
+          
+          return 0;
+          
+      }
+      int count=0;
+// 
+    //   for(int i=1;i<sen.length();i++){
+        word=word+sen.charAt(0);
+        if(ispresent(word)){
+            // System.out.println(word);
+            count+=wordbreak(sen.substring(1), "", ans+word+" ");
+        }
+        count+=wordbreak(sen.substring(1), word, ans);
+    //   }
+
+      return count;
+
+      }
+    public static boolean canHPword(char[][] board , int x, int y , String word ){
+        if(y>=0){
+            if(y==0 || board[x][y-1]=='+'){
+                if(y+word.length()<board.length){
+                    if(y==board.length-1 || board[x][y+1]=='+'){
+                        return true;
+                    }
+                }
+
+            }
+
+        }
+        return false;
+    }
+    
     public static void main(String[] args){
         // boolean[][] isvisited = new boolean[5][5];
         // System.out.println(mazepath(0, 0, 4, 4 ,0, isvisited));
@@ -397,7 +471,8 @@ public class recrevise{
         // System.out.println(permutation("abc", ""));
         // System.out.println(permutationwithoutrep("aba", ""));
         // System.out.println(equiset(0, 0, 0, "", ""));
-        System.out.println(   nqueenbits(0, 4, 4, 4, ""));
-     
+        // System.out.println(   nqueenbits(0, 4, 4, 4, ""));
+        wordbreak(sentence, "", "");
+   
     }
 }
