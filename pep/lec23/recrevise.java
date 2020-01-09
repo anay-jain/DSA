@@ -359,33 +359,97 @@ public class recrevise{
 
         return count;
     }
-    // public static boolean issafesudoku(int[][] board , int num , int x , int y){
-    //     for(int i =0;i<board.length;i++){
-
-    //     }
-    // }
-
-    // public static int sudoku(int[][] board , int idx){
-    //     if(idx==board.length*board[0].length){
-    //     for(int i=0;i<board.length;i++){
-    //         for(int j =0;j<board[0].length;j++){
-    //             System.out.print(board[i][j]+" ");
-    //         }
-    //         System.out.println("");
-    //     }
-    //      return 1;
-    //     }
-    //    int count=0;
-    //     for(int num=1;num<10;num++){
-    //         if(board[i][j]==0 && issafesudoku(board , num , x ,y)){
-
-    //         }
+    public static boolean issafesudoku(int[][] board , int num , int x , int y){
+        for(int i =0;i<board.length;i++){
+            if(num==board[x][i] || num== board[i][y]){
+                return false;
+            }
+        }
+            // compress AND  decompress
+            int X = (x/3)*3;
+            int Y = (y/3)*3;
+            for(int i=X;i<X+3;i++){
+                for(int j = Y ;j<Y+3;j++){
+                    if(board[i][j]==num) return false;
+                    // System.out.println("d");
+                }
+            }
+            return true;
+    }
+    static int simplesodukucalls = 0;
+    public static int sudoku(int[][] board , int idx){
+        simplesodukucalls++;
+        if(idx==board.length*board[0].length){
+        for(int i=0;i<board.length;i++){
+            for(int j =0;j<board[0].length;j++){
+                System.out.print(board[i][j]+" ");
+            }
+            System.out.println("");
+        }
+        System.out.println("");
+         return 1;
+        }
+       int count=0;
+       int x = idx/board.length;
+       int y = idx% board[0].length;
+       if(board[x][y]==0){ // this is imp to come here not below with if
+        for(int num=1;num<10;num++){
+            if(issafesudoku(board , num , x ,y)){
+                board[x][y]=num;
+                count+=sudoku(board, idx+1);
+                board[x][y]=0;
+            }
             
-    //     }
-    //    return count;
+        }
+    }
+    else{
+        count+=sudoku(board, idx+1);
+    }
+       return count;
 
-    // }
+    }
+    static int sodukubitscalls=0;
+    // int row and col and 3*3 matrix array will be taken as argument so that they are avaialabale at any momemnt
+    public static int soduku02(int[][] board,ArrayList<Integer> calls , int idx, int[] row , int[] col , int[][] mat){
+    sodukubitscalls++;
+        if(idx==calls.size()){
+            for(int i=0;i<board.length;i++){
+                for(int j =0;j<board[0].length;j++){
+                    System.out.print(board[i][j]+" ");
+                }
+                System.out.println("");
+            }
+             return 1;
+            }
+            int x = calls.get(idx) / board.length;
+            int y = calls.get(idx) % board[0].length;
+            // System.out.println(x+" , "+y+" "+idx);
+            int count=0;
+            for(int num =1;num<10;num++){
+                // mask will be created in loop that needs to be changed at every iteration
+                int rowmask =1<<num;
+                int colmask= 1<<num;
+                int matmask = 1<<num;
+                // only 1 mask can be created. 
+                // all mask has been created ans chehcking if  mask exists
 
+                if((rowmask & row[x])==0 && (colmask & col[y])==0 && (matmask & mat[x/3][y/3])==0){
+                    board[x][y]=num;
+                    row[x]^=rowmask;
+                    col[y]^=colmask;
+                    mat[x/3][y/3]^=matmask;
+                    count += soduku02(board,calls, idx+1, row, col, mat);
+                    row[x]^=rowmask;
+                    col[y]^=colmask;
+                    mat[x/3][y/3]^=matmask;
+                    board[x][y]=0;
+
+                }
+            }
+       
+
+            return count;
+    }
  public static void crypto(){
     String str = str1+str2+str3;
     int[] freqmap = new int[26];
@@ -440,20 +504,36 @@ public class recrevise{
       return count;
 
       }
-    public static boolean canHPword(char[][] board , int x, int y , String word ){
-        if(y>=0){
-            if(y==0 || board[x][y-1]=='+'){
-                if(y+word.length()<board.length){
-                    if(y==board.length-1 || board[x][y+1]=='+'){
-                        return true;
-                    }
-                }
+      public static int wordbreak02(String ques, String ans){
+          if(ques.length()==0){
+            System.out.println(ans);
+            return 1;
+          }
+          int count=0;
+          for(int i =0;i<=ques.length();i++){
+              // <= is imp due to substring 
+              String word = ques.substring(0, i);
+             // if (words.contains(word)) {
+              if(ispresent(word)){
+                count+=wordbreak02(ques.substring(i), ans+" "+word);
+              }
+          }
+          return count;
+      }
+    // public static boolean canHPword(char[][] board , int x, int y , String word ){
+    //     if(y>=0){
+    //         if(y==0 || board[x][y-1]=='+'){
+    //             if(y+word.length()<board.length){
+    //                 if(y==board.length-1 || board[x][y+1]=='+'){
+    //                     return true;
+    //                 }
+    //             }
 
-            }
+    //         }
 
-        }
-        return false;
-    }
+    //     }
+    //     return false;
+    // }
     
     public static void main(String[] args){
         // boolean[][] isvisited = new boolean[5][5];
@@ -468,11 +548,45 @@ public class recrevise{
             // System.out.println(nqueencombieff(box, 0, 4, new boolean[box.length], ""));
             // queencombi2d(0, 3, 0,3, "");
         // crypto();
-        // System.out.println(permutation("abc", ""));
+        // System.out.println(permutation(" abc", ""));
         // System.out.println(permutationwithoutrep("aba", ""));
         // System.out.println(equiset(0, 0, 0, "", ""));
         // System.out.println(   nqueenbits(0, 4, 4, 4, ""));
-        wordbreak(sentence, "", "");
-   
+        // wordbreak(sentence, "", "");
+        // wordbreak02(sentence,"");
+        int[][] board = new int[][] 
+    { 
+        {0, 0, 6, 0, 0, 8, 0, 0, 0},
+        {5, 2, 0, 0, 0, 0, 0, 0, 0},
+        {0, 8, 7, 0, 0, 0, 0, 3, 1},
+        {0, 0, 3, 0, 1, 0, 0, 8, 0},
+        {9, 0, 0, 8, 6, 3, 0, 0, 5},
+        {0, 5, 0, 0, 9, 0, 6, 0, 0},
+        {1, 3, 0, 0, 0, 0, 2, 5, 0},
+        {0, 0, 0, 0, 0, 0, 0, 7, 4},
+        {0, 0, 5, 2, 0, 6, 3, 0, 0}
+    }; 
+    System.out.println(sudoku(board, 0));
+    // ==== soduku with bit masking ==============
+    ArrayList<Integer> calls = new ArrayList<>();
+    int[] row = new int[9];
+    int[] col = new int[9];
+    int[][] mat = new int[3][3];
+    for(int i=0;i<board.length;i++){
+        for(int j =0;j<board[0].length;j++){
+            if(board[i][j]==0){
+                calls.add(i*9+j); // creating idx
+            }
+            else{
+                int mask = 1<<board[i][j];
+                row[i]|=mask;
+                col[j]|=mask;
+                mat[i/3][j/3]|=mask;
+            }
+        }
     }
+    System.out.println(soduku02(board , calls , 0, row,col, mat));
+    System.out.println(simplesodukucalls+" "+sodukubitscalls);
+    }
+    
 }
