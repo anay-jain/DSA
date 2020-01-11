@@ -185,7 +185,57 @@ public class dynamic{
             }
             return memo[n];
         }
-        
+        public static void displaymethod(int[][] memo){
+            for(int i =0;i<memo.length;i++){
+                for(int j=0;j<memo[0].length;j++){
+                    System.out.print(memo[i][j]+" ");
+                }
+                System.out.println("");
+            }
+        }
+      
+        public static void  lcs(String a , String b ){
+            int[][] memo = new int[a.length()+1][b.length()+1];
+            for(int i = a.length()-1 ; i>=0;i--){
+                for(int j=b.length()-1 ; j>=0;j--){
+                    if(a.charAt(i)==b.charAt(j)){
+                        memo[i][j]= memo[i+1][j+1]+1;
+
+                    }
+                    else{
+                        memo[i][j]= Math.max(memo[i+1][j], memo[i][j+1]);
+                    }
+                }
+            }
+            displaymethod(memo);
+        }      
+        public static void distinctsubseq(String word , String subseq){
+            int[][] memo = new int[word.length()+1][subseq.length()+1];
+            memo[word.length()][subseq.length()]=1;
+            for(int i=word.length()-1;i>=0;i--){
+                for(int j=subseq.length();j>=0;j--){
+                    if(j== subseq.length()){
+                        memo[i][j]=1;
+                    }
+                    else{
+                        if(word.charAt(i)==subseq.charAt(j)){
+                            memo[i][j]= memo[i+1][j+1]+memo[i+1][j];
+                        }
+                        else{
+                            memo[i][j]=memo[i+1][j];
+                        }
+                    }
+                }
+            }
+            displaymethod(memo);
+        }  
+        public static int  distinct(String word, String ans){
+            int count =0;
+            
+            count+= distinct(word.substring(1), ans+word.charAt(0));
+            count+=distinct(word.substring(1), ans);
+            return count
+        }
        public static void main(String[] args){
         // int[][] idn={{1,1},{1,0}};
         // int[][] newans  = apower2(idn,5);
@@ -206,8 +256,9 @@ public class dynamic{
         // int[] arr1 = {1,3,0,4,0,0,2,1,1,0};
         // minimumjumps(arr1);
         // System.out.println(longestpalisubs("babad"));
-        System.out.println(singlepairup(5));
-        
+        // System.out.println(singlepairup(5));
+        distinctsubseq("geeksforgeeks", "gks");        
+        // lcs("abcd", "abed");
     }
     
 }
