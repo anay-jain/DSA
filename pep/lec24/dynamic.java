@@ -229,13 +229,48 @@ public class dynamic{
             }
             displaymethod(memo);
         }  
+        static int callslis01=0;
+        public static int lis01(int[] arr){
+            int[] dp = new int[arr.length];
+            for(int i=1;i<arr.length;i++){
+                for(int j =0;j<i;j++){
+                    callslis01++;
+                    if(arr[i]>arr[j]){
+                        dp[i]=Math.max(dp[i],dp[j]+1);
+                    }
+                }
+            }
+            return dp[arr.length-1];
+        }
+        public static int lis02(int[] arr ){
+            int si =0;
+            int li = arr.length;
+            int mid =(si+arr.length)/2;
+            while(si<=li){
+
+            }
+        }
         public static int  distinct(String word, String ans){
             int count =0;
             
             count+= distinct(word.substring(1), ans+word.charAt(0));
             count+=distinct(word.substring(1), ans);
-            return count
+            return count;
         }
+        // public static int knapsack01(int[] arr , int target ){
+        //     int[][] memo =new int[target+1][2];
+        //     int idx=0;
+        //     int size = arr.size;
+        //     while(size!=0){
+        //     int first  = idx%2;
+        //     for(int i =0;i<=target;i++){
+        //         if(memo[i][])
+        //         memo[i][1]=Math.max(memo[i][0], memo);
+        //     }
+        //     idx++;
+        //     size--;
+        // }
+        // }
        public static void main(String[] args){
         // int[][] idn={{1,1},{1,0}};
         // int[][] newans  = apower2(idn,5);
@@ -257,8 +292,10 @@ public class dynamic{
         // minimumjumps(arr1);
         // System.out.println(longestpalisubs("babad"));
         // System.out.println(singlepairup(5));
-        distinctsubseq("geeksforgeeks", "gks");        
+        // distinctsubseq("geeksforgeeks", "gks");        
         // lcs("abcd", "abed");
+        int[] arr = {0,8,4,12,2,10,6,14,1,9,5,13,3,11,7,15};
+        System.out.println(lis01(arr)+" "+ callslis01);
     }
     
 }
