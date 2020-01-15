@@ -1,10 +1,10 @@
 class btree{
     public static class Node{
-        int node =0;
+        int data=0;
         Node left = null;
         Node right = null;
-        Node(int node , Node left , node right){
-            this.node=node;
+        Node(int data , Node left , Node right){
+            this.data=data;
             this.left=left;
             this.right=right;
 
@@ -13,8 +13,10 @@ class btree{
 
         }
     }
+    // construction of tree=========================================================
     // we dont need node as we are  iterating on the array
-    Node construction(int[] arr , int idx){
+    static int idx=0;
+ public static Node construction(int[] arr ){
         if(idx==arr.length){
             return null;
 
@@ -26,13 +28,52 @@ class btree{
         Node node = new Node(arr[idx], null, null);
         idx++;
         // isse ek node create ho jayega jo aage node create karega aur last mei iska left mei aage ka aajayega
-        node.left  = construction(arr, idx);
-        node.right = construction(arr, idx);
+        node.left  = construction(arr);
+        node.right = construction(arr);
 
         return node;
 
     }
-    void display(Node node ){
-        
+    public static void display(Node node ){
+        if(node == null ){
+            return ;
+        }
+        String str = "";
+        str +=  node.left==null?" .":node.left.data;
+        str +=  "-> "+ node.data + " <- ";
+        str +=  node.right==null?".":node.right.data;
+        System.out.println(str);
+        display(node.left);
+        display(node.right);
+    
+    }
+    // inorder traversal ==========================================================
+    public static void inorderdisplay(Node node){
+        if(node==null){
+            return;
+    }   
+    inorderdisplay(node.left);
+    System.out.print(node.data+ " -> ");
+    inorderdisplay(node.right);
+    }
+    // =====IS BST====================================================================
+    public class BSTpair{
+        boolean isBST = true;
+        int bstcount =0;
+        int maxsize =0;
+        Node rnode = null;
+        int max = -(int)(1e8); // max(left)
+        int min = (int)1e8;
+    }
+    public static bstsoln(Node node){
+
+    }
+    public static void main(String[] args){
+
+        int[] arr = { 10, 20, 30, -1, -1, 40, -1, -1, 50, 60, 80, -1, -1, -1, 70, 90, -1, 100, -1, -1, -1 };
+        Node root = construction(arr);
+        // display(root);
+        inorderdisplay(root);
+
     }
 }
