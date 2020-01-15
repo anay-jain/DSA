@@ -7,7 +7,7 @@ public class btree01Pro {
         Node root = create(arr);
         // display(root);
         solve(root);
-
+        
     }
 
     public static void solve(Node root) {
@@ -186,5 +186,7 @@ public class btree01Pro {
         return Math.max(left, right) + 1;
 
     }
-
+    public static class BSTpair{
+        
+    }
 }
