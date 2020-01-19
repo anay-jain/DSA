@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 class btree{
     public static class Node{
         int data=0;
@@ -45,18 +47,54 @@ class btree{
         System.out.println(str);
         display(node.left);
         display(node.right);
-    
+
     }
     // inorder traversal ==========================================================
-    public static void inorderdisplay(Node node){
+    public static void inorderdisplay(Node node , ArrayList<Node> arr){
         if(node==null){
             return;
     }   
-    inorderdisplay(node.left);
-    System.out.print(node.data+ " -> ");
-    inorderdisplay(node.right);
+    arr.add(node);
+    inorderdisplay(node.left,arr);
+    // System.out.print(node.data+ " -> ");
+  
+    inorderdisplay(node.right,arr);
     }
-    // =====IS BST====================================================================
+    public static int[] diameter2(Node node) {
+        if (node == null) {
+            return new int[2];
+        }
+
+        int[] left = diameter2(node.left);
+        int[] right = diameter2(node.right);
+
+        int[] myAns = new int[2];
+        myAns[0] = Math.max(Math.max(left[0], right[0]), left[1] + right[1] + 1);
+        myAns[1] = Math.max(left[1], right[1]) + 1;
+        return myAns;
+
+    }
+    //=============================================================================
+    public static void swapNodeInBst(ArrayList<Node> arr, Node data){
+        Node[] arr1 = new Node[3];
+        arr1[1]=null;
+        arr1[2]=null;
+        arr1[0]=data;
+        for(int i =0;i<arr.size()-1;i++){
+            if(arr.get(i).data>arr.get(i+1).data){
+                arr1[1]=arr.get(i);
+            }
+        }
+    }
+    // public static Node preorderBST(int[] arr, int idx){
+    //     if(idx==arr.length){
+    //         return null;
+    //     }
+    //     Node node = new Node(arr[idx],null,null);
+    //     // if(arr)
+        
+    // }
+    // =====IS_BST====================================================================
     public class BSTpair{
         boolean isBST = true;
         int bstcount =0;
@@ -65,9 +103,7 @@ class btree{
         int max = -(int)(1e8); // max(left)
         int min = (int)1e8;
     }
-    public static bstsoln(Node node){
-
-    }
+  
     public static void main(String[] args){
 
         int[] arr = { 10, 20, 30, -1, -1, 40, -1, -1, 50, 60, 80, -1, -1, -1, 70, 90, -1, 100, -1, -1, -1 };

@@ -242,14 +242,30 @@ public class dynamic{
             }
             return dp[arr.length-1];
         }
-        public static int lis02(int[] arr ){
-            int si =0;
-            int li = arr.length;
-            int mid =(si+arr.length)/2;
-            while(si<=li){
+        // public static int lis02(int[] arr ){
+        //     int si =0;
+        //     int li = arr.length-1;
+        //     int mid =(si+li)/2;
+        //     int data=0;
+        //     while(si<=li){
+        //         if(arr[mid]>data) li = mid+1;
 
+
+        //     }
+        // }
+
+        public static int rodcutting(int[] arr){
+            int[] memo = new int[arr.length];
+            memo[0]=arr[0];
+            for(int i =1;i<arr.length;i++){
+                memo[i]=arr[i];
+                for(int j=i-1;j>=0;j--){
+                    memo[i]=Math.max(memo[i],memo[i-j]+memo[j]);
+                }
             }
+            return memo[arr.length-1];
         }
+            
         public static int  distinct(String word, String ans){
             int count =0;
             
@@ -294,8 +310,10 @@ public class dynamic{
         // System.out.println(singlepairup(5));
         // distinctsubseq("geeksforgeeks", "gks");        
         // lcs("abcd", "abed");
-        int[] arr = {0,8,4,12,2,10,6,14,1,9,5,13,3,11,7,15};
-        System.out.println(lis01(arr)+" "+ callslis01);
+        // int[] arr = {0,8,4,12,2,10,6,14,1,9,5,13,3,11,7,15};
+        // System.out.println(lis01(arr)+" "+ callslis01);
+        int[] arr = {0,1,5,8,9,10,17,17,20};
+        System.out.println(rodcutting(arr));
     }
     
 }
