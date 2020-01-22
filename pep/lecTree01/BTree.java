@@ -24,10 +24,10 @@ public class BTree{
         // so that jo leke aaue vo . vo usko hi point kar rha ho
         // display(root);
         // System.out.println(find(root, 60));
-        ArrayList<Integer> ans = new ArrayList<>();
-        System.out.println(rootToNodePath02(root, 70, ans));
-        System.out.println(ans);
-        
+        // ArrayList<Integer> ans = new ArrayList<>();
+        // System.out.println(rootToNodePath02(root, 70, ans));
+        // System.out.println(ans);
+        System.out.println(LCA(root, 70, 90));
     }
     static int idx=0;
     //---- construction -------------------------------
@@ -92,24 +92,25 @@ public class BTree{
   // ----- Root to node path(2 ways)---------------------------------------------------------------
   
   
-    public static ArrayList<Integer> shortestPathToNode(Node node,ArrayList<Integer> ans, int data){
+    public static ArrayList<Integer> shortestPathToNode(Node node, int data){
         if(node==null){
 
             return null;
         }
         if(node.data==data){
+            ArrayList<Integer> ans = new ArrayList<>();
             ans.add(data);
             return ans;
         }
-        ArrayList<Integer> left = shortestPathToNode(node.left, ans, data) ;
+        ArrayList<Integer> left = shortestPathToNode(node.left, data) ;
         if(left !=null){
-            ans.add(node.data);
-            return ans;
+            left.add(node.data);
+            return left;
         }
-        ArrayList<Integer> right= shortestPathToNode(node.right, ans, data);
+        ArrayList<Integer> right= shortestPathToNode(node.right,  data);
         if(right != null){
-            ans.add(node.data);
-            return ans;
+            right.add(node.data);
+            return right;
         }
         return null;
     }
@@ -129,7 +130,19 @@ public class BTree{
         }
         return res;
     }
-    // -------------------------------------------------------------------------------------
+    // -----LCA    ----------------------------------------------------------------------
+    public static int LCA(Node node , int data1 , int data2){
+        ArrayList<Integer> node1 = shortestPathToNode(node, data1);
+        ArrayList<Integer> node2 = shortestPathToNode(node, data2);
+        int temp =-1;
+        for(int i=node1.size()-1 , j =node2.size()-1;i>=0 && j>=0;i--,j--){
+            if(node1.get(i)!=node2.get(j)){
+                return temp;
+            }
+            temp=node1.get(i);
+        }
+   return temp;
+  }
+   
 
-    
 }
