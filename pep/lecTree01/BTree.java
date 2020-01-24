@@ -27,7 +27,8 @@ public class BTree{
         // ArrayList<Integer> ans = new ArrayList<>();
         // System.out.println(rootToNodePath02(root, 70, ans));
         // System.out.println(ans);
-        System.out.println(LCA(root, 70, 90));
+        // System.out.println(LCA(root, 70, 90));
+        kfar01(root, 2, 60);
     }
     static int idx=0;
     //---- construction -------------------------------
@@ -92,24 +93,24 @@ public class BTree{
   // ----- Root to node path(2 ways)---------------------------------------------------------------
   
   
-    public static ArrayList<Integer> shortestPathToNode(Node node, int data){
+    public static ArrayList<Node> shortestPathToNode(Node node, int data){
         if(node==null){
 
             return null;
         }
         if(node.data==data){
-            ArrayList<Integer> ans = new ArrayList<>();
-            ans.add(data);
+            ArrayList<Node> ans = new ArrayList<>();
+            ans.add(node);
             return ans;
         }
-        ArrayList<Integer> left = shortestPathToNode(node.left, data) ;
+        ArrayList<Node> left = shortestPathToNode(node.left, data) ;
         if(left !=null){
-            left.add(node.data);
+            left.add(node);
             return left;
         }
-        ArrayList<Integer> right= shortestPathToNode(node.right,  data);
+        ArrayList<Node> right= shortestPathToNode(node.right,  data);
         if(right != null){
-            right.add(node.data);
+            right.add(node);
             return right;
         }
         return null;
@@ -143,7 +144,33 @@ public class BTree{
         }
    return temp;
   }
-    public static int 
+  // ---- KFAR 2 methods----------------------------------------------------------
+    // kaway for kfar
+    public static void kaway(Node node, int k , Node rnode){
+        if(node==null){
+            return ;
+        }
+        if(node == rnode){
+            return ;
+        }
+        if(k==0){
+            System.out.println(node.data +" ");
+        }
+        kaway(node.left, k-1, rnode);   
+        kaway(node.right, k-1, rnode);
+    
+    
+    }
+    public static void kfar01(Node node , int k , int data){
+        ArrayList<Node> path =shortestPathToNode(node, data);
+        // as this arraylist will point to that node only
+        Node rnode = null;
+        // this rnode has to be leaved kyuki isme se to aaya tha vo
+        for(int i=0;i<path.size();i++){
+            kaway(path.get(i), k-i, rnode);
+            rnode = path.get(i);
+            }
+    }
        
 
 }

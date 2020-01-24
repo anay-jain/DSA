@@ -1,5 +1,5 @@
 class myStack{
-    private int st[];
+    protected int[] st;
     int size;
     myStack(){
         int[] st = new int[10];
@@ -7,5 +7,6 @@ class myStack{
     myStack(int size){
         int[] st = new int[size];
     }
+
     
 }
