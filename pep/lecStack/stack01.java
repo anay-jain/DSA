@@ -18,6 +18,31 @@ public class stack01{
     st.push(arr[i]);
 
     }
+
+    }
+    public static int largestareainrectangle(int[] arr){
+        Stack<Integer> st = new Stack<>();
+        int maxarea=0;
+        st.push(-1);
+        // bcs  to hm 0 se bhi between maan ske 
+        for(int i =0;i<arr.length;i++){
+            if(st.peek()== -1 || st.peek()<arr[i]){
+                st.push(arr[i]);
+            }
+            else if(st.peek()>arr[i]){
+                // resolve karvana padega kyuki ho ab ele aaya hai vo chota hai 
+                while(){
+                    // height of 1st pop element -> which will take as refernece kyuki usske aage aur current
+                    // element ke beech mei sab bade honge
+                    int ht = arr[st.pop()];
+                    int idx = st.peek();
+                    int area = ht * (i-idx-1);
+                    maxarea = Math.max(maxarea, area);
+
+                }
+            }
+
+        }
     }
     public static void main(String[] args){
         int[] arr = {1,3,2,4,8,6,5,9,1};
