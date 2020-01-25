@@ -1,45 +1,26 @@
-import java.util.ArrayList;
+import java.util.Stack;
 
 public class stack01{
-    static ArrayList<Integer> num = new ArrayList<>();
-    static ArrayList<Character> ch = new ArrayList<>();
-    public static int priorityseq(char ch ){
-        
-        if(ch=='+' || ch =='-' ){
-            return 1;
+    public static  void  justPrevGreaterElement(int[] arr){
+        // creating a new stack
+        Stack <Integer> st = new Stack<>();
+        // st.push(arr[0]);
+        for(int i=0;i<arr.length;i++){
+        while(st.size()!=0 && st.peek()<arr[i]){
+        // < -> just next greater ele on left , > for lesser
+            st.pop();
         }
-        else if(ch=='*' || ch=='/'){
-            return 2;
+        if(st.size()==0){
+            System.out.println(arr[i] + "-> " + -1);
+        }else{
+            System.out.println(arr[i] + "-> " + st.peek());
         }
-        else if(ch=='%'|| ch == '^'){
-            return 3;
-        }
-        else{
-            return 4;
-        }
+    st.push(arr[i]);
 
     }
-    public static boolean isch(char ch ){
-        if(ch == '+' || ch=='-' || ch =='/' || ch =='%'){
-            return true;
-        }
-        return false;
     }
-    public static int calculate(int val1, int val2 , char ch){
-        if(ch =='+')return val2+val1;
-        else if(ch == '-')return val2-val1;
-        else if(ch == '*') return val2*val1;
-        else if(ch=='/') return val2/val1;
-        else return -1;
-    }
-    public static void justnextgreaterele(int[] arr){
-            
-        }
-    }
-    // Stack st = new Stack()
     public static void main(String[] args){
-        String str= "";
-
-
+        int[] arr = {1,3,2,4,8,6,5,9,1};
+        justPrevGreaterElement(arr);
     }
 }

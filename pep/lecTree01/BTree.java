@@ -133,7 +133,7 @@ public class BTree{
         return res;
     }
     //------- Diameter two methods ------------------------------------------------------
-    
+
     // -----LCA    ----------------------------------------------------------------------
     public static int LCA(Node node , int data1 , int data2){
         ArrayList<Node> node1 = shortestPathToNode(node, data1);
@@ -209,5 +209,37 @@ public class BTree{
         return -1;
     }
        
-// ----- one function(find , height , prec , ssucc , ceil , floor , diameter)------------
+// ----- one function(find , height , prec , ssucc , ceil,size  , floor , diameter)------------
+class allPair{
+    boolean findele = false;
+    int height =0;
+    int size =0;
+  
+    int ceil = (int)-1e8;
+    int floor =(int)1e8;
+    int diameter =0;
+    
+    Node pred = null;
+    Node prec =null;
+    Node succ = null;
+    
+    allPair(){
+
+    }
+}
+public static void allsoln(Node node, int level ,  int data, allPair sol){
+    if(node== null){
+        return ;
+    }
+    // hm node ko call karte ja rhe hai aur hmare pasbs ek class object hai jo hm baar usekartr ja rhe hai
+    // har node ke lie alag ni bna rhe
+    sol.size++;
+    findele = findele || (node.data==data);
+    sol.height = Math.max(sol.height, level);
+    // will update height accordingly
+    
+
+
+}
+
 }
