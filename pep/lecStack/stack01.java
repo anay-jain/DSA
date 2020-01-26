@@ -60,7 +60,7 @@ public class stack01{
         int maxarea = 0;
         int[] ar = new int[arr.length];
         for(int i=0;i<arr.length;i++){
-            for(int j =0;j<arr[0].length;j++){
+            for(int j =0;j<arr[0    ].length;j++){
                 ar[j]= arr[i][j]=='0'?0:(1+ar[j]);
             }
             maxarea =Math.max(largestareainrectangle(ar), maxarea);
@@ -103,7 +103,7 @@ public class stack01{
     }
     
     public int top() {
-        if(st.size==0){
+        if(st.size()==0){
             return -1;
         }
         // st is not minstack type , it is of min type
@@ -118,13 +118,161 @@ public class stack01{
     }
 }
 //-------Balance brackets----------------------------------------------------------------------
+    public static boolean isopench(char ch ){
+        if(ch =='(' || ch == '{' || ch=='[')
+        return true;
+        return false;
+    }
+    public static boolean isBalanced(String s){
+        Stack<Character> st = new Stack<>();
+        for(int i =0;i<s.length();i++){
+            char ch  = s.charAt(i);
+            if(isopench(ch)){
+                st.push(ch);
+            }
+            else{
+                if(ch==')' && st.peek()==')'){
+                    st.pop();
+                }
+                else if(ch == '}' && st.peek()=='{'){
+                    st.pop();
+                }
+                else if(ch == ']' && st.peek()=='['){
+                    st.pop();
+                }
+                else{
+                    return false;
+                }
+            }
+
+        }
+     return st.size()==0;
+    }
+//----- longest valid parenthesis -------------------------------------------------------
+public static int largestvalidParenthesis(String str){
+    Stack<Integer> st= new Stack<>();
+    st.push(-1);;
+    int max=0;
+    //so that we can include the index 0 (in between)
+    for(int i=0;i<str.length();i++){
+        char ch = str.charAt(i);
+        if(ch=='('){
+            st.push(i);
+        }else if(ch==')'){
+            if(st.size()>0 && str.charAt(st.peek())=='('){
+                st.pop();
+                int max_ = (i-st.peek());
+                // ismme -e ahi hoga kiyuki we have to include the last one too.
+                max = Math.max(max , max_);
+            }else{
+                st.push(i);
+            }
+        }
+    }
+    return max;
+    }   
+// ---- Remove unnecessary brackets------------------------------------------------------------------\
+static  String str = "[{((a+b))+(c+d)}]";
+    public static void removebracket(int idx1 , int idx2){
+        
+        str = str.substring( 0, idx1) +'$'+ str.substring(idx1+1);
+        str = str.substring(0, idx2) +'$'+ str.substring(idx2+1);
+        // System.out.println(idx1+ " " + idx2+ " " +str);
+    }
+    public static void removeUnnecessaryBrackets(){
+        Stack<Integer> st = new Stack<>();
+        for(int i=0;i<str.length();i++){
+            char ch = str.charAt(i);
+            if(isopench(ch)){
+                st.push(i);
+            }else if(ch == ']' || ch == '}' || ch==')'){
+                if(ch == ']'){
+                    if(st.peek()==-1){
+                        st.pop();
+                        if(str.charAt(st.peek())=='['){ st.pop();
+                        }else{
+                            System.out.println("invalid");
+                       return ;
+                   }
+                    }
+                    else{
+                        if(str.charAt(st.peek())=='['){
+                            int idx1 = st.pop();
+                            removebracket( idx1, i);
+                            }else{
+                                System.out.println("invalid");
+
+                           return ;
+                       }
+                    }
+                   
+                }
+                else if(ch == '}'){
+                    if(st.peek()==-1){
+                        st.pop();
+                        if(str.charAt(st.peek())=='{'){ st.pop();
+                        }else{
+                            System.out.println("invalid");
+
+                       return ;
+                   }
+                    }
+                    else{
+                        if(str.charAt(st.peek())=='}'){
+                            int idx1 = st.pop();
+                            removebracket( idx1, i);
+                            }else{
+                                System.out.println("invalid");
+
+                           return ;
+                       }
+                    }
+                   
+                }else if(ch == ')'){
+                    if(st.peek()==-1){
+                        st.pop();
+                        if(str.charAt(st.peek())=='('){ st.pop();
+                        }else{
+                       
+                       System.out.println("invalid");
+                        return ;
+                   }
+                    }
+                    else{
+                        if(str.charAt(st.peek())=='('){
+                            int idx1 = st.pop();
+                            removebracket( idx1, i);
+                            }else{
+                           
+                           System.out.println("invalid");
+                            return ;
+                       }
+                    }
+                   
+                }
+                
+            }
+            else{
+                if(st.peek()!=-1){
+                    st.push(-1);
+                }
+            }
+        }
+        return ;
+    }
 
    public static void main(String[] args){
         // int[] arr = {1,3,2,4,8,6,5,9,1};
         // justPrevGreaterElement(arr);
     
-        int[] arr = {2,1,5,6,2,3};
-        System.out.println(largestareainrectangle(arr));
+        // int[] arr = {2,1,5,6,2,3};
+        // System.out.println(largestareainrectangle(arr));
+        // System.out.println(largestvalidParenthesis("()(()"));
+        removeUnnecessaryBrackets();
+        for(int i=0;i<str.length();i++){
+            if(str.charAt(i)!='$') System.out.print(str.charAt(i));
+        }
+        // System.out.println(str);
         
     }
 }
