@@ -1,6 +1,7 @@
 import java.util.Stack;
 
 public class stack01{
+   
     // ------ INFIX EVALUATION ---------------------------------------------------------------
     public static int precedence(char ch ){
         if(ch == '+' || ch  == '-'){
@@ -359,6 +360,15 @@ static  String str = "[{((a+b))+(c+d)}]";
     }
 
    public static void main(String[] args){
+            //  myStack stack = new myStack();
+            dynamicStack stack = new dynamicStack();
+
+            for(int i =0;i<50;i++){
+                stack.push(i);
+            }
+            stack.print();
+            // stack.push(-1);
+            // stack.print();
         // int[] arr = {1,3,2,4,8,6,5,9,1};
         // justPrevGreaterElement(arr);
     
@@ -370,8 +380,8 @@ static  String str = "[{((a+b))+(c+d)}]";
         //     if(str.charAt(i)!='$') System.out.print(str.charAt(i));
         // }
         // System.out.println(str);
-            String s = "8+4*3-9/3^(2-1)";
-            System.out.println(infixeval(s)); 
+            // String s = "8+4*3-9/3^(2-1)";
+            // System.out.println(infixeval(s)); 
     }
 
 }
