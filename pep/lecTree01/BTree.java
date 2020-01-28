@@ -29,7 +29,8 @@ public class BTree{
         // System.out.println(ans);
         // System.out.println(LCA(root, 70, 90));
         // kfar01(root, 2, 60);
-        kfar02(root, 2, 60);
+        // kfar02(root, 2, 60);
+    
     }
     static int idx=0;
     //---- construction -------------------------------
@@ -219,9 +220,9 @@ class allPair{
     int floor =(int)1e8;
     int diameter =0;
     
-    Node pred = null;
-    Node prec =null;
-    Node succ = null;
+    Node pred = null; // just prev valuee
+    Node prev =null; // previous will always change according gi he ndoe 
+    Node succ = null; // just aage wali value
     
     allPair(){
 
@@ -232,14 +233,70 @@ public static void allsoln(Node node, int level ,  int data, allPair sol){
         return ;
     }
     // hm node ko call karte ja rhe hai aur hmare pasbs ek class object hai jo hm baar usekartr ja rhe hai
-    // har node ke lie alag ni bna rhe
+    // har node ke lie alag ni bna rhe bas allpair soln ko hi update kar rhe h
+
     sol.size++;
-    findele = findele || (node.data==data);
+    sol.findele = sol.findele || (node.data==data);
     sol.height = Math.max(sol.height, level);
+    if(node.data>data && sol.ceil>node.data){
+       sol.ceil = node.data;
+    }
+    if(node.data<data && sol.floor<node.data){
+        sol.floor = node.data;
+    }
+    if(node.data == data && sol.pred==null){
+        sol.pred = sol.prev;
+    }
+    if(sol.pred!=null && sol.succ == null && sol.prev.data==data){
+        sol.succ = node;
+    }
+    sol.prev = node;
+    allsoln(node.left, level+1, data, sol);
+    allsoln(node.right, level+1, data, sol);
     // will update height accordingly
     
-
-
 }
 
+// ----- IS BST---------------------------------------------------------------------------
+// prev sould be static as hme usko har level par change nahi karna 
+static int prev  = -1e6; 
+public static boolean isBST(Node node ){
+    if(node == null){
+        return true;
+    }
+    if(!isBST(node.left)){
+        return false;
+    }
+     // jo bhi prev  hai usko apne app se check karta hazi
+    if(node.data <prev){
+        return false;
+    }
+   
+    prev = node.data; 
+    // right ko call lagane se phele vo apne app ko phele prev set karta hai phir roght ki call lagata
+    if(!isBST(node.right)){
+        return false;
+    }
+    return true;
+
+}
+// ----- BST Pair , count all bST, largest BST and its size----------------------------------------
+public class BSTPair{
+    boolean isBST=false;
+    int count =0;
+    int size =0 ;
+    Node root;
+    BSTPair(){
+
+    }
+}
+
+// public static BSTPair BSTsoln(Node node  ){
+//     if(node == null){
+//         return;
+//     }
+ 
+
+  
+// }
 }
