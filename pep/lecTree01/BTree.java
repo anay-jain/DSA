@@ -415,8 +415,8 @@ public static void DLL(Node node){
       ArrayList<ArrayList<Integer>> right = sumpath2_01(node.right, target-node.data);
       if(right!=null){
           for(ArrayList<Integer> i : right){
-            i.add(0,node.data);
-            ans.add(i);
+            i.add(0,node.data); // ye O{n} ka kaam hai . kyuki aaage aad karva rhe hai
+            ans.add(i); // o(1) ka kaam because refernece hi copy karrhe hai
           }
       }
       return ans;
