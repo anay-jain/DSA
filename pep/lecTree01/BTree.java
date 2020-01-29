@@ -282,21 +282,143 @@ public static boolean isBST(Node node ){
 }
 // ----- BST Pair , count all bST, largest BST and its size----------------------------------------
 public class BSTPair{
-    boolean isBST=false;
+    boolean isBST=true;
     int count =0;
     int size =0 ;
-    Node root;
+    Node root; // as we have to save largest root node
+    int minofmax = -1e6;
+    int maxofmin = 1e6;
     BSTPair(){
 
     }
 }
-
-// public static BSTPair BSTsoln(Node node  ){
+// public static boolean isValidBST(Node node){
 //     if(node == null){
-//         return;
+//         return true;
 //     }
- 
 
-  
 // }
+
+public static BSTPair BSTsoln(Node node  ){
+    if(node == null){
+        return new BSTPair();
+    }
+    BSTPair lp = BSTsoln(node.left);
+    BSTPair rp = BSTsoln(node.right);
+
+    // new BST pair 
+    BSTPair sol = new BSTPair();
+    // count of all bst phele hi hoga
+    sol.count = rp.count + lp.count;
+    if(lp.isBst && rp.isBST && lp.maxofmin < node.data && rp.minofmax>node.data){
+        sol.isBST = true;
+        sol.count++;
+        // ye islie kyuki iska itna size hoga
+        sol.size = sol.count;
+        sol.root = node;
+    }else{
+        sol.isBST = false;
+        // else likhna islie zarrrri hai suppose sabse upr wala bst ni hua . to neche ki info ko store
+        // karke rkhe aur last mei jb hm return node kare to vo vali stored info dede
+        if(lp.size>rp.size){
+            sol.size =lp.size;
+            sol.root = lp.root;
+        }
+        else{
+            sol.size = rp.size;
+            sol.root = rp.root;
+        }
+    }
+    sol.minofmax = Math.min(node.data , Math.min(lp.minofmax, rp.minofmax));
+    sol.maxofmin = Math.max(node.data , Math.max(lp.maxofmin, rp.maxofmin));
+    return sol;
+}
+// -- LINEAR TREE ---------
+public static Node lineartree(Node node){
+    if(node == null){
+        return null;
+    }
+    if(node.left == null && node.right == null){
+        // mtlb vo ek perfect leaf hai 
+        return node;
+    }
+    Node leftTail = lineartree(node.left);
+    Node rightTail = lineartree(node.right);
+
+    // dono ek mangwaye
+    // agar left tail kuch ni hai to as it is node.left mei jake lag jao 
+    if(leftTail == null){
+        node.left = node.right;
+        // node ka left bhi null hi hoga
+    }
+    else{
+        leftTail.left = node.right;
+    }
+    node.right =null;
+    // kyuki node right wala kisis ko point nhi karega
+    return rightTail!=null?rightTail:leftTail;
+}
+// convert into doubly linked list -----------------------------------------------------
+static Node prev_ = null;
+static Node head  = null;
+public static void DLL(Node node){
+    if(node ==null){
+        return ;
+    }
+    DLL(node.left);
+    if(prev_ == null){
+        head= node;
+    }
+    else{
+        prev_.right = node;
+        node.left = prev;
+
+    }
+    prev= node;
+
+}
+//---- PATH SUM 1 (lc-112) -------------------------------------------------------
+  // sumpath(node->leaf ) = target
+  public static boolean sumpath1(Node node , int target, String ans){
+      if(node == null){
+          return false;
+      }
+      if(node.left == null && node.right == null && node.data-target==0){
+          return true;
+      }
+      boolean res = false;
+      res  = res || sumpath1(node.left, target-node.data, ans+node.data);
+      res = res || sumpath1(node.right , target-node.data , ans + node.data)
+      return res;
+  }
+  // -----  print all paths that make that target---------------
+  public static  ArrayList<ArrayList<Integer>> sumpath2_01(Node node , int target){
+      if(node == null){
+          return null;
+      }
+      // leaf condition
+      if(node.left == null && node.right==null && node.data-target==0){
+          ArrayList<ArrayList<Integer>> base = new ArrayList<>();
+            ArrayList<Integer> base1 = new ArrayList<>();
+            base1.add(node.data);
+            base.add(base1);
+          return base;
+      }
+      ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+      ArrayList<ArrayList<Integer>> left = sumpath2_01(node.left, target-node.data);
+      if(left!=null){
+          for(ArrayList<Integer> i : left){
+            i.add(node.data);
+            ans.add(i);
+          }
+      }
+      ArrayList<ArrayList<Integer>> right = sumpath2_01(node.right, target-node.data);
+      if(right!=null){
+          for(ArrayList<Integer> i : right){
+            i.add(0,node.data);
+            ans.add(i);
+          }
+      }
+      return ans;
+  }
 }
