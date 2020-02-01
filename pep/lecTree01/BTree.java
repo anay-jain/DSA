@@ -30,6 +30,10 @@ public class BTree{
         // System.out.println(LCA(root, 70, 90));
         // kfar01(root, 2, 60);
         // kfar02(root, 2, 60);
+        int[] arr1 = {10,20,30,40,50,60,70,80,90};
+        Node root1 = makeBST(arr1, 0, arr.length);
+        display(root1);
+
     
     }
     static int idx=0;
@@ -259,7 +263,7 @@ public static void allsoln(Node node, int level ,  int data, allPair sol){
 
 // ----- IS BST---------------------------------------------------------------------------
 // prev sould be static as hme usko har level par change nahi karna 
-static int prev  = -1e6; 
+static int prev  = (int)-1e6; 
 public static boolean isBST(Node node ){
     if(node == null){
         return true;
@@ -281,13 +285,13 @@ public static boolean isBST(Node node ){
 
 }
 // ----- BST Pair , count all bST, largest BST and its size----------------------------------------
-public class BSTPair{
+public static class BSTPair{
     boolean isBST=true;
     int count =0;
     int size =0 ;
     Node root; // as we have to save largest root node
-    int minofmax = -1e6;
-    int maxofmin = 1e6;
+    int minofmax = (int)-1e6;
+    int maxofmin = (int)1e6;
     BSTPair(){
 
     }
@@ -310,7 +314,7 @@ public static BSTPair BSTsoln(Node node  ){
     BSTPair sol = new BSTPair();
     // count of all bst phele hi hoga
     sol.count = rp.count + lp.count;
-    if(lp.isBst && rp.isBST && lp.maxofmin < node.data && rp.minofmax>node.data){
+    if(lp.isBST && rp.isBST && lp.maxofmin < node.data && rp.minofmax>node.data){
         sol.isBST = true;
         sol.count++;
         // ye islie kyuki iska itna size hoga
@@ -371,10 +375,10 @@ public static void DLL(Node node){
     }
     else{
         prev_.right = node;
-        node.left = prev;
+        node.left = prev_;
 
     }
-    prev= node;
+    prev_= node;
 
 }
 //---- PATH SUM 1 (lc-112) -------------------------------------------------------
@@ -388,7 +392,7 @@ public static void DLL(Node node){
       }
       boolean res = false;
       res  = res || sumpath1(node.left, target-node.data, ans+node.data);
-      res = res || sumpath1(node.right , target-node.data , ans + node.data)
+      res = res || sumpath1(node.right , target-node.data , ans + node.data);
       return res;
   }
   // -----  print all paths that make that target---------------
@@ -421,5 +425,44 @@ public static void DLL(Node node){
       }
       return ans;
   }
-  
+  public static Node makeBST(int[] arr , int si , int li){
+    if(li<si){
+        return null;
+    }
+    int mid = (li+si)>>1; // si+(ei-si)/2 -> to manage overflow
+    Node root = new Node(arr[mid],null,null);
+    root.left = makeBST(arr, si, mid-1);    
+    root.right = makeBST(arr, mid+1, li);
+
+    return root;
+  }
+  public static Node  addNodeInBST(Node node, int data){
+      if(node == null){
+          Node root = new Node(data , null , null);
+          return node;
+      }
+      if(data<node.data){
+          node.left = addNodeInBST(node.left,data);
+
+      }
+      else{
+          node.right = addNodeInBST(node.right, data);
+      }
+      return node;
+  }
+
+  public static Node remove(Node node , int data){
+
+    // 3rd condition Leaf
+if(node.left == null && node.right == null ){
+    return null;
+}
+if(node.left ==null || node.right == null){
+    if(node.left==null){
+        node.data = node.left.data;
+    }else{
+        node.data = node.right.data;
+    }
+}
+  }
 }

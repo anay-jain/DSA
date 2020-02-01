@@ -26,6 +26,7 @@ public class RecLeetCode{
         }
         return ans;
     }
+    public static int bb(int[] arr)
     public static void main(String[] args){
         int[] arr  = {3,1,5,8};
         System.out.println(burstballons(arr, 0, arr.length-1));
