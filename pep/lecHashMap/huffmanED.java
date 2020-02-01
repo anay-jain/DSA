@@ -66,6 +66,29 @@ public class huffmanED{
         }
         construct();
     }
+    public static String encode(String str){
+        StringBuilder sb = new StringBuilder();
+        for(int i =0;i<str.length();i++){
+            char ch = str.charAt(i);
+            String s = ch +"";
+            sb.append(encode.get(s));
+        }
+        // to convert String builder into string
+        return sb.toString();
+    }
+    public static String decode(String str){
+        int j=0;
+        StringBuilder sb = new StringBuilder();
+        for(int i =1;i<=str.length();i++){
+            // as ith string is not inculded so we have to start from 1 ;
+            String str1  = str.substring(j, i);
+            if(decode.containsKey(str1)==true){
+                sb.append(decode.get(str));
+                j=i;
+            }    
+        }
+        return sb.toString();   
+    }
     public static void main(String[] args){
         String str ="aaabbbbcccbcbcbcbcbcbcbbdbdbsbbsbsbsbs";
         huffman(str);
