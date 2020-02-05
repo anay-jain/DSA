@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BTree{
     // ==== Class of Node
@@ -32,7 +33,8 @@ public class BTree{
         // kfar02(root, 2, 60);
         int[] arr1 = {10,20,30,40,50,60,70,80,90};
         Node root1 = makeBST(arr1, 0, arr.length);
-        display(root1);
+        // display(root1);
+        System.out.println(BST_LCA(root1, 60, 70));;
 
     
     }
@@ -452,17 +454,116 @@ public static void DLL(Node node){
   }
 
   public static Node remove(Node node , int data){
-
-    // 3rd condition Leaf
-if(node.left == null && node.right == null ){
-    return null;
-}
-if(node.left ==null || node.right == null){
-    if(node.left==null){
-        node.data = node.left.data;
-    }else{
-        node.data = node.right.data;
+    // first find data
+    if(node.data>data){
+        node.left = remove(node.left, data);
     }
-}
+    else if(node.data<data){
+        node.right = remove(node.right,data);
+    }
+    else{
+        // data is equal
+        // 3rd condn and 2nd 
+        if(node.left==null || node.right ==null){
+            // hmr 3rd condition mei hi null return karna gota hai
+            // parent ko hi hum node ka left aur right child return kar skte hai
+            return node.left==null?node.right:node.left;
+        }
+        // 1st condtion
+        Node rdata = findMaxInBst_forremove( node);
+        node.data = rdata.data;
+
+    }
+    return node;
   }
+
+  // -- LCA IN BST (LOG N)-----------------------------------------------------------------------
+  // jb divergence condition hogi thats our ans;
+  public static boolean findNodeInBst(Node node , int data){
+      if(node==null){
+          return false;
+      }
+      if(node.data == data){
+          return true;
+      }
+      if(node.data>data){
+          return findNodeInBst(node.left, data);
+      }
+      if(node.data<data){
+        return  findNodeInBst(node.right, data);
+      }
+     return false;
+  }
+  public static Node BST_LCA(Node node , int a  , int b){
+      // as hme LCA node return karna hai
+      if(node.data<a){
+        return BST_LCA(node.right, a, b);
+      }
+      if(node.data>b){
+          return BST_LCA(node.left, a, b);
+      }
+      // divergence condition
+      else{
+          if(findNodeInBst(node, a) == true && findNodeInBst(node, b)==true){
+              return node;
+          }
+          return null;
+      }
+     }
+  public static Node findMaxInBst_forremove(Node node){
+      // left ki sabse max value jo hme milegi node right par
+      while(node.right!=null){
+         return  findMaxInBst(node.right);
+      }
+      return null;
+  }
+ 
+// -----------------Vertical order Sum ------------------------------------------------------
+// public static int Vertical_order01(Node node){
+//     // base case hoga to arr create karddenge
+
+// }
+// Leetcode(968) -> BINARY TREE CAMERAS-------------------------------------------------------
+// static int min_cameras=0;
+// public static int binarytreecamera(Node node ){
+//     int bleft = binarytreecamera(node.left);
+//     int bright = binarytreecamera(node.right);
+//     // 1 -> i have camera
+//     // 0 -> i am covered by my child
+//     // -1 -> i need camera
+//     if( bleft ==-1|| bright ==-1){
+
+//         min_cameras++;
+//         return 1;
+//     }
+//     if(bleft==1 || bright==1){
+//         return 0;
+//     }
+//     if(bleft ==0 || bright == 0 ){
+//         if()
+//     }
+// }
+
+//------ 508 MOst frequent subarray sum--------------------------------------------------
+static HashMap<Integer,Integer> map = new HashMap<>();
+static int maxfreq =0;
+// public static int[] mostFrequentsum_(Node node){
+//     if(node == null){
+//         return new int[0];
+//     }
+//         mostFrequentsum(node);
+//         int count =0;
+//         for(Integer key: map.keySet()){
+
+//         }
+// }
+// public static int mostFrequentsum(Node node){
+//     if(node == null){
+//         return 0;
+//     }
+//     int sum = mostFrequentsum(node.left)+ mostFrequentsum(node.right)+ node.data;
+//     map.put(sum, map.getOrDefault(sum, 0)+1);
+//     maxfreq = Math.max(maxfreq, map.get(sum));
+//     return sum; 
+// }
 }
