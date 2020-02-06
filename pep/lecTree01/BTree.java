@@ -32,10 +32,10 @@ public class BTree{
         // kfar01(root, 2, 60);
         // kfar02(root, 2, 60);
         int[] arr1 = {10,20,30,40,50,60,70,80,90};
-        Node root1 = makeBST(arr1, 0, arr.length);
+        Node root1 = makeBST(arr1, 0, arr1.length-1);
         // display(root1);
-        System.out.println(BST_LCA(root1, 60, 70));;
-
+        Node BST_node  = BST_LCA(root1, 10, 90);
+        System.out.println(BST_node.data);
     
     }
     static int idx=0;
@@ -432,6 +432,7 @@ public static void DLL(Node node){
         return null;
     }
     int mid = (li+si)>>1; // si+(ei-si)/2 -> to manage overflow
+    // System.out.println(si +" "+mid + " "+ li);
     Node root = new Node(arr[mid],null,null);
     root.left = makeBST(arr, si, mid-1);    
     root.right = makeBST(arr, mid+1, li);
@@ -481,6 +482,7 @@ public static void DLL(Node node){
   // jb divergence condition hogi thats our ans;
   public static boolean findNodeInBst(Node node , int data){
       if(node==null){
+
           return false;
       }
       if(node.data == data){
@@ -513,7 +515,7 @@ public static void DLL(Node node){
   public static Node findMaxInBst_forremove(Node node){
       // left ki sabse max value jo hme milegi node right par
       while(node.right!=null){
-         return  findMaxInBst(node.right);
+         return  findMaxInBst_forremove(node.right);
       }
       return null;
   }
