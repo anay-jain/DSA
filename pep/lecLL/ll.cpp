@@ -17,9 +17,22 @@ class LinkedList{
 private: 
     Node* head = nullptr;
     Node* tail = nullptr;// pointer that contais address
-    int size;
+    int size=0;
 public:
-   
+    ~LinkedList(){
+        Node* temp = head;
+        while (head!=nullptr)
+        {
+            head = head->next;
+            delete temp;
+            temp = head;
+            /* code */
+        }
+        
+    }
+    int Size(){
+        return this->size;
+    }
     bool isEmpty(){
         return this->size==0;
     }
@@ -64,7 +77,118 @@ public:
 
         
     }
-    void display(){
+    Node* getNodeAt(int idx){
+        if(idx==0){
+            return nullptr;
+        }
+        Node* temp = head;
+        while(idx){
+         temp =temp->next;
+            idx--;
+        }
+        return temp;
+    }
+    int removeLast(){
+        if(size==0)
+        return -1;
+        Node* rn = nullptr;
+        if(size ==1){
+            rn = tail;
+            tail = nullptr;
+            head = nullptr;
+        }
+        else{
+           Node* temp = getNodeAt(size-2);
+           // because size last node ke aage hai
+        //    cout<<temp->data<<endl;
+           rn = temp->next;
+            tail = temp;
+           temp->next=nullptr;
+        }
+        int rdata = tail!=nullptr?rn->data:-1;
+        delete rn;
+        size--;
+        return rdata;
+    }
+    void addAt(int idx , int data){
+        if(idx<0 || idx>size){
+            return ;
+        }
+        if(idx==0){
+            addFirst(data);
+        }
+        else if(idx == size){
+            addLast(data);
+        }
+        else{
+           Node* getNode1  = getNodeAt(idx-1);
+        Node* getNode2 = getNode1->next;
+        Node* node = new Node(data);
+        getNode1->next = node;
+        node->next = getNode2;
+        size++;
+
+
+        }
+    }
+        void removeAt(int idx){
+            if(idx<0 || idx>size){
+                return ;
+            }
+            if(idx==0){
+                removeFirst();
+            }
+            else if(idx==size){
+                removeLast();
+            }
+            else{
+                Node* getNode1 = getNodeAt(idx-1);
+                Node* currNode = getNode1->next;
+                getNode1->next = currNode->next;
+                size--;
+                delete currNode;
+            }
+           
+            
+        }
+        Node* mid(){
+            Node* slow = head;
+            Node* fast = head;
+            while(fast!=nullptr && fast->next !=nullptr && fast->next->next!=nullptr){
+                slow = slow->next;
+                fast = fast->next->next;
+
+            }
+            return slow;
+        }
+        private:
+        class pairRec{
+            public:
+            Node* prevNode = nullptr;
+            // vs taki ye heap pr pahuch jaye 
+            pairRec(){
+                
+            }
+        };
+        void reverseDataRec(Node* node , pairRec* prev, int level){
+        if(node  == nullptr){
+            return ;
+            }
+        // call lagao 
+        reverseDataRec(node->next, prev, level+1);
+        // jab level half size se bda hai tab tak swap karna hai 
+        if(level>=this->size/2){
+                //prevNode private hota to hme pairRec ki class mei hi usse aise use kar ste hai.
+                int temp= prev->prevNode->data;
+                prev->prevNode->data = node->data;
+                node->data= temp;
+                prev->prevNode = prev->prevNode->next;
+                // prev ka prevNode kisse reflect 
+                // cout<<"d";
+        }
+    }
+    public:
+     void display(){
         while (head!=nullptr)
         {
             cout<<head->data<<"->";
@@ -72,6 +196,49 @@ public:
         }
         
     }
+    void reverseDataRec_(){
+        pairRec* prev = new pairRec(); 
+        prev->prevNode = head;
+        reverseDataRec(head,prev, 0 );
+    }
+   Node* reversepointer(Node* node){
+        if(node == nullptr){
+            return nullptr;
+        }
+        
+        Node* curr = node->next;
+        while(curr !=nullptr){
+            Node* forward = curr->next;
+            curr->next = node;
+
+            node = curr;
+            curr = forward;
+        }
+        return node;
+
+    }
+  
+    void reverseData(Node* node){
+        if(node==nullptr){
+            return ;
+        }
+        Node* slow = node;
+        Node* fast = node;
+
+        while(fast!=nullptr && fast->next!=nullptr&& fast->next->next !=nullptr ){
+            slow = slow->next;
+            fast = fast->next->next;
+
+        }
+        if(fast->next!=nullptr){
+            fast = fast ->next;
+            // now fast and slow are rightly placed 
+        }
+
+    }
+
+
+   
 
 };
 
@@ -80,6 +247,15 @@ int main(){
     for(int i=1;i<=10;i++){
         ll.addFirst(i*10);
     }
+    
+    // cout<<ll.Size();
+    // cout<<ll.removeLast()<<endl;
+    // cout<<ll.removeLast()<<endl;cout<<ll.removeLast()<<endl;
+    // ll.display();
+    // cout<<ll.Size();
+    // ll->Node* midData = ll.mid();
+    ll.reverseDataRec_();
     ll.display();
+
     return 0;
 }
