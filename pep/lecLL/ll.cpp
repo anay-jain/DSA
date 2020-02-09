@@ -206,40 +206,45 @@ public:
             return nullptr;
         }
         
-        Node* curr = node->next;
-        while(curr !=nullptr){
-            Node* forward = curr->next;
-            curr->next = node;
+        Node *prev = nullptr;
+        Node *curr = node;
 
-            node = curr;
-            curr = forward;
+        while (curr != nullptr)
+        {
+            Node *forw = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = forw;
         }
-        return node;
+
+        return prev;
+    
 
     }
   
-    void reverseData(Node* node){
-        if(node==nullptr){
-            return ;
+    bool isPalindrome(){
+        // Node*  node = head;
+        Node* midNode= mid();
+        Node* nhead = midNode->next;
+        midNode->next = nullptr;
+        Node* prev= reversepointer(nhead);
+        Node* list1 = head;
+        Node* list2 = prev;
+        bool flag = true;
+        while(list1!=nullptr && list2!=nullptr){
+            if(list1->data != list2->data){
+                flag= false;
+            }
+            list1=list1->next;
+            list2=list2->next;
         }
-        Node* slow = node;
-        Node* fast = node;
+        prev = reversepointer(prev);
+        midNode->next = nhead;
+        // kyuki hmne beech mei link todd dia ta
+        return flag;
 
-        while(fast!=nullptr && fast->next!=nullptr&& fast->next->next !=nullptr ){
-            slow = slow->next;
-            fast = fast->next->next;
-
-        }
-        if(fast->next!=nullptr){
-            fast = fast ->next;
-            // now fast and slow are rightly placed 
-        }
-
-    }
-
-
-   
-
+    
+    }   
 };
 
 int main(){
@@ -247,15 +252,20 @@ int main(){
     for(int i=1;i<=10;i++){
         ll.addFirst(i*10);
     }
-    
+    for(int i =10;i>=1;i--){
+        ll.addFirst(i*10);
+
+    }
+
     // cout<<ll.Size();
     // cout<<ll.removeLast()<<endl;
     // cout<<ll.removeLast()<<endl;cout<<ll.removeLast()<<endl;
     // ll.display();
     // cout<<ll.Size();
-    // ll->Node* midData = ll.mid();
-    ll.reverseDataRec_();
-    ll.display();
+    // ll->Node* midData = ll.mid(); // problm
+    // ll.reverseDataRec_();
+    // ll.display();
+    cout<<ll.isPalindrome();
 
     return 0;
 }

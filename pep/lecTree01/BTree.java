@@ -568,4 +568,16 @@ static int maxfreq =0;
 //     maxfreq = Math.max(maxfreq, map.get(sum));
 //     return sum; 
 // }
+class traversal{
+    Node node=null;
+    boolean selfDone = false;
+    boolean leftDone = false;
+    boolean rightDone = false;
+    traversal(Node node){
+        this.node = node;
+    }
+}
+public void traversalPreOrder(){
+     
+}
 }
