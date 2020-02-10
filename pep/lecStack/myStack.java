@@ -8,6 +8,7 @@ public  class myStack{
         this.st = new int[size];
     }
     public  void push(int x){
+        // System.out.println(idx);
         if(idx==st.length){
             System.out.println("Stack is overflow");
             return ;
