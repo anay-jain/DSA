@@ -1,4 +1,6 @@
 #include<iostream>
+#include<list>
+#include<unordered_map>
 using namespace std;
 class LinkedList{
     public:
@@ -245,6 +247,20 @@ public:
 
     
     }   
+    
+};
+class LRU{
+    list<int> ll;
+    unordered_map<int,char> map;
+    int defaultSize =4;
+    void set(int key , char val){
+        if(map.find[key]==map.end()){
+            
+        }
+    }
+
+
+
 };
 
 int main(){

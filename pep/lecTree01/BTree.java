@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Stack;
 
 public class BTree{
     // ==== Class of Node
@@ -577,7 +578,25 @@ class traversal{
         this.node = node;
     }
 }
-public void traversalPreOrder(){
+public void traversalPreOrder(Node node ){
+    Stack<traversal> st = new Stack<>();
+    st.push(new traversal(node));
+    while(!st.isEmpty()){
+        traversal rpair = st.peek();
+        if(rpair.selfDone==false){
+            System.out.println(rpair.node.data);
+            rpair.selfDone= true;
+        }
+        else if(rpair.leftDone == false){
+            rpair.leftDone = true;
+            if(rpair.node.left !=null){
+                st.add(new traversal(rpair.node.left));
+            }
+        }
+        else if(rpair.rightDone == false){
+            
+        }
+    }
      
 }
 }
