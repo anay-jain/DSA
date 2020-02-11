@@ -62,6 +62,41 @@ public:
         }
     size++;
     }
+    void addFirstNode(Node* node){
+       
+     if(head==nullptr){
+         head = node;
+         tail =node;
+     }else{
+         node->next=head;
+         head = node;
+     }
+     size++;
+    }
+    Node* removeFirstNode(){
+        Node* rn = nullptr;
+        if(head!=nullptr){
+            if(size==1){
+                tail=nullptr;
+            }
+            rn = head;
+            head=head->next;
+            size--;
+        }
+        return rn;
+    }
+    Node* addLastNode(Node* node){
+        if(tail!=nullptr){
+            tail->next =node;
+            tail=node;
+
+        }else{
+            // ek hi ele hau agr to
+            tail=node;
+            head=node;
+        }
+        size++;
+    }
     int removeFirst(){
         Node * rn = nullptr;
         if(head != nullptr){
@@ -191,10 +226,11 @@ public:
     }
     public:
      void display(){
-        while (head!=nullptr)
+         Node* curr = head;
+        while (curr!=nullptr)
         {
-            cout<<head->data<<"->";
-            head = head->next;
+            cout<<curr->data<<"->";
+            curr = curr->next;
         }
         
     }
@@ -204,9 +240,9 @@ public:
         reverseDataRec(head,prev, 0 );
     }
    Node* reversepointer(Node* node){
-        if(node == nullptr){
-            return nullptr;
-        }
+            // if(node == nullptr){
+            //     return nullptr;
+            // }
         
         Node *prev = nullptr;
         Node *curr = node;
@@ -218,10 +254,7 @@ public:
             prev = curr;
             curr = forw;
         }
-
         return prev;
-    
-
     }
   
     bool isPalindrome(){
@@ -244,9 +277,77 @@ public:
         midNode->next = nhead;
         // kyuki hmne beech mei link todd dia ta
         return flag;
-
-    
     }   
+    Node* fold(){
+        Node* midNode  = mid();
+        Node* nt = midNode->next;
+        midNode->next = nullptr;
+        Node* nh = reversepointer(nt);
+        Node* list1 = head;
+        Node* list2 = nh;
+        while( list2!=nullptr){
+            Node* cn1 = list1->next;
+            Node* cn2 = list2->next;
+            // cn1 aur cn2 while mei islie nahi aaynege kyuki last wale abhi connect nahi hue
+            // list1->next=list2;
+            // list2->next=cn1;
+            // list1=cn1;
+            // list2=cn2;
+            list1->next = list2;
+            list1=cn1;
+             list2->next=list1;
+            list2= cn2;
+
+
+            //   list1->next = list2;
+            // this is wrong kyuki list1 next is pointing to list2;
+            // list1=list1->next;
+            // to ye glt point karega
+            //  list2->next=list1;
+            // list2= list2->next;
+        }
+        if(list1==nullptr){
+            // even case;
+            tail = nt;
+        }
+        else{
+            tail = list1;
+        }
+        
+
+    }
+    private:
+
+    Node* detectCycle(){
+        Node* slow =head;
+        Node* fast = head;
+        while(fast!=nullptr ){
+            slow= slow->next;
+            fast = fast->next->next;
+            if(slow=fast){
+                return slow;
+            }
+        }
+        return nullptr;
+    }
+    public:
+    bool detectCycle_(){
+        Node* rnode = detectCycle();
+        return rnode!=nullptr;
+    }
+    int intersectionPoint(){
+        Node* node = detectCycle();
+        if(node!=nullptr){
+            Node* slow = head;
+           Node* fast = node;
+            while(slow!=fast){
+                slow = slow->next;
+                fast =fast->next;
+            }
+            return slow->data;
+        }
+        return -1;
+    }
     
 };
 class LRU{
@@ -261,17 +362,17 @@ class LRU{
 
 
 
-};
+// };
 
 int main(){
     LinkedList ll ;
     for(int i=1;i<=10;i++){
         ll.addFirst(i*10);
     }
-    for(int i =10;i>=1;i--){
-        ll.addFirst(i*10);
+    // for(int i =8;i>=1;i--){
+    //     ll.addFirst(i*10);
 
-    }
+    // }
 
     // cout<<ll.Size();
     // cout<<ll.removeLast()<<endl;
@@ -281,7 +382,11 @@ int main(){
     // ll->Node* midData = ll.mid(); // problm
     // ll.reverseDataRec_();
     // ll.display();
-    cout<<ll.isPalindrome();
+    // cout<<ll.isPalindrome();
+    // ll.display();
+    ll.fold();
+    ll.display();
+
 
     return 0;
 }
