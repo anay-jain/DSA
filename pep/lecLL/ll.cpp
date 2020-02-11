@@ -352,17 +352,35 @@ public:
 };
 class LRU{
     list<int> ll;
-    unordered_map<int,char> map;
+    unordered_map<int,int> map;
     int defaultSize =4;
-    void set(int key , char val){
+    void set(int key , int val){
         if(map.find[key]==map.end()){
-            
+            if(ll.size() == defaultSize){
+                int last_key = ll.back();
+                ll.pop_back();
+               
+                map.erase(last_key);
+
+            } ll.push_front(key);
+            map[key]=val;
+        
+        }else{
+            ll.remove(key);
+            ll.push_front(key);
+            map[key]=val;
         }
     }
-
-
-
-// };
+   int  get(int key){
+        if(map.find(key)== map.end())
+        return -1;
+        else{
+            ll.remove(key);
+            ll.push_front(key);
+            return map[key];
+        }
+    }
+};
 
 int main(){
     LinkedList ll ;
