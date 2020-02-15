@@ -324,7 +324,7 @@ public:
         while(fast!=nullptr ){
             slow= slow->next;
             fast = fast->next->next;
-            if(slow=fast){
+            if(slow==fast){
                 return slow;
             }
         }

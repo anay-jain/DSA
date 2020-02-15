@@ -32,12 +32,23 @@ public class BTree{
         // System.out.println(LCA(root, 70, 90));
         // kfar01(root, 2, 60);
         // kfar02(root, 2, 60);
-        int[] arr1 = {10,20,30,40,50,60,70,80,90};
-        Node root1 = makeBST(arr1, 0, arr1.length-1);
+        // int[] arr1 = {10,20,30,40,50,60,70,80,90};
+        // Node root1 = makeBST(arr1, 0, arr1.length-1);
         // display(root1);
-        Node BST_node  = BST_LCA(root1, 10, 90);
-        System.out.println(BST_node.data);
-    
+        // Node BST_node  = BST_LCA(root1, 10, 90);
+        // System.out.println(BST_node.data);
+        ArrayList<ArrayList<Integer>> myAns = new ArrayList<>();
+
+        pathSum2_02(root, 60, new ArrayList<Integer>(), myAns);
+        for(ArrayList<Integer> i: myAns){
+            for(int j:i){
+                System.out.print(j+ " ");
+            }
+            System.out.println("");
+        }
+        leafToLeafMaxSum(root);
+        System.out.println(maxSum);
+        
     }
     static int idx=0;
     //---- construction -------------------------------
@@ -367,21 +378,23 @@ public static Node lineartree(Node node){
 }
 // convert into doubly linked list -----------------------------------------------------
 static Node prev_ = null;
-static Node head  = null;
+static Node head  = null; // ye circular mei kaaam aayega
 public static void DLL(Node node){
     if(node ==null){
         return ;
     }
     DLL(node.left);
     if(prev_ == null){
-        head= node;
+        head= node; // for circular DLL
     }
     else{
         prev_.right = node;
         node.left = prev_;
-
+ 
     }
     prev_= node;
+    // vo apne aap ko change karke reight ki cl lagayega ... 
+    DLL(node.right);
 
 }
 //---- PATH SUM 1 (lc-112) -------------------------------------------------------
@@ -428,6 +441,25 @@ public static void DLL(Node node){
       }
       return ans;
   }
+  public static void pathSum2_02(Node node , int tar , ArrayList<Integer> small , ArrayList<ArrayList<Integer>> ans){
+      if(node == null){
+          return ;
+      }
+      if(node.right == null && node.left== null && node.data-tar==0){
+          ArrayList<Integer> base = new ArrayList<Integer>(small);
+          // this will copy small to base(deep copy);
+          base.add(node.data);
+          ans.add(base);
+          return;
+
+      }
+      // ate wqt small me add karo
+      small.add(node.data);
+      pathSum2_02(node.left, tar-node.data, small, ans);
+      pathSum2_02(node.right, tar-node.data, small, ans);
+      small.remove(small.size()-1);
+  }
+  // --------------------------------------------------------------------------------------------
   public static Node makeBST(int[] arr , int si , int li){
     if(li<si){
         return null;
@@ -569,6 +601,25 @@ static int maxfreq =0;
 //     maxfreq = Math.max(maxfreq, map.get(sum));
 //     return sum; 
 // }
+public void morrisTraversalInorder(Node node){
+    Node curr = node;
+    while(curr != null){
+        Node next = curr.left;
+        if(next== null || next.right==curr){
+            // agar uska koi left child nahi h to . print the node
+            if(next==null){
+            System.out.print(curr.data);
+            continue;
+            }
+            System.out.print(next.right);
+            next.right=null;
+            curr = curr.right;
+        }
+        else{
+            
+        }
+    }
+}
 class traversal{
     Node node=null;
     boolean selfDone = false;
@@ -598,5 +649,21 @@ public void traversalPreOrder(Node node ){
         }
     }
      
+}
+    static int maxSum =0;
+public static int leafToLeafMaxSum(Node node){
+    int lsum =0 , rsum=0;
+    if(node == null){
+        return 0;
+    }
+         lsum = leafToLeafMaxSum(node.left);
+         rsum = leafToLeafMaxSum(node.right);
+        if(lsum != -1 && rsum!=-1){
+            maxSum = Math.max(maxSum , lsum+rsum+node.data);
+        }
+
+    
+    return Math.max(lsum , rsum )+node.data;
+
 }
 }
