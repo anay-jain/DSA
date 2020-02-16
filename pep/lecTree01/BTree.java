@@ -110,6 +110,58 @@ public class BTree{
         res = res || find(node.right , data);
         return res;
     }
+// Diameter 3 ways---------------------------------------------------------------
+
+public static int Diameter_01(Node node){
+    // dia is in terms of edges
+    if(node == null){
+        return 0;
+    }
+    int  lh = height(node.left);
+    int rh =height(node.right);
+    int maxSide = Math.max(lh,rh)+1;
+    return Math.max(maxSide, lh+rh+2);
+
+    
+}
+
+static int maxdia =0;
+public static int diameter_02(TreeNode root){
+    if(root == null){
+      return -1;
+  }
+  int lh = diameter_02(root.left);
+  int rh = diameter_02(root.right);
+  maxdia = Math.max(maxdia , lh+rh+2);
+  return Math.max(lh,rh)+1;
+}
+public static int[] diameter_03(Node node){
+    if(node == null){
+        return new int[]{0,-1};
+    }
+    int[] ld = diameter_02(node.left);
+    int[] rd = diameter_02(node.right);
+
+    int[] ans = new int[2];
+
+    ans[0] = Math.max(Math.max(ld[0], rd[0]), ld[1] + rd[1] + 2);
+    ans[1] = Math.max(ld[1], rd[1]) + 1;
+
+    return ans;
+}
+// ---- Binary tree max path sum---------------------------------------------------------------
+public static int nodeToNodeMaxSum(Node node) {
+    if (node == null)
+        return 0;
+
+    int leftsum = nodeToNodeMaxSum(node.left);
+    int rightsum = nodeToNodeMaxSum(node.right);
+    
+    int sideMax = Math.max(leftsum, rightsum) + node.data;
+    maxSum = Math.max(Math.max(maxSum, sideMax), Math.max(leftsum + rightsum + node.data, node.data));
+
+    return math.max(sideMax, node.data);
+}
   // ----- Root to node path(2 ways)---------------------------------------------------------------
   
   
@@ -153,7 +205,7 @@ public class BTree{
     }
     //------- Diameter two methods ------------------------------------------------------
 
-    // -----LCA    ----------------------------------------------------------------------
+    // -----LCA   2 methods  ----------------------------------------------------------------------
     public static int LCA(Node node , int data1 , int data2){
         ArrayList<Node> node1 = shortestPathToNode(node, data1);
         ArrayList<Node> node2 = shortestPathToNode(node, data2);
@@ -165,6 +217,27 @@ public class BTree{
             temp=node1.get(i).data;
         }
    return temp;
+  }
+  static Node lca_node = null;
+  public static boolean lca_02(Node node , int p , int q){
+      if(node==null){
+          return null;
+      }
+      boolean selfDone = node.data==p || node.data==q;
+      boolean left = lca_02(node.left, p, q);
+      if(lca_node != null){
+          return true;
+      }
+      boolean right = lca_02(node.right, p, q);
+      if(lca_node != null){
+          return true;
+      }
+
+      if((left&& right ) || (left && selfDone) ||(right && selfDone )){
+         lca_node= node;
+      } 
+      return left|| right|| selfDone;
+
   }
   // ---- KFAR 2 methods----------------------------------------------------------
     // kaway for kfar
@@ -601,25 +674,25 @@ static int maxfreq =0;
 //     maxfreq = Math.max(maxfreq, map.get(sum));
 //     return sum; 
 // }
-public void morrisTraversalInorder(Node node){
-    Node curr = node;
-    while(curr != null){
-        Node next = curr.left;
-        if(next== null || next.right==curr){
-            // agar uska koi left child nahi h to . print the node
-            if(next==null){
-            System.out.print(curr.data);
-            continue;
-            }
-            System.out.print(next.right);
-            next.right=null;
-            curr = curr.right;
-        }
-        else{
+// public void morrisTraversalInorder(Node node){
+//     Node curr = node;
+//     while(curr != null){
+//         Node next = curr.left;
+//         if(next== null || next.right==curr){
+//             // agar uska koi left child nahi h to . print the node
+//             if(next==null){
+//             System.out.print(curr.data);
+//             continue;
+//             }
+//             System.out.print(next.right);
+//             next.right=null;
+//             curr = curr.right;
+//         }
+//         else{
             
-        }
-    }
-}
+//         }
+//     }
+// }
 class traversal{
     Node node=null;
     boolean selfDone = false;
