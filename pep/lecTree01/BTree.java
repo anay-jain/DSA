@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Stack;
 
 public class BTree{
@@ -37,17 +38,19 @@ public class BTree{
         // display(root1);
         // Node BST_node  = BST_LCA(root1, 10, 90);
         // System.out.println(BST_node.data);
-        ArrayList<ArrayList<Integer>> myAns = new ArrayList<>();
+        // ArrayList<ArrayList<Integer>> myAns = new ArrayList<>();
 
-        pathSum2_02(root, 60, new ArrayList<Integer>(), myAns);
-        for(ArrayList<Integer> i: myAns){
-            for(int j:i){
-                System.out.print(j+ " ");
-            }
-            System.out.println("");
-        }
-        leafToLeafMaxSum(root);
-        System.out.println(maxSum);
+        // pathSum2_02(root, 60, new ArrayList<Integer>(), myAns);
+        // for(ArrayList<Integer> i: myAns){
+        //     for(int j:i){
+        //         System.out.print(j+ " ");
+        //     }
+        //     System.out.println("");
+        // }
+        // leafToLeafMaxSum(root);
+        // System.out.println(maxSum);
+        // boundaryView(root);
+        verticalOrder_01(root);
         
     }
     static int idx=0;
@@ -126,7 +129,7 @@ public static int Diameter_01(Node node){
 }
 
 static int maxdia =0;
-public static int diameter_02(TreeNode root){
+public static int diameter_02(Node root){
     if(root == null){
       return -1;
   }
@@ -139,13 +142,13 @@ public static int[] diameter_03(Node node){
     if(node == null){
         return new int[]{0,-1};
     }
-    int[] ld = diameter_02(node.left);
-    int[] rd = diameter_02(node.right);
+    int[] ld = diameter_03(node.left);
+    int[] rd = diameter_03(node.right);
 
     int[] ans = new int[2];
 
-    ans[0] = Math.max(Math.max(ld[0], rd[0]), ld[1] + rd[1] + 2);
-    ans[1] = Math.max(ld[1], rd[1]) + 1;
+    ans[0] = Math.max(Math.max(ld[0], rd[0]), ld[1] + rd[1] + 2); //isme diameter
+    ans[1] = Math.max(ld[1], rd[1]) + 1; // iske andr hm apni height store kar rhe hai
 
     return ans;
 }
@@ -160,7 +163,7 @@ public static int nodeToNodeMaxSum(Node node) {
     int sideMax = Math.max(leftsum, rightsum) + node.data;
     maxSum = Math.max(Math.max(maxSum, sideMax), Math.max(leftsum + rightsum + node.data, node.data));
 
-    return math.max(sideMax, node.data);
+    return Math.max(sideMax, node.data);
 }
   // ----- Root to node path(2 ways)---------------------------------------------------------------
   
@@ -221,7 +224,7 @@ public static int nodeToNodeMaxSum(Node node) {
   static Node lca_node = null;
   public static boolean lca_02(Node node , int p , int q){
       if(node==null){
-          return null;
+          return false;
       }
       boolean selfDone = node.data==p || node.data==q;
       boolean left = lca_02(node.left, p, q);
@@ -577,15 +580,156 @@ public static void DLL(Node node){
             return node.left==null?node.right:node.left;
         }
         // 1st condtion
-        Node rdata = findMaxInBst_forremove( node);
+        Node rdata = findMaxInBst_forremove( node.left);
         node.data = rdata.data;
 
+        node.left = remove(node.left, rdata.data);
     }
     return node;
   }
+  Node FindMaxPrev(Node node){
+      if(node== null)
+      return null;
+      Node prev =null;
+      Node rnode = node;
+      while(rnode.right == null){
+          prev = rnode;
+          rnode=rnode.right;
+      }
+      return prev;
+  }
 
-  // -- LCA IN BST (LOG N)-----------------------------------------------------------------------
+
+  // Swap ele to make it bst
+  static Node x , y , z;
+
+  // z will be our prev
+  public static boolean swapBst(Node node){
+    if(node == null){
+        return false;
+
+    }
+    boolean res = false;
+    res = res || swapBst(node.left);
+    if(z!= null && z.data >node.data){
+        y = node;
+        if(x==null){
+            x = z;
+        }
+        else{
+            return true;
+        }
+       
+        
+    } 
+    z=node;
+    res = res || swapBst(node.right);
+    return res;
+
+  }
+  // --- Preoder to BST TREE------------------------------------------------------
+
+  static int Preorder_idx=0;
+  public static Node preorderToBst(int[] arr ,  int lb , int ub){
+      if(Preorder_idx>=arr.length || arr[Preorder_idx] <lb || arr[Preorder_idx]>ub ){
+          return null;
+      }
+      Node nnode = new Node(arr[idx],null,null);
+      Preorder_idx++;
+      if(Preorder_idx<arr.length){
+          nnode.left = preorderToBst(arr, lb, arr[idx]);
+      }
+      if(Preorder_idx<arr.length){
+          nnode.right = preorderToBst(arr, arr[idx] , ub);
+      }
+      return nnode;
+  }
+
+  // height of BST traveral----------------------------------------------
+  static int height_idx=0;
+  public static int heightFromBstPreorder(int[] arr , int lb , int ele , int ub){
+      if(height_idx== arr.length || ele<lb || ele>ub){
+          return 0;
+      }
+      int ele_ = arr[height_idx];
+      height_idx++;
+      int lh = 0, uh=0;
+      if(height_idx<arr.length ){
+          lh  = heightFromBstPreorder(arr, lb, arr[idx],ele_ );
+        
+      }
+      if(height_idx<arr.length ){
+        uh  = heightFromBstPreorder(arr, ele_, arr[idx],ub);
+      
+    }
+    return Math.max(lh,uh)+1;
+  }
   // jb divergence condition hogi thats our ans;
+  // ---- Traversal and views -----------------------------------------------------------
+  static int level_=-1;
+  public static void leftView_01(Node node, int level){
+    if(node == null){
+        return;
+    }
+    leftView_01(node.left, level+1);
+    leftView_01(node.right, level+1);
+    if(level!=level_){
+        System.out.print(node.data);
+        level_=level;
+    }
+  // right view ke lie call ko swap kardo bas  
+  }
+
+  public static void leftView_02(Node node){
+    
+      LinkedList<Node> que = new LinkedList<>();
+      que.add(node);
+      int level=0;
+      while(!que.isEmpty()){
+          int size = que.size();
+          Node prev = null;
+          while(size-->0){
+              Node rnode = que.removeLast();
+              if(prev == null){
+                  System.out.print(rnode.data);
+                  prev = rnode;
+              }
+              if(node.left!=null)
+              que.addFirst(node.left);
+              if(node.right != null)
+              que.addFirst(node.right);
+          }
+          level++;
+      }
+  }
+public static void boundaryView(Node node){
+    LinkedList<Node> que = new LinkedList<>();
+    que.addLast(node);
+    que.addLast(null);
+    Node prev = null;
+    int level =0;
+    while(que.size()>1){
+        Node rnode = que.removeFirst();
+        if(rnode.left !=null){
+            que.addLast(rnode.left);
+        }
+        if(rnode.right !=null)
+        que.addLast(rnode.right);
+        if(prev == null && level !=0 && que.size()>1){
+            System.out.print(rnode.data+" ");
+            prev= que.peekFirst();
+        }
+        if(que.peekFirst()==null){
+            level++;
+            prev = null;
+            que.addLast(null);
+            que.removeFirst();
+            System.out.print(rnode.data+" ");
+            System.out.println("");
+        }
+    }
+
+}
   public static boolean findNodeInBst(Node node , int data){
       if(node==null){
 
@@ -625,6 +769,70 @@ public static void DLL(Node node){
       }
       return null;
   }
+
+  // -- vertical order View 2 ways-----------------------------------------------------------
+  public static class verticalPair{
+      Node node = null ;
+      int level =0;
+      verticalPair(Node node , int level){
+          this.node = node;
+          this.level=level;
+      }
+  }
+  public static void verticalOrder_01(Node node){
+      if(node == null){
+          return;
+      }
+      HashMap<Integer,ArrayList<Integer>> map = new HashMap<>();
+      LinkedList<verticalPair> que = new LinkedList<>();
+      verticalPair vpair = new verticalPair(node, 0);
+      que.addLast(vpair);
+      ArrayList<Integer> base = new ArrayList<>();
+      base.add(node.data);
+      map.put(0, base);
+      int minlevel = 0 , maxlevel = 0;
+      while(!que.isEmpty()){
+          int size = que.size();
+          while(size-->0){
+              verticalPair rpair = que.removeFirst();
+              int level = rpair.level;
+              maxlevel = Math.max(maxlevel, level);
+              minlevel = Math.min(minlevel, level);
+              if(rpair.node.left!=null){
+                  que.addLast(new verticalPair(rpair.node.left, level-1));
+                  ArrayList<Integer> left =  map.getOrDefault(level-1, new ArrayList<>());
+                  left.add(rpair.node.left.data);
+                  map.put(level-1, left);
+                //   System.out.println(left+ " "+level);
+              }
+              if(rpair.node.right != null){
+                  que.addLast(new verticalPair(rpair.node.right, level+1 ));
+                  ArrayList<Integer> right =  map.getOrDefault(level+1, new ArrayList<>());
+                  right.add(rpair.node.right.data);
+                  map.put(level+1, right);
+                //   System.out.println(right+ " "+level);
+
+
+              }
+
+          }
+      }
+      for(int i=minlevel; i<=maxlevel;i++){
+        ArrayList<Integer> arr = map.get(i);
+        // System.out.println(i);
+        // System.out.println(arr);
+        // System.out.println(map.keySet());
+        if(arr.size()>0){
+            for(int itr : arr){
+            System.out.print(itr+ " ");
+        }
+        System.out.println("");
+        }
+        
+      }
+
+  }
+  
  
 // -----------------Vertical order Sum ------------------------------------------------------
 // public static int Vertical_order01(Node node){
