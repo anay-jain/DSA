@@ -50,7 +50,8 @@ public class BTree{
         // leafToLeafMaxSum(root);
         // System.out.println(maxSum);
         // boundaryView(root);
-        verticalOrder_01(root);
+        // verticalOrder_01(root);
+        rangeBST(root, 30, 70);
         
     }
     static int idx=0;
@@ -822,7 +823,7 @@ public static void boundaryView(Node node){
         // System.out.println(i);
         // System.out.println(arr);
         // System.out.println(map.keySet());
-        if(arr.size()>0){
+        if( arr.size()>0){
             for(int itr : arr){
             System.out.print(itr+ " ");
         }
@@ -832,12 +833,107 @@ public static void boundaryView(Node node){
       }
 
   }
-  
- 
-// -----------------Vertical order Sum ------------------------------------------------------
-// public static int Vertical_order01(Node node){
-//     // base case hoga to arr create karddenge
+  static int maxlevel1 =0 ;
+  static int minlevel1 = 0;
+public static void width(Node node , int level){
+    if(node == null){
+        return ;
+    }
+    minlevel1 = Math.min(minlevel1 , level);
+    width(node.left, level-1);
+    width(node.right, level+1);
 
+}
+public static void verticalOrder_02(Node node){
+    if(node == null){
+        return;
+
+    }
+    width(node , 0);
+    // rtather than making a class make 2 que 
+    LinkedList<Node> que1 = new LinkedList<>();
+    LinkedList<Integer> que2 = new LinkedList<>();
+    // similar as class jisme ek node aur level hota
+    ArrayList<Integer>[] arr = new ArrayList[maxlevel1-minlevel1];
+    que1.add(node);
+    que2.add(-minlevel1); // to map 0
+    // arr[-minlevel1].add(node.data);
+    while(que1.size()>0){
+        int size = que1.size();
+
+        while(size-->0){
+            Node rnode = que1.removeFirst();
+            int rdata = que2.removeFirst();
+            arr[rdata].add(rnode.data);
+            if(rnode.left!=null){
+                que1.addLast(rnode.left);
+                que2.addLast(rdata-1);
+            }
+            if(rnode.right!=null){
+                que1.addLast(rnode.right);
+                que2.addLast(rdata+1);
+            }
+            
+        }
+    }
+}
+// find range BST
+public static void rangeBST(Node node, int a , int b){
+    if(node == null){
+        return ;
+    }
+    if(
+        node.data<a){
+        // right side lie karegs
+        // node.data<a<b;
+        rangeBST(node.right, a ,b);
+    }
+    else if(node.data>b){
+        rangeBST(node.left, a, b);
+
+    }
+    else{
+        System.out.print(node.data);
+        rangeBST(node.left, a, b);
+        rangeBST(node.right,a , b);
+    }
+
+}
+// width Another method
+public static int width_02(Node node, boolean isLeftWidth){
+    if(node == null){
+        return -1;
+    }
+    int lw = width_02(node.left, isLeftWidth)+ (isLeftWidth?1:-1);
+    int rw = width_02(node.right, isLeftWidth) + (isLeftWidth?-1:1);
+    return Math.max(lw, rw);
+}
+// Diagonal print
+public static void diagonalPrint(Node node){
+    if(node == null){
+        return;
+
+    }
+    int lh = width_02(node, true);
+    int[] arr  = new int[lh];
+    diagonalPrint(node);
+}
+
+// Vertical order Sum (Doubly LinkedList Solution)-------------------------------------------
+// static LinkedList<Node> dll = new LinkedList<>();
+// static Node head_ = null;
+// static Node tail_ = null;
+// public static void verticalSum(Node node, Node curr){
+//     if(node == null){
+//         return;
+//     }
+//     if(head == null){
+
+//     }
+//     if(node.left != null){
+
+//     }
+    
 // }
 // Leetcode(968) -> BINARY TREE CAMERAS-------------------------------------------------------
 // static int min_cameras=0;
