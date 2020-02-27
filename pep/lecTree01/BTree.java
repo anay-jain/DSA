@@ -536,6 +536,22 @@ public static void DLL(Node node){
       pathSum2_02(node.right, tar-node.data, small, ans);
       small.remove(small.size()-1);
   }
+  static int maxSum =0;
+  public static int leafToLeafMaxSum(Node node){
+      int lsum =0 , rsum=0;
+      if(node == null){
+          return 0;
+      }
+           lsum = leafToLeafMaxSum(node.left);
+           rsum = leafToLeafMaxSum(node.right);
+          if(lsum != -1 && rsum!=-1){
+              maxSum = Math.max(maxSum , lsum+rsum+node.data);
+          }
+  
+      
+      return Math.max(lsum , rsum )+node.data;
+  
+  }
   // --------------------------------------------------------------------------------------------
   public static Node makeBST(int[] arr , int si , int li){
     if(li<si){
@@ -770,6 +786,18 @@ public static void boundaryView(Node node){
       }
       return null;
   }
+ // bottm views -------------------------------------------------------------------------------
+ public static void width_03(Node node , int level , int[] ans){
+     if(node == null){
+         return ;
+     }
+     ans[0] = Math.min(ans[0] , level);
+     ans[1] = Math.max(ans[1] , level);
+     width_03(node.left ,level-1, ans);
+     width_03(node.right, level+1, ans);
+
+ }
+ // in this we make static width 
 
   // -- vertical order View 2 ways-----------------------------------------------------------
   public static class verticalPair{
@@ -909,32 +937,65 @@ public static int width_02(Node node, boolean isLeftWidth){
     return Math.max(lw, rw);
 }
 // Diagonal print
-public static void diagonalPrint(Node node){
-    if(node == null){
-        return;
-
-    }
-    int lh = width_02(node, true);
-    int[] arr  = new int[lh];
-    diagonalPrint(node);
-}
-
-// Vertical order Sum (Doubly LinkedList Solution)-------------------------------------------
-// static LinkedList<Node> dll = new LinkedList<>();
-// static Node head_ = null;
-// static Node tail_ = null;
-// public static void verticalSum(Node node, Node curr){
+// public static void diagonalPrint(Node node){
 //     if(node == null){
 //         return;
-//     }
-//     if(head == null){
 
 //     }
-//     if(node.left != null){
-
-//     }
-    
+//     int lh = width_02(node, true);
+//     int[] arr  = new int[lh];
+//     diagonalPrint(node);
 // }
+
+// Vertical order Sum (Doubly LinkedList Solution)-------------------------------------------
+public static class LLnode{
+    int data =0;
+    LLnode next = null;
+    LLnode prev  = null;
+    LLnode(int data){
+        this.data = data;
+    }
+}
+static LLnode head_ = null;
+static LLnode tail_ = null;
+public static void verticalSum_03(Node node){
+    // setting up head and tail 
+//     static LinkedList<LLnode> dll = new LinkedList<>();
+// static Node head_ = null
+// static Node tail_ = null;
+// rather than making them null , we can make them point to sinngle node to manage excpetns
+    LLnode lnode  = new LLnode(0);
+    head_ = lnode;
+    tail_ = lnode;
+    verticalSum_03_(node , lnode);
+    // data display below
+}
+
+
+public static void verticalSum_03_(Node node , LLnode lnode){
+
+    // sabse phele aake preorder mei apne app ko add karenge
+    lnode.data += node.data;
+    if(node.left!=null){
+        if(lnode.prev== null){
+            // ll node -> creation
+            lnode.prev = new LLnode(0);
+            head_ = lnode.prev;
+            lnode.prev.next = lnode;
+
+        }
+        verticalSum_03_(node.left , lnode.prev);
+    }
+    if(node.right != null){
+        if(lnode.next==null){
+            lnode.next = new LLnode(0);
+            lnode.next=tail_;
+            lnode.next.prev = lnode;
+
+        }
+        verticalSum_03_(node.right, lnode.next);
+    }
+}
 // Leetcode(968) -> BINARY TREE CAMERAS-------------------------------------------------------
 // static int min_cameras=0;
 // public static int binarytreecamera(Node node ){
@@ -1027,20 +1088,5 @@ public void traversalPreOrder(Node node ){
     }
      
 }
-    static int maxSum =0;
-public static int leafToLeafMaxSum(Node node){
-    int lsum =0 , rsum=0;
-    if(node == null){
-        return 0;
-    }
-         lsum = leafToLeafMaxSum(node.left);
-         rsum = leafToLeafMaxSum(node.right);
-        if(lsum != -1 && rsum!=-1){
-            maxSum = Math.max(maxSum , lsum+rsum+node.data);
-        }
-
-    
-    return Math.max(lsum , rsum )+node.data;
-
-}
+   
 }
