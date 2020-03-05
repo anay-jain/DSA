@@ -90,7 +90,7 @@ public class recrevise{
         count+=queencombi2d(lqpl+1, tnq, qpsf, er, ans);
         return count;
     }
-    static int[][] dir = {{-1,0},{-1,-1},{0,-1},{-1,1},{1,0},{1,1},{0,1},{1,-1}};
+    static int[][] dir = {{-1,0[]},{-1,-1},{0,-1},{-1,1},{1,0},{1,1},{0,1},{1,-1}};
     public static boolean issafe(boolean[][] box , int X , int Y){
         for(int d=0;d<dir.length;d++){
             for(int rad=1;rad<=Math.max(box.length,box[0].length);rad++){
