@@ -1,11 +1,35 @@
+import java.util.ArrayList;
 public class Graph{
-    public class Edge{
+    static  class Edge{
         int v = 0;
         int wt  = 0;
         Edge(int v , int wt){
             this.v = v;
             this.wt=wt;
         }
+    }
+    static int n =9;
+    static ArrayList<Edge>[] graph= new ArrayList[n];
+    
+    public static void addEdge(int u , int v , int wt){
+        graph[u].add(new Edge(v, wt));
+        graph[v].add(new Edge(u, wt));
+    }
+    public static boolean dfs_01(int src , int dest, boolean[] isVis){
+        if(src==dest){
+            System.out.print("founded");
+            return true;
+        }
+        boolean res = false;
+        isVis[src]=true;
+        for(int i=0;i<graph[src].size();i++){
+            int nbr = graph[src].get(i).v;
+            // rec call
+            if(isVis[nbr]==false)
+            res = res || dfs_01(nbr, dest, isVis);
+
+        }
+    return res;
     }
 
    // dfs surrounded paths
@@ -62,16 +86,111 @@ public class Graph{
            surrounded_regions(board, r+1, c);
        }
    }
-   public static void main(String[] args){
-        char[][] board = {{'X','X','X','X'},{'X','O','O','X'},{'X','X','O','X'},{'X','O','X','X'}};
-        dfs_surrounded_paths(board);
-        for(int i=0;i<board.length;i++){
-            for(int j =0;j<board[0].length;j++){
-                System.out.print(board[i][j]+ " ");
+   // count servers that communicate ----------------------------------------------------------------
+   /* 
+   class Solution {
+public:
+    int dir[4][2] = {{1, 0}, {-1, 0}, {0, -1}, {0, 1}};
 
+int dfs(int x, int y, int &len, vector<vector<int>> &grid)
+{
+    grid[x][y] = 2;
+    int count = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        for (int rad = 1; rad <= len; rad++)
+        {
+            int u = x + rad * dir[i][0];
+            int v = y + rad * dir[i][1];
+
+            if (u >= 0 && v >= 0 && u < grid.size() && v < grid[0].size())
+            {
+                if (grid[u][v] == 1)
+                    count += dfs(u, v, len, grid);
             }
-            System.out.println();
+            else
+                break;
         }
+    }
 
+    return count + 1;
+}
+    int countServers(vector<vector<int>>& grid) {
+          std::ios_base::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    int ans = 0;
+    int len = max(grid.size(), grid[0].size());
+    for (int u = 0; u < grid.size(); u++)
+        for (int v = 0; v < grid[0].size(); v++)
+            if (grid[u][v] == 1)
+            {
+                int count = dfs(u, v, len, grid);
+                ans += (count == 1 ? 0 : count);
+            }
+
+    return ans;
+    }
+};
+   */
+  // method 02----------------
+  public static int countServers(int[][] grid){
+      int n = grid.length;
+      int m = grid[0].length;
+      int[] row = new int[n];
+      int[] col = new int[m];
+    
+    int total_server = 0;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            row[i] += grid[i][j];
+            col[j] += grid[i][j];
+            total_server+=grid[i][j];
+        }
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            if (grid[i][j] == 1 && row[i] * col[j] * grid[i][j] == 1)
+                total_server--;
+        }
+    }
+
+    return total_server;
+  }
+  public static void createGraph(){
+      for(int i =0;i<n;i++){
+          graph[i] = new ArrayList<Edge>();
+      }
+
+    addEdge(0, 1, 10);
+    addEdge(0, 3, 10);
+    addEdge(1, 2, 10);
+    addEdge(2, 3, 40);
+    addEdge(3, 4, 2);
+    addEdge(4, 5, 2);
+    addEdge(4, 6, 8);
+    addEdge(5, 6, 3);
+
+    addEdge(7, 8, 3);
+    addEdge(2, 7, 3);
+    addEdge(2, 8, 3);
+  }
+   public static void main(String[] args){
+        // char[][] board = {{'X','X','X','X'},{'X','O','O','X'},{'X','X','O','X'},{'X','O','X','X'}};
+        // dfs_surrounded_paths(board);
+        // for(int i=0;i<board.length;i++){
+        //     for(int j =0;j<board[0].length;j++){
+        //         System.out.print(board[i][j]+ " ");
+
+        //     }
+        //     System.out.println();
+        // }
+
+            createGraph();
+            dfs_01(0, 8, new boolean[9]);
     }
 }
