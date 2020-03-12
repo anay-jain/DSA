@@ -14,7 +14,11 @@ public class Graph{
     public static void addEdge(int u , int v , int wt){
         graph[u].add(new Edge(v, wt));
         graph[v].add(new Edge(u, wt));
+
     }
+
+
+    //---has Path----------------------------------------------------------------------------
     public static boolean dfs_01(int src , int dest, boolean[] isVis){
         if(src==dest){
             System.out.print("founded");
@@ -31,7 +35,56 @@ public class Graph{
         }
     return res;
     }
+// -- all path-------------------------------------------------------------------------------------
+public static  int  allPath(int src , int dest, boolean[] isVis){
+    if(src==dest){
+        System.out.print("founded");
+        return 1;
+    }
+    // boolean res = false;
+    int count =0;
+    isVis[src]=true;
+    for(int i=0;i<graph[src].size();i++){
+        int nbr = graph[src].get(i).v;
+        // rec call
+        if(isVis[nbr]==false)
+        count += allPath(nbr, dest, isVis);
 
+    }
+    isVis[src] = false;
+return res;
+}
+    // ---- hamilton path ----------------------------------------------------------------------
+    public static int searchVertex(int u , int v){
+        int idx =-1;
+        for(int i =0;i<graph[u].size();i++){
+            if(graph[u].get(v).v==v){
+                idx =i;
+                break;
+            }
+
+        }
+        return idx;
+    }
+    public static void hamiltonianPath(int src , int osrc ,int level,  boolean[] isVis , String ans){
+        if(level  = n-1){
+            int idx = searchVertex(src, osrc);
+            if(idx==-1){
+                System.out.println(ans +src + " ans its a cycle");
+            }
+            else{
+                System.out.println(ans+src);
+            }
+        }
+        isVis[src]=true;
+        for(int i=0;i<graph[src].size();i++){
+            int nbr = graph[src].get(i).v; 
+            if(isVis[nbr]==false)
+            hamiltonianPath(nbr, osrc, level+1, isVis, ans+src);
+        }
+        isVis[src]=false;
+    }
+    
    // dfs surrounded paths
    public static void dfs_surrounded_paths(char[][] board ){
        // loop for all corner of arrays
@@ -159,8 +212,11 @@ int dfs(int x, int y, int &len, vector<vector<int>> &grid)
         }
     }
 
-    return total_server;
-  }
+    return total_server; 
+  } 
+  // GCC--------------------------------------------------------------------------------------------
+  
+
   public static void createGraph(){
       for(int i =0;i<n;i++){
           graph[i] = new ArrayList<Edge>();
