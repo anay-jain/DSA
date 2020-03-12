@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 public class Graph{
     static  class Edge{
         int v = 0;
@@ -216,7 +217,21 @@ int dfs(int x, int y, int &len, vector<vector<int>> &grid)
   } 
   // GCC--------------------------------------------------------------------------------------------
   
-
+// Bipartite graph----------------------------------------------------------------------------------
+public static boolean bipartite(int src , int[] vis){
+    LinkedList<int[]> que = new LinkedList<>();
+    que.add(new int[]{src,0});
+    while(que.size()!=0){
+        int[] pair = que.peek();
+        pair[0]
+    }
+}
+public static void isBipartite(){
+    int[] vis = new int[n]; 
+    for(int i=0;i<n;i++){
+          bipartite(i , vis);
+      }
+  }
   public static void createGraph(){
       for(int i =0;i<n;i++){
           graph[i] = new ArrayList<Edge>();

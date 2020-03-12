@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 public class graphDirected{
     static  class Edge{
         int v = 0;
@@ -16,8 +18,71 @@ public class graphDirected{
         // graph[v].add(new Edge(u, wt));
         
     }
-    
+    // khan algo =----------------------------------------------------------
+        void khanAlgo(){
+            // ArrayList<Integer> incidentEdges = new ArrayList[9];
+            int[] arr = new int[n];
+            for(int i=0;i<n;i++){
+                for(Edge ele:graph[i]){
+                    arr[ele.v]++;
+                }
+            }
+            Queue<Integer> que = new LinkedList<>();
+            for(int i =0;i<arr.length;i++){
+                if(arr[i]==0){
+                    que.add(i);
+                    // addition of those ele which have zero incomming edges
+                }
+            }
+            while(que.size()!=0){
+                int rdata = que.peek();
+                que.remove();
+                ans.add(rdata);
+                for(int i =0;i<graph[rdata].size();i++){
+                    int rchild = graph[rdata].get(i).v;
+                    arr[rchild]--;
+                    if(arr[rchild]==0){
+                        que.add(rchild);
+                    }
+                }
+            }
+        }
+        // leetcode 207-----------------------------------------------------
+
     // topological Sort------------------------------------------------------
+
+     // topological dfs
+
+     public static boolean topologicalDFS_01(int src , ArrayList<Boolean>vis , ArrayList<Boolean> cycle , ArrayList<Integer> st){
+         vis.set(src, true);
+         cycle.set(src, true);
+         boolean res = false;
+            for(int i =0;i<graph[src].size();i++){
+                int nbr = graph[u].get(i).v;
+                if(vis.get(nbr)==false){
+                    res = res || topologicalDFS_01(nbr, vis, cycle, st);
+                }
+                if(cycle.get(nbr)==true)
+                    return true;
+            }
+            st.add(src);
+         cycle.set(src, false);
+         return res;
+     }
+     public static void topologicalDFS(){
+         ArrayList<Boolean> vis = new ArrayList<>();
+         ArrayList<Boolean> cycle = new ArrayList<>();
+         ArrayList<Integer> st = new ArrayList<>();
+         boolean res = false;
+         for(int i =0;i<n && !res ;i++){
+             res = res || topologicalDFS_01(i,vis,cycle,st);
+         }
+         if(res)
+         System.out.print("its a cycle");
+         else
+         System.out.println("its not a cyclr");
+
+     }
     
     public static void topoSort(int src , boolean[] isVis){
         isVis[src]=true;
