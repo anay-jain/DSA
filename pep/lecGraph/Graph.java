@@ -223,15 +223,36 @@ public static boolean bipartite(int src , int[] vis){
     que.add(new int[]{src,0});
     while(que.size()!=0){
         int[] pair = que.peek();
-        pair[0]
+        int num =pair[0];
+        int clr = pair[1];
+        if(vis[num] != -1){
+            if(vis[num] == clr){
+                return false; //iska mtlb vo num phele kisi aur clr se aaya hai aur ab kisi aur num se
+            }
+            else
+            continue;
+        }
+        
+        vis[num]=clr;
+        for(int i=0;i<graph[src].size();i++){
+            int nbr = graph[src].get(i).v;
+            if(vis[nbr] != -1){
+                int[] pair1 = {nbr,(clr+1)%2};
+                que.addLast(pair1);
+            }
+        }
     }
+    
+    return true;
 }
 public static void isBipartite(){
     int[] vis = new int[n]; 
     for(int i=0;i<n;i++){
+        if(vis[i] == -1)
           bipartite(i , vis);
       }
   }
+  // 
   public static void createGraph(){
       for(int i =0;i<n;i++){
           graph[i] = new ArrayList<Edge>();
