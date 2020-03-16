@@ -13,7 +13,7 @@ public class stack01{
         else  if(ch == '^'){
             return 3;
         }
-        else{
+        else{   
             return -1;
         }
 }

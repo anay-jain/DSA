@@ -29,5 +29,5 @@ public class myQueue{
         st =(st+1)%que.length;
         return rv;
     }
-    public int front 
+    
 }
