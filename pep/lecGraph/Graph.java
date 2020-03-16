@@ -216,7 +216,59 @@ int dfs(int x, int y, int &len, vector<vector<int>> &grid)
     return total_server; 
   } 
   // GCC--------------------------------------------------------------------------------------------
+
   
+  // rotten oranges----------------------------------------
+  public static int rottenOranges(int[][] grid){
+         
+    LinkedList<int[]> que = new LinkedList<>();
+    for(int i=0;i<grid.length;i++){
+        for(int j=0;j<grid[0].length;j++){
+            if(grid[i][j]==2){
+                que.addLast(new int[]{i,j});
+            }
+        }
+    }
+      int level =0;
+      while(que.size()!=0){
+          int size = que.size();
+          while(size-->0){
+              int[] pair = que.removeFirst();
+            
+            int X = pair[0];
+            int Y = pair[1];
+            int[][] dir = {{1,0},{0,1},{-1,0},{0,-1}};
+            for(int i=0;i<dir.length;i++){
+                int x = X+ dir[i][0];
+                int y = Y + dir[i][1];
+                if(x>=0 && x<grid.length && y>=0 && y<grid[0].length && grid[x][y]!=0 && grid[x][y]!=2){
+                    grid[x][y]=2;
+                    que.addLast(new int[]{x,y});
+                }
+            }
+          }
+          level++;
+      }
+        boolean flag = false;
+         for(int i=0;i<grid.length;i++){
+        for(int j=0;j<grid[0].length;j++){
+            if(grid[i][j]==1){
+                flag=true;
+            }
+        }}
+        if(flag)
+            return -1;
+        else
+           if(level==0){
+               return 0;
+           }
+            else{
+                return level-1;
+            }
+      
+    }
+  }
+
 // Bipartite graph----------------------------------------------------------------------------------
 public static boolean bipartite(int src , int[] vis){
     LinkedList<int[]> que = new LinkedList<>();
@@ -234,8 +286,8 @@ public static boolean bipartite(int src , int[] vis){
         }
         
         vis[num]=clr;
-        for(int i=0;i<graph[src].size();i++){
-            int nbr = graph[src].get(i).v;
+        for(int i=0;i<graph[num].size();i++){
+            int nbr = graph[num].get(i).v;
             if(vis[nbr] != -1){
                 int[] pair1 = {nbr,(clr+1)%2};
                 que.addLast(pair1);
