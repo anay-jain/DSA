@@ -87,6 +87,85 @@ Return the lexicographically smallest equivalent string of S by using the equiva
         return ans;
     }
     //No of islands 200 ---------------------------------------------------------
+    static int[][] dir = {{-1,0},{1,0},{0,1},{0,-1}};
+
+    public static int noOfIslands_(char[][] grid  , int X , int Y){
+         grid[X][Y]='0';
+        int count =0;
+        for(int i=0;i<dir.length;i++){
+            int x = X + dir[i][0];
+            int y = Y + dir[i][1];
+            if(x>=0 && y>=0 && x<grid.length && y<grid[0].length && grid[x][y]!='0'){
+                count+=noOfIslands_(grid,x,y);
+            }
+        }
+        return count+1;
+    }
+    public static int noOfIslands(char[][] grid){
+        int totalCount=0;
+        for(int i =0;i<grid.length;i++){
+            for(int j =0;j<grid[0].length;j++){
+                if(grid[i][j]=='1'){
+                    totalCount++;
+                           noOfIslands_(grid, i, j);  
+                        
+                    }
+            }
+        }
+        return totalCount;
+    }
+    // 695 Max Area in Island---------------------------------------------------------
+    static int maxArea =0;
+    public static int maxAreaofIslands(int[][] grid , int X , int Y){
+        if(count>maxIsland){
+            maxIsland=count;
+        }
+        grid[X][Y]=0;
+        int count =0;
+        for(int i=0;i<dir.length;i++){
+            int x = X + dir[i][0];
+            int y = Y + dir[i][1];
+            if(x>=0 && y>=0 && x<grid.length && y<grid[0].length && grid[x][y]!='0'){
+                count+=maxAreaOfIslands(grid,x,y);
+            }
+        }
+        return count+1;
+
+    }
+    public static int maxAreaOfIsland(int[][] grid){
+        for(int i =0;i<grid.length;i++){
+            for(int j =0;j<grid[0].length;j++){
+                if(grid[i][j]==1){
+                    // totalCount++;
+                          count =  maxAreaofIslands(grid, i, j);  
+                          maxArea = Math.max(count , maxArea);
+                    
+                    }
+            }
+        }
+        return maxArea;
+    }
+    // island perimeter 463 Leetcode------------------------------------------------------------
+    public int islandPerimeter(int[][] grid) {
+        int total=0;
+        int nbrs=0;
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid[0].length;j++){
+                if(grid[i][j]==1){
+                    total++;
+                    if(i+1<grid.length && grid[i+1][j]==1){
+                        nbrs++;
+                    }
+                    if(j+1<grid[0].length && grid[i][j+1]==1){
+                        nbrs++;
+                    }
+                }
+        
+            }
+            
+        }
+        return total*4-nbrs*2;
+    }
     public static void main(String[] args){
 
     }
