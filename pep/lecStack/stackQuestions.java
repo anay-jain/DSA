@@ -119,8 +119,124 @@ public class stackQuestions {
             
         }
     }
-    
-    
+    // remove outermost string LC 1021
+    public String removeOuterParentheses(String s) {
+        int ob=0;
+        String ans="";
+        for(int i=0;i<s.length();i++){
+            char ch = s.charAt(i);
+            if(ch=='(' && ob++ > 0) ans+=ch;
+            if(ch==')' && ob-- > 1) ans+=ch;
+        }   
+        return ans;
+    }
+
+    // longest valid paranthesis -- LC 32 -------------------------------------------------
+    public int longestValidParentheses(String str) {
+        Stack<Integer> st= new Stack<>();
+       st.push(-1);;
+       int max=0;
+       //so that we can include the index 0 (in between)
+       for(int i=0;i<str.length();i++){
+           char ch = str.charAt(i);
+           if(ch=='('){
+               st.push(i);
+           }else if(ch==')'){
+               if(st.size()>1 && str.charAt(st.peek())=='('){
+                   st.pop();
+                   int max_ = (i-st.peek());
+                   max = Math.max(max , max_);
+               }else{
+                   st.push(i);
+               }
+           }
+       }
+       return max;   
+       }
+       // largest rectange in histo LC -84
+       public int largestRectangleArea(int[] arr) {
+        Stack<Integer> st = new Stack<>();
+        int maxarea=0;
+        st.push(-1);
+        // bcs  to hm 0 se bhi between maan ske 
+        for(int i =0;i<arr.length;i++){
+            if(st.peek()== -1 || arr[st.peek()]<arr[i]){
+                st.push(i);
+            }
+            else {
+                // resolve karvana padega kyuki ho ab ele aaya hai vo chota hai 
+                while(st.peek()!=-1 && arr[st.peek()]>=arr[i]){
+                    // height of 1st pop element -> which will take as refernece kyuki usske aage aur current
+                    // element ke beech mei sab bade honge
+                    int ht = arr[st.pop()];
+                    int idx = st.peek();
+                    int area = ht * (i-idx-1);
+                    // System.out.println(ht+" "+i+ " "+ idx);
+                    maxarea = Math.max(maxarea, area);   
+                    
+            }     
+            st.push(i);
+        }
+        // System.out.print(maxarea+ " ");
+    }
+        // jab ar khtm hogya tab bi kuch ele stack mei bacheve honge
+        while(st.peek()!=-1 ){
+            int ht = arr[st.pop()];
+            int idx = st.peek();
+            int area = ht * (arr.length-idx-1);
+            maxarea = Math.max(maxarea, area);
+        }
+        return maxarea;
+    }
+    // Maximal Rectangle Leetcode 85----------------------------------------------------------------
+    public static int largestareainrectangle(int[] arr){
+        Stack<Integer> st = new Stack<>();
+        int maxarea=0;
+        st.push(-1);
+        // bcs  to hm 0 se bhi between maan ske 
+        for(int i =0;i<arr.length;i++){
+            if(st.peek()== -1 || arr[st.peek()]<arr[i]){
+                st.push(i);
+            }
+            else {
+                // resolve karvana padega kyuki ho ab ele aaya hai vo chota hai 
+                while(st.peek()!=-1 && arr[st.peek()]>arr[i]){
+                    // height of 1st pop element -> which will take as refernece kyuki usske aage aur current
+                    // element ke beech mei sab bade honge
+                    int ht = arr[st.pop()];
+                    int idx = st.peek();
+                    int area = ht * (i-idx-1);
+                    // System.out.println(ht+" "+i+ " "+ idx);
+                    maxarea = Math.max(maxarea, area);   
+                    
+            }     
+            st.push(i);
+        }
+        // System.out.print(maxarea+ " ");
+    }
+        // jab ar khtm hogya tab bi kuch ele stack mei bacheve honge
+        while(st.peek()!=-1 ){
+            int ht = arr[st.pop()];
+            int idx = st.peek();
+            int area = ht * (arr.length-idx-1);
+            maxarea = Math.max(maxarea, area);
+        }
+        return maxarea;
+    }
+    public int maximalRectangle(char[][] arr) {
+        if(arr.length==0){
+            return 0;
+        }
+         int maxarea = 0;
+        int[] ar = new int[arr[0].length];
+        for(int i=0;i<arr.length;i++){
+            for(int j =0;j<arr[0].length;j++){
+                ar[j]= arr[i][j]=='0'?0:(1+ar[j]);
+            }
+            maxarea =Math.max(largestareainrectangle(ar), maxarea);
+        }
+        return maxarea;
+    }
     // next greater on right-------------------------------------------------------------------------
     public int[] ngor(int[] arr){
         int n = arr.length;
