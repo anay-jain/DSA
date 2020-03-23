@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Queue;
 import java.util.Stack;
 
 public class stackQuestions {
@@ -17,15 +19,118 @@ public class stackQuestions {
             return this.dist - o.dist;
         }
     }
+
+    // implement queue using stack LC 232--------- 
+    class MyQueue {
+
+        Stack<Integer> st= new Stack<>();
+           Stack<Integer> st1= new Stack<>();
+        /** Initialize your data structure here. */
+        public MyQueue() {
+        //    Stack<Integer> st = new Stack<>(); 
+        }
+        
+        /** Push element x to the back of queue. */
+        public void push(int x) {
+            st.push(x);
+        }
+        
+        /** Removes the element from in front of queue and returns that element. */
+        public int pop() {
+            if(st.size()==0){
+                return -1;
+            }
+            // Stack<Integer> st1 = new Stack<>();
+            reverse(st,st1);
+            int temp = st1.peek();
+            st1.pop();
+            reverse(st1,st);
+            return temp;
+        }
+        
+        /** Get the front element. */
+        public int peek() {
+             if(st.size()==0){
+                return -1;
+            }
+            // Stack<Integer> st1 = new Stack<>();
+            reverse(st,st1);
+            int temp = st1.peek();
+            reverse(st1,st);
+            return temp;
+            
+            
+        }
+        
+        /** Returns whether the queue is empty. */
+        public boolean empty() {
+            return st.size()==0;
+            
+            
+        }
+        public void reverse(Stack<Integer> st1, Stack<Integer> st2){
+            while(st1.size()>0){
+                int temp = st1.peek();
+                st1.pop();
+                st2.push(temp);
+            }
+        }
+        
+
+    }
+    //implementing stack using queue LC 225
+    class MyStack {
+        Queue<Integer> que = new LinkedList<>();
+        Queue<Integer> que1 = new LinkedList<>();
+        int top=-1;
+        /** Initialize your data structure here. */
+        public MyStack() {
+            
+        }
+        
+        /** Push element x onto stack. */
+        public void push(int x) {
+        que.add(x);
+            top =x;
+        }
+        
+        /** Removes the element on top of the stack and returns that element. */
+        public int pop() {
+            while(que.size()>1){
+                top = que.remove();
+                que1.add(top);
+            }
+            int rm = que.remove();
+            Queue<Integer> temp = que;
+            que=que1;
+            que1=temp;
+            return rm;
+        }
+        
+        /** Get the top element. */
+        public int top() {
+            return top;
+        }
+        
+        /** Returns whether the stack is empty. */
+        public boolean empty() {
+            
+            return que.size()==0;
+            
+        }
+    }
+    
+    
     // next greater on right-------------------------------------------------------------------------
     public int[] ngor(int[] arr){
         int n = arr.length;
+    
         Stack<Integer> st = new Stack<>();
         // we will store index in stack
         int[] arr1= new int[n];
         for(int i =0;i<n;i++){ //for(int i=n-1;i>=0;i--) -> ngol
-            while(st.size()!=0 && arr[st.top]<arr[i]){ // for right <  , for left >
-                int temp = st.top();
+            while(st.size()!=0 && arr[st.peek()]<arr[i]){ // for right <  , for left >
+                int temp = st.peek();
                 st.pop();
                 arr1[temp]=arr[i];
 
@@ -33,7 +138,62 @@ public class stackQuestions {
             st.push(i);
 
         }
+        return arr1;
     }
+    // next greater element 1 LC 496 ----------------------------------------------------------
+    static HashMap<Integer,Integer> hm = new HashMap<>();
+    public void  ngor_(int[] arr){
+        int n = arr.length;
+        Stack<Integer> st = new Stack<>();
+        // we will store index in stack
+      
+        for(int i =0;i<n;i++){ //for(int i=n-1;i>=0;i--) -> ngol
+            while(st.size()!=0 && arr[st.peek()]<arr[i]){ // for right <  , for left >
+                int temp = st.peek();
+                st.pop();
+                hm.put(arr[temp], arr[i]);
+
+            }
+            st.push(i);
+
+        }
+    }
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        hm.clear();
+            ngor_(nums2);
+            int[] arr = new int[nums1.length];
+            for(int i=0;i<nums1.length;i++){
+                int temp= hm.getOrDefault(nums1[i], -1);
+                arr[i]=temp;
+
+            }
+            return arr;
+    }
+
+
+    // next greater elelemt 2 LC 503----------------------------------------------------------
+    public int[] nextGreaterElements(int[] nums) {
+        int n = nums.length;
+        int m = 2*n;
+         Stack<Integer> st = new Stack<>();
+        int[] arr = new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=-1;
+        }
+        for(int i=0;i<m;i++){
+            int t = i%n;
+            while(st.size()!=0 && nums[st.peek()]<nums[t]){
+                int rem = st.peek();
+                st.pop();
+                arr[rem]=nums[t];
+            }
+            st.push(t);
+            
+        }
+        return arr;
+    }
+
+
     public int carFleet(int target, int[] position, int[] speed) {
         int n = position.length;
         ArrayList<pair> arr = new ArrayList<>();
@@ -55,6 +215,7 @@ public class stackQuestions {
         return count;
         
     }
+    // Leetcode Gas Station -----------------------------------------------------
     public int canCompleteCircuit(int[] gas, int[] cost) {
         int gpetrol =0;
         int gdist=0;
@@ -81,6 +242,41 @@ public class stackQuestions {
         }
         
     }
+    // asteroid collision Leetcode -735
+     // in cpp 
+     /* 
+     vector<int> asteroidCollision(vector<int>& asteroids) {
+      stack<int> st;
+        for(int i=0;i<asteroids.size();i++){
+            int ele = asteroids[i];
+                if( ele>0){
+                    st.push(ele);
+                    
+                }
+            else{
+                while(st.size()>0 && st.top()>0 &&  st.top()< -(ele)){
+                    st.pop();
+                }
+                if(st.size()!=0 && st.top() == -ele){
+                    st.pop();
+                }
+                else if(st.size()==0 || st.top() <0){
+                    st.push(ele);
+                }
+            }
+                
+            
+        }
+        vector<int> arr(st.size(),0);
+        int t=st.size()-1;
+        while(st.size()>0){
+            int ele= st.top();
+            arr[t]=ele;
+            t--;
+            st.pop();
+        }
+        return arr;
+    }*/
     public static void main(String[] args){
 
     }
