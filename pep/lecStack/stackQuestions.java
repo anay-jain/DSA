@@ -358,6 +358,49 @@ public class stackQuestions {
         }
         
     }
+    // trapping rain water LC 42-- 2 approaches---------------------------------------------------------
+    public int trap(int[] height) {
+        int n = eight.length;
+        int[] left = new int[n];
+        int[] right = new int[n];
+        int max =-1;
+        for(int i=0;i<n;i++){
+            if(height[i]>max){
+                
+                max = height[i];
+            }
+            left[i]=max;
+        }
+        max = -1;
+        for(int i = n-1 ;i>=0;i--){
+            if(height[i]>max){
+                max= height[i];
+            }
+            right[i]=max;
+        }
+        int water=0;
+        for(int i=0;i<n;i++){
+            water+=(Math.min(left[i],right[i])-arr[i]);
+        }
+        return water;
+    }
+    // int trap(vector<int> &arr)
+    // {
+    //     stack<int> st;
+    //     int water=0;
+    //     for(int i=0;i<arr.size();i++){
+    //         while(st.size()!=0 && arr[i]>=arr[st.top()]){
+    //             int h=arr[st.top()]; st.pop();
+    //             if(st.size()==0) break;
+    
+    //             int oh=min(arr[st.top()],arr[i])-h;
+    //             water+=oh*(i-st.top()-1);
+    //         }
+    //         st.push(i);
+    //     }
+    
+    //     return water;
+    // }
     // asteroid collision Leetcode -735
      // in cpp 
      /* 
