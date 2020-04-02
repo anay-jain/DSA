@@ -5,16 +5,16 @@ public class heapsort{
         for(int i=arr.length-1 ;i>=0;i--){
             downHeapify(arr, i, arr.length-1, isMax);
             }
-            for (int i = 0; i < arr.length; i++) {
-                for (int ele : arr) {
-                    System.out.print(ele + " ");
-                }
+        for (int i = 0; i < arr.length; i++) {
+            for (int ele : arr) {
+                System.out.print(ele + " ");
+            }
 
-                System.out.println();
+            System.out.println();
 
-            swap(arr, 0,arr.length-i-1);
-            downHeapify(arr, 0, arr.length-i-1 , isMax);
-        }
+        swap(arr, 0,arr.length-i-1);
+        downHeapify(arr, 0, arr.length-i-1 , isMax);
+    }
     }
     public static void downHeapify(int[] arr , int idx , int n , boolean isMax){
         int maxidx=idx;
