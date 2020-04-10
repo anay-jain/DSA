@@ -90,7 +90,37 @@ public int update(int prevVal , int newVal){
         arr.set(x, val2);
         arr.set(y, val1);
     }
-
+    class pair implements Comparable<pair>{
+        int x ;
+        int y;
+        int val ; 
+        pair(int x , int y , int val){
+            this.x = x;
+            this.y=y;
+            this.val = val;
+        }
+        @Override
+        public int compareTo(pair o){
+            return this.val-o.val;
+        }
+    }
+    public int kthSmallest(int[][] matrix, int k) {
+        int n = matrix.length;
+       PriorityQueue<pair> pq = new PriorityQueue<>();
+        // rther than making class  PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a,b)->(a[2]-b[2]));
+        for(int i=0;i<n;i++){
+            pq.add(new pair(i,0,matrix[i][0]));
+        }
+        // System.out.println(pq.peek().val);
+        for(int i=0;i<k-1;i++){
+            pair rdata = pq.poll();
+            if(rdata !=null && rdata.y+1<n){
+                pq.add(new pair(rdata.x,rdata.y+1,matrix[rdata.x][rdata.y+1]));
+            }
+        }
+        return pq.size()==0?-1:pq.peek().val;
+    
+    }
     } 
     public static void main(String[] args){
 

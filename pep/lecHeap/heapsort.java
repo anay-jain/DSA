@@ -53,3 +53,31 @@ public class heapsort{
         heapsort_01(arr, false);
     }
 }
+/*public int findKthLargest(int[] arr, int k) {
+        // k=k+1;
+           for(int i =arr.length-1;i>=0;i--){
+            downHeapify(arr,i,arr.length);
+        }
+        for(int i =0;i<k;i++){
+            swap(arr,0,arr.length-i-1);
+            downHeapify(arr,0,arr.length-i-1); // because hmne phele wala swap kar lia h
+        }
+        return arr[arr.length-k];
+    }
+    public static void downHeapify(int[] arr ,int idx , int n){
+        int maxidx= idx;
+        int lci= 2*idx+1;
+        int rci =  2*idx+2;
+        if(lci<n && (arr[lci]-arr[maxidx])>0) maxidx=lci;
+        if(rci<n && (arr[rci]-arr[maxidx])>0) maxidx=rci;
+        if(maxidx!=idx){
+            swap(arr,maxidx,idx);
+            downHeapify(arr,maxidx,n);
+        }
+    }
+    public static void swap(int[] arr , int x, int y){
+        int temp = arr[x];
+        arr[x]=arr[y];
+        arr[y]=temp;
+    }
+     */
