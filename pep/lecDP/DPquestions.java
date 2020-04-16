@@ -27,6 +27,44 @@ public class DPquestions{
             
         }
     }
+    // optimal strategy for a game DP 31----------------------------------------------------
+    public static int optimalStrategy(int n , int[] arr){
+        int[][] dp = new int[n][n];
+        for(int gap=0;gap<n;gap++){
+            for(int i=0,j=gap;j<n;j++,i++){
+                if(gap==0){
+                    dp[i][j]=arr[i];
+                }
+                else if(gap==1){
+                    dp[i][j] =Math.max(dp[i][j-1],arr[j]);
+                }
+                else{
+                    // this means p1 ne ith choose kia to p2 min banayega jo bhi p2 ke pas optn honge
+                    int a = arr[i] + Math.min(dp[i+1][j-1],dp[i+2][j]);
+                    int b = arr[j] + Math.min(dp[i+1][j-1],dp[i][j-2]);
+                    dp[i][j]=Math.max(a,b);
+                }
+            }
+        }
+        return dp[0][n-1];
+    }
+    // leetcode 464----------------------------------------------------------------------------------
+    public boolean canIWin_(){
+        
+    }
+    public boolean canIWin(int m, int total) {
+        HashMap<Integer,Integer> hm = new HashMap<>();
+        // it tells whether we have used the state or not
+        int currstate=0;
+        for(int i=1;i<=m;i++){
+            int mask = 1<<i;
+            if(currstate & mask){
+                currstate^=mask;
+                res = res || canIWin_(currstate , m, total-i);    
+
+            }
+        }
+    }
     public static int nthSuperUglyNumber(int n, int[] primes) {
         PriorityQueue<Integer> pq = new PriorityQueue<>();
         int k = primes.length;
