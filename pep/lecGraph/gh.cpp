@@ -20,6 +20,7 @@ using namespace std;
                 if(arr[i][j]!='.'){
                     count++;
                 }
+
             }
             if(count>=3){
                 ans+=binomialCoeff(count,3);

@@ -50,19 +50,19 @@ public class DPquestions{
     }
     // leetcode 464----------------------------------------------------------------------------------
   
-    public boolean canIWin(int m, int total) {
-        HashMap<Integer,Integer> hm = new HashMap<>();
-        // it tells whether we have used the state or not
-        int currstate=0;
-        for(int i=1;i<=m;i++){
-            int mask = 1<<i;
-            if(currstate & mask){
-                currstate^=mask;
-                res = res || canIWin_(currstate , m, total-i);    
+    // public boolean canIWin(int m, int total) {
+    //     HashMap<Integer,Integer> hm = new HashMap<>();
+    //     // it tells whether we have used the state or not
+    //     int currstate=0;
+    //     for(int i=1;i<=m;i++){
+    //         int mask = 1<<i;
+    //         if(currstate & mask){
+    //             currstate^=mask;
+    //             res = res || canIWin_(currstate , m, total-i);    
 
-            }
-        }
-    }
+    //         }
+    //     }
+    // }
     public static int nthSuperUglyNumber(int n, int[] primes) {
         PriorityQueue<Integer> pq = new PriorityQueue<>();
         int k = primes.length;
@@ -248,22 +248,169 @@ maxsofar= Math.max(maxsofar,dp[0][j-1]-prices[j-1]);
         return maxsub;
     }
 
-    // count distinct subsequences
-    public static void countDistinctSubseq(String str){
-        int[] mapped = new int[26];
-        int n = str.length();
+    // count distinct subsequences LC 940
+    public int distinctSubseqII(String s) {
+        int n = s.length();
+        int mod = 1000000007;
         int[] dp = new int[n+1];
-        for(int i=0;i<n;i++){
-            char ch = str.charAt(i);
-            int num = (int)ch-'a';
-            if(mapped[num]!=-1)
+        dp[0]=1;
+        int[] memo = new int[26];
+        for(int i=0;i<26;i++){
+            memo[i]=-1;
+        }
+        for(int i=1;i<n+1;i++){
+            int num = s.charAt(i-1)-'a';
+            if(memo[num]!=-1){
+                long a= (long)dp[i-1]*2 % mod;
+                dp[i]=(int)a;
+                dp[i]= (dp[i]-dp[memo[num]-1]+mod)%mod;
+            }
+            else{
+                long a  = (long)dp[i-1]*2 % mod ;
+                dp[i]=(int)a;
+            }
+            memo[num]=i;
+        }
+        return dp[n]-1;
+    }
+    public static void printarr(int[][] arr){
+        for(int i=0;i<arr.length;i++){
+            for(int j=0;j<arr.length;j++){
+                System.out.print(arr[i][j]);
+            }
+            System.out.println();
         }
     }
+    // LPS and K palindromic GFG
+
+    // longest palundromic substring boolean
+    public static boolean lps_01(String s){
+        // finding LPS
+        int n=s.length();
+        boolean[][] dp = new boolean[n][n];
+        dp[0][0]=true;
+        for(int gap=0;gap<n;gap++){
+            for(int i=0,j=gap;j<n;i++,j++){
+                if(gap==0){
+                    dp[i][j]=true;
+                }
+                else if(gap==1){
+                    if(s.charAt(i)==s.charAt(j))
+                         dp[i][j]=true;
+                }
+                else if (s.charAt(i)==s.charAt(j) && dp[i+1][j-1]){
+                    dp[i][j]=true;
+                }
+            
+            }
+        }
+        return dp[0][n-1];
+    }
+    // longest palindromic substring with count 
+    public static int lps_02(String s){
+    
+        // finding LPS
+        int n=s.length();
+        int[][] dp = new int[n][n];
+        for(int gap=0;gap<n;gap++){
+            for(int i=0,j=gap;j<n;i++,j++){
+                if(gap==0){
+                    dp[i][j]=1;
+                }
+                else if(gap==1 && s.charAt(i)==s.charAt(j)){
+                    
+                         dp[i][j]=2;
+                }
+                else if (s.charAt(i)==s.charAt(j) && dp[i+1][j-1]==(j-i-1)){
+                    dp[i][j]=j-i+1;
+                }
+                else{
+                    dp[i][j]=Math.max(dp[i][j-1],dp[i+1][j]);
+                }
+            
+            }
+        }
+        printarr(dp);
+        return dp[0][n-1];
+    }
+    // longest palindromic subsequnece with count 
+    public static int lps_subseq(String s){
+    
+        // finding LPS
+        int n=s.length();
+        int[][] dp = new int[n][n];
+        for(int gap=0;gap<n;gap++){
+            for(int i=0,j=gap;j<n;i++,j++){
+                if(gap==0){
+                    dp[i][j]=1;
+                }
+                else if(gap==1 && s.charAt(i)==s.charAt(j)){
+                    
+                         dp[i][j]=2;
+                }
+                else if (s.charAt(i)==s.charAt(j)){
+                    dp[i][j]=dp[i+1][j-1]+2;
+                }
+                else{
+                    dp[i][j]=Math.max(dp[i][j-1],dp[i+1][j]);
+                }
+            
+            }
+        }
+        // printarr(dp);
+        return dp[0][n-1];
+    }
+
+    public static boolean kpalindromic(String s, int k){
+        int lps = lps_subseq(s);
+        int rem = s.length()-lps;
+        // System.out.println(lps);
+        return k>=rem;
+    }
+      // longest palindromic substring  (AXIS METHOD) returns the lps string
+      public static String lps_03(String s){
+        int n = s.length();
+         int max=1;
+         String ns="";
+        for(int i=1;i<=n-1;i++){
+            //for add 
+            int axis=0;
+            int start=i;
+            int end =i;
+            while((start>=0 && end<n) && s.charAt(start)==s.charAt(end)){
+                if(max<(end-start+1)){
+                    max=end-start+1;
+                    ns = s.substring(start, end+1);
+                }
+                // max=Math.max(end-start+1 , max);
+                axis++;
+                start = start-axis;
+                end = end+axis;
+            }
+            int starteven = i-1;
+            int endeven=i;
+            int axiseven =0;
+            while((starteven>=0 && endeven<n) && s.charAt(starteven)==s.charAt(endeven)){
+                if(max<(endeven-starteven+1)){
+                    max=endeven-starteven+1;
+                    ns = s.substring(starteven, endeven+1);
+                }
+                // max=Math.max(endeven-starteven+1 , max);
+                axiseven++;
+                starteven = starteven-axiseven;
+                endeven = endeven+axiseven;
+            }
+        }
+        return ns;
+    }
+
     public static void main(String[] args){
         int[] primes = 
         {7,19,29,37,41,47,53,59,61,79,83,89,101,103,109,127,131,137,139,157,167,179,181,199,211,229,233,239,241,251};
         int n =100000;
-        System.out.println(nthSuperUglyNumber(n,primes));
+        // System.out.println(nthSuperUglyNumber(n,primes));
+        // System.out.println(kpalindromic("abcdecba",1));
+        System.out.println(lps_03("abccbc"));
 
     }
 }
