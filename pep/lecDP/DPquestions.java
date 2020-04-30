@@ -403,14 +403,31 @@ maxsofar= Math.max(maxsofar,dp[0][j-1]-prices[j-1]);
         }
         return ns;
     }
-
+// longest repeating subsequence GFG
+    public static int lrs_01(String s){
+        int n = s.length()+1;
+        int[][] dp = new int[n][n];
+        for(int i=1;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                if(s.charAt(i-1)==s.charAt(j-1)){
+                    dp[i][j]= dp[i-1][j-1]+1;
+                }
+                else{
+                    dp[i][j]= Math.max(dp[i-1][j],dp[i][j-1]);
+                }
+            }
+        }
+        printarr(dp);
+        return dp[n-2][n-1];
+    }
     public static void main(String[] args){
         int[] primes = 
         {7,19,29,37,41,47,53,59,61,79,83,89,101,103,109,127,131,137,139,157,167,179,181,199,211,229,233,239,241,251};
         int n =100000;
         // System.out.println(nthSuperUglyNumber(n,primes));
         // System.out.println(kpalindromic("abcdecba",1));
-        System.out.println(lps_03("abccbc"));
+        // System.out.println(lps_03("abccbc"));
+        System.out.println(lrs_01("aabebcddb"));
 
     }
 }
