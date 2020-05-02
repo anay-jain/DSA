@@ -420,6 +420,8 @@ maxsofar= Math.max(maxsofar,dp[0][j-1]-prices[j-1]);
         printarr(dp);
         return dp[n-2][n-1];
     }
+
+    
     public static void main(String[] args){
         int[] primes = 
         {7,19,29,37,41,47,53,59,61,79,83,89,101,103,109,127,131,137,139,157,167,179,181,199,211,229,233,239,241,251};
@@ -428,6 +430,7 @@ maxsofar= Math.max(maxsofar,dp[0][j-1]-prices[j-1]);
         // System.out.println(kpalindromic("abcdecba",1));
         // System.out.println(lps_03("abccbc"));
         System.out.println(lrs_01("aabebcddb"));
+        System.out.println(0%3);
 
     }
 }

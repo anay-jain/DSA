@@ -1,5 +1,10 @@
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Scanner;
+import java.util.Stack;
+import java.util.HashSet;
+
 public class HashMapQuestions {
     // Rearrange characters in a string such that no ajacent are same
     public static class pair1 implements Comparable<pair1>{
@@ -66,7 +71,7 @@ public class HashMapQuestions {
     }
 
     // Trapping rain water LC 407
-    public int trapRainWater(int[][] heightMap) {
+    public int trapRainWater_01(int[][] heightMap) {
         int ans=0;
         for(int t=1;t<heightMap.length-1;t++){
             int[] height = heightMap[t];
@@ -96,6 +101,289 @@ public class HashMapQuestions {
         return ans;
         
     }
+
+    // sol2 
+    int[][] dir = {{1,0},{-1,0},{0,1},{0,-1}};
+    public static class pair2 implements Comparable<pair2>{
+        int x;
+        int y ;
+        int val;
+        public int compareTo(pair2 o){
+            return this.val-o.val;
+        }
+        pair2(int x , int y , int val){
+            this.x=x;
+            this.y=y;
+            this.val=val;
+        }
+    }
+  public int trapRainWater(int[][] heightMap) {
+     
+        PriorityQueue<pair2> pq = new PriorityQueue<>();
+        int ans =0;
+        int n = heightMap.length;
+        int m = heightMap[0].length;
+      if(n==0 || m==0) return 0;
+        // creating a boolean array and pQ
+        boolean[][] vis = new boolean[n][m];
+        // add all corner elements in PQ
+        for(int i=0;i<n;i++){
+            pq.add(new pair2(i, 0, heightMap[i][0]));
+            pq.add(new pair2(i,m-1,heightMap[i][m-1]));
+        }
+        for(int j=0;j<m;j++){
+            pq.add(new pair2(0, j, heightMap[0][j]));
+            pq.add(new pair2(n-1,j,heightMap[n-1][j]));
+        }
+        while(pq.size()>0){
+            pair2 rem = pq.poll();
+            vis[rem.x][rem.y]=true;
+            for(int i=0;i<dir.length;i++){
+            int nx = rem.x+dir[i][0];
+            int ny = rem.y + dir[i][1]; 
+            if(nx>=0 && nx<n && ny>=0 && ny<m && vis[nx][ny]==false){
+                // jisko add karne ja rhe hai vo chota ho skta hai ya bada
+                if(heightMap[nx][ny]<rem.val){
+                    // because we are ensuring ki side wale bade honge
+                    ans+=(rem.val - heightMap[nx][ny]);
+                    heightMap[nx][ny]=rem.val;
+                    
+                }
+                // else mei to bas add hi karna tha
+                pq.add(new pair2(nx,ny,heightMap[nx][ny]));
+            }
+            }
+            
+        }
+        return ans;
+    }
+
+    // maximum frequency stack LC 895
+    class FreqStack {
+        HashMap<Integer,Stack<Integer>> hm_freq = new HashMap<>();
+        HashMap<Integer,Integer> hm_num = new HashMap<>();
+        int maxfreq=0;
+        public FreqStack() {
+                  
+        }
+        
+        public void push(int num) {
+            // sabse phele num to freq ++;
+            int freq = hm_num.getOrDefault(num,0)+1;
+            hm_num.put(num, freq);
+            Stack<Integer> st = hm_freq.getOrDefault(freq,new Stack<>());
+            st.add(num);
+            hm_freq.put(freq,st);
+            maxfreq = Math.max(maxfreq, freq);
+        }
+        
+        public int pop() {
+            Stack<Integer> st = hm_freq.getOrDefault(maxfreq,null);
+            int rem = st.pop();
+            hm_num.put(rem, hm_num.getOrDefault(rem,1)-1);
+            if(st.size()==0){
+                maxfreq--;
+            }
+            return rem;
+        }
+    }
+
+ // sliding window LC 239
+ public int[] maxSlidingWindow(int[] nums, int k) {
+        int n = nums.length;    
+        int[] maxleft= new int[n];
+        int[] maxright = new int[n];
+        // making our leftMax
+        for(int i=0;i<n;i++){
+            if(i%k==0){
+                // on line 
+                maxleft[i]=nums[i];
+            }else{
+                maxleft[i]=Math.max(maxleft[i-1],nums[i]);
+            }
+
+        } 
+        for(int i=n-1;i>=0;i--){
+            if((i+1)%k==0 || i==n-1){
+                maxright[i]=nums[i];
+            }
+            else{
+                maxright[i]=Math.max(maxright[i+1],nums[i]);
+            }
+        }
+        for(int i=0;i<n;i++) System.out.print(maxright[i]+ " ");
+        // ans dp of length 0 to 
+        int[] ans = new int[n-k+1];
+        for(int i=0;i<ans.length;i++)
+        {
+            ans[i]=Math.max(maxright[i], maxleft[i+k-1]);
+        }
+        return ans;
+}
+class RandomizedSet {
+    HashMap<Integer,Integer> hm = new HashMap<>();
+    ArrayList<Integer> arr = new ArrayList<>();
+    
+    /** Initialize your data structure here. */
+    public RandomizedSet() {
+        
+    }
+    
+    /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
+    public boolean insert(int val) {
+            if(hm.get(val)==null){
+                this.arr.add(val);
+                hm.put(val,this.arr.size()-1);
+            }
+        else{
+            return false;
+        }
+        return true;
+        
+    }
+    
+    /** Removes a value from the set. Returns true if the set contained the specified element. */
+    public boolean remove(int val) {
+        if(hm.get(val)==null){
+            return false;
+        }
+        else{
+            int idx=hm.get(val);
+            // swap the idx
+            int lastidx=arr.size()-1;
+            int lastval= arr.get(lastidx);
+            // int val = arr.get(idx);
+            arr.set(lastidx, val);
+            arr.set(idx,lastval);
+            arr.remove(lastidx);
+            hm.remove(val);
+
+            if(arr.size()==0){
+                return true; // it list gets empty
+            }
+            if(lastidx!=idx)
+            hm.put(lastval,idx); // update it with new idx
+             
+            
+        }
+        return true;
+    }
+    
+    /** Get a random element from the set. */
+    public int getRandom() {
+        int range = arr.size();
+        if(range==0) return 0;
+        int randIdx = (int)Math.floor(Math.random()*range);
+        return arr.get(randIdx);
+        
+    }
+}
+
+
+// LC 381 
+
+class RandomizedCollection {
+    HashMap<Integer,HashSet<Integer>> hm = new HashMap<>();
+    ArrayList<Integer> arr = new ArrayList<>();
+
+    /** Initialize your data structure here. */
+    public RandomizedCollection() {
+        // here we also can new 
+    }
+    
+    /** Inserts a value to the collection. Returns true if the collection did not already contain the specified element. */
+    public boolean insert(int val) {
+        int size = arr.size()-1;
+        // abhi tak ka size;
+        arr.add(val);
+        HashSet<Integer> ht = hm.getOrDefault(val, new HashSet<>());
+        // if(ht.size()>0){
+        //     if(ht.contains(size+1)) return false;
+        // }
+        ht.add(size+1);
+        hm.put(val,ht);
+        return true;
+    }
+    
+    /** Removes a value from the collection. Returns true if the collection contained the specified element. */
+    public boolean remove(int val) {
+        if(hm.containsKey(val)==true){
+            // vo val konse index par aa rhi h usme se koi ek.
+            HashSet<Integer> remhs = hm.get(val);
+            int remidx=-1;
+            for(Integer i: remhs){
+                remidx=i;
+                break;
+            }
+            // getting last index and last value
+            int lastidx = arr.size()-1;
+            int lastval = arr.get(lastidx);
+            // swapping last idx and remidx in array list
+
+            arr.set(lastidx, val);
+            arr.set(remidx,lastval);
+            // now chaging the idx accordingly in hashmap.
+              HashSet<Integer> lasths = hm.get(lastval);
+            lasths.remove(lastidx);
+            lasths.add(remidx);
+            arr.remove(lastidx);
+             remhs.remove(remidx);
+            if(lastidx==remidx || remhs.size()==0){
+                // same last idx;
+               
+               if(remhs.size()==0) hm.remove(val);
+               return true;
+            }
+            // chainging lastidx
+          
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    /** Get a random element from the collection. */
+    public int getRandom() {
+        int range = arr.size();
+        if(range==0) return 0;
+        int randIdx = (int)Math.floor(Math.random()*range);
+        return arr.get(randIdx);
+        
+    }
+}
+
+ // k sorted array
+ public static int[] ksortedarray(int[] arr , int k){
+    PriorityQueue<Integer> pq = new PriorityQueue<>();
+    // i+k+1 = n-1;
+    int n = arr.length;
+    int[] ans = new int[n];
+    // o ke lie phele hi chala lenhe
+    k= n>k?k:n-1;
+    for(int i=0;i<=k;i++){
+        pq.add(arr[i]);
+    }
+    ans[0]=pq.remove();
+    int t=0;
+    for(int i =k+1;i<n;i++){
+        pq.add(arr[i]);
+        int top = pq.remove();
+        t=i-k;
+        ans[t] = top;
+    }
+    
+    while(pq.size()>0){
+        int top = pq.remove();
+        t+=1;
+        ans[t] =top;
+    }
+    return ans;
+ }
+
+  // a simple fraction gfg
+  
+
     public static void main(String[] args){
      Scanner scn = new Scanner(System.in);
     //  int t = scn.nextInt();
