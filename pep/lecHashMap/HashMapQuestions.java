@@ -4,6 +4,8 @@ import java.util.PriorityQueue;
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Collection;
 
 public class HashMapQuestions {
     // Rearrange characters in a string such that no ajacent are same
@@ -381,9 +383,119 @@ class RandomizedCollection {
     return ans;
  }
 
-  // a simple fraction gfg
-  
-
+  // length of longest substring
+  public static int lengthlongestsubsting(String s){
+    int n= s.length();
+    HashMap<Character,Integer> hm = new HashMap<>();
+    // acquired and release
+    int start =0,end=0;
+    int ans=1;
+    for(int i=0;i<n;i++){
+      char ch = s.charAt(i);
+      if(hm.containsKey(ch)==false){
+          // acquired as equation is statisfied
+          hm.put(ch, 1);
+      }
+      else{
+          // start release
+          while(s.charAt(start)!=ch){
+              hm.remove(s.charAt(start));
+              start++;
+          }
+          // start is at point where it is equal
+          // hm.remove(s.charAt(start));
+          start++;
+      }
+      end=i;
+      ans= Math.max(ans,end-start+1);
+    }
+    return ans;
+}
+// leetcode 914
+public static int gcd(int a , int b){
+    //  euclidian algorithm
+            while(a!=b){
+                if(a>b){
+                    a = a-b;
+                }
+                else{
+                    b= b-a;
+                }
+             
+            }
+            return a;
+        }
+      public boolean hasGroupsSizeX(int[] deck) {
+            HashMap<Integer,Integer> hm = new HashMap<>();
+            // creating a frequency map
+            for(int i=0;i<deck.length;i++)
+                hm.put(deck[i],hm.getOrDefault(deck[i], 0)+1);
+            // if(hm.size()==1) return true;
+            int gcd = hm.remove(deck[0]);
+          for (int t : hm.keySet()){
+               int freq = hm.get(t);
+               gcd = gcd(gcd,freq);
+               if(gcd==1) return false;
+          }
+            return gcd!=1;
+        }
+        // 954 brickwall
+        public int leastBricks(List<List<Integer>> wall) {
+            HashMap<Integer,Integer> hm = new HashMap<>();
+            int max=0;
+            for(int i=0;i<wall.size();i++){
+             int ans =0;
+                for(int j=0;j<wall.get(i).size()-1;j++){
+                    ans+=wall.get(i).get(j);
+                    hm.put(ans , hm.getOrDefault(ans, 0)+1);
+                    max = Math.max(max, hm.get(ans));
+                    // System.out.println(max+" ");
+                }
+            }
+           return wall.size()-max;
+        }
+        public int numRabbits(int[] answers) {
+            HashMap<Integer,Integer> hm = new HashMap<>();
+           int ans=0;
+            for(int i=0;i<answers.length;i++){
+                if(answers[i]==0){
+                    ans+=1;
+                    continue;
+                }
+                hm.put(answers[i], hm.getOrDefault(answers[i], 0)+1);
+            }
+          
+            for(int key : hm.keySet()){
+                int val = hm.get(key);
+                double a = (val*1.0)/(key+1);
+                double tmp=(Math.ceil(a));
+                ans+=(tmp*(key+1));
+            }
+            return (int)ans;
+        }
+        // public static class coord implements Comparable<coord>{
+        //     int x;
+        //     int y;
+        //     double d;
+        //     coord(int x , int y ,double d){
+        //         this.x=x;
+        //         this.y=y;
+        //         this.d=d;
+        //     }
+        //     public int compareTo(coord o){
+        //         return -(this.d-o.d);
+        //     }
+        // }
+        // public int[][] kClosest(int[][] points, int K) {
+            
+            
+        // }
+        // public int[][] kClosest(int[][] points, int K) {
+        
+        // }
+        public int minRefuelStops(int target, int startFuel, int[][] stations) {
+        
+        }
     public static void main(String[] args){
      Scanner scn = new Scanner(System.in);
     //  int t = scn.nextInt();
