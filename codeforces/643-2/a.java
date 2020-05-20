@@ -31,7 +31,7 @@ public class a{
     }
     public static void main(String[] args){
         int t= scn.nextInt();
-        while(t-->0){
+        while(t-->0){   
             long n = scn.nextLong();
             long k = scn.nextLong();
             System.out.println(solve(n, k));
