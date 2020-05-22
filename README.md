@@ -7,4 +7,5 @@ This repository contains various algorithms and solutions of different challenge
 3. leetcode
 4. Hackerrank
 <img src="images/codechef.jpg" width="10">
-<!-- ![](images/codechef.jpg) -->
+
+![](images/codechef.jpg)
