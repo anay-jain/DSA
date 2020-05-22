@@ -6,8 +6,8 @@ This repository contains various algorithms and solutions of different challenge
 2. Codechef
 3. leetcode
 4. Hackerrank
-<img src="images/codechef.jpg" width="50" >
+<!-- <img src="images/codechef.jpg" width="50" > -->
 
-[go to google](https://www.google.com)
+<!-- [go to google](https://www.google.com) -->
 
 <!-- ![](images/codechef.jpg) -->
