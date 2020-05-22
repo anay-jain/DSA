@@ -6,6 +6,6 @@ This repository contains various algorithms and solutions of different challenge
 2. Codechef
 3. leetcode
 4. Hackerrank
-<img src="images/codechef.jpg" width="10">
+<img src="images/codechef.jpg" width="50" >
 
 ![](images/codechef.jpg)
