@@ -1088,5 +1088,31 @@ public void traversalPreOrder(Node node ){
     }
      
 }
+
+// Morris traversal 
+public static void morris01(Node curr){
+
+    while(curr!=null){
+        Node curr1 = curr.left;  
+        while(curr1.right!=null && curr1.right!=curr){
+         curr1=curr1.right;}
+         if(curr1.right==curr){
+             // aknowledged
+             System.out.print(curr.data);
+             curr1.right=null;
+             // mei khud process hogya hun.. to right ko call kardo mere
+             curr = curr.right;
+         
+        }
+
+
+        // connection as curr1 is at left ka rightmost
+       
+
+    }
+
+
+
+}
    
 }
