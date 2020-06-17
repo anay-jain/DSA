@@ -8,42 +8,14 @@ public class Solution implements Runnable {
     
   
     public void solve() throws Exception {
-        int n= sc.nextInt();
-        int[] arr = new int[n];
-        for(int i=0;i<n;i++){
-            arr[i]= sc.nextInt();
+        int t = sc.nextInt();
+        while(t-->0){
+
         }
 
-       System.out.println(hasGroupsSizeX(arr));
+       
     }
-    public static int gcd(int a , int b){
-        //  euclidian algorithm
-                while(a!=b){
-                    if(a>b){
-                        a = a-b;
-                    }
-                    else{
-                        b= b-a;
-                    }
-                 
-                }
-                return a;
-            }
-          public boolean hasGroupsSizeX(int[] deck) {
-                HashMap<Integer,Integer> hm = new HashMap<>();
-                // creating a frequency map
-                for(int i=0;i<deck.length;i++)
-                    hm.put(deck[i],hm.getOrDefault(deck[i], 0)+1);
-                // if(hm.size()==1) return true;
-                int gcd = hm.remove(deck[0]);   
-              for (int t : hm.keySet()){
-                   int freq = hm.get(t);
-                   gcd = gcd(gcd,freq);
-                   if(gcd==1) return false;
-              }
-                return gcd!=1;
-            }
-            2
+ 
     static Throwable uncaught;
  
     BufferedReader in;

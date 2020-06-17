@@ -10,8 +10,6 @@ public class Solution implements Runnable {
     public void solve() throws Exception {
         int t = sc.nextInt();
         while(t-->0){
-            int n = sc
-            HashMap<Integer,Integer> hm = new HashMap<>();
 
         }
 
