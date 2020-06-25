@@ -59,13 +59,37 @@ public class tree{
 			}
 			return arr;
 		}
+		public static boolean rootToNodePath(Node root, ArrayList<Integer> arr, int data){
+			if(root == null) return false;
+			arr.add(root.data);
+			if(root.data==data) return true;
+			boolean flag = rootToNodePath(root.left, arr, data) || rootToNodePath(root.right, arr, data);
+			if(flag==false)arr.remove(arr.size()-1);
+			return flag;
+		}
+		static Node head = null;
+		static Node prev = null;
+		public static void treeToDLL(Node node){
+			if(node == null)  return null;
+			// all left call
+			treeToDLL(node.left, prev)
+			if(prev==null) head= node;
+			else{
+				prev.right = node;
+				node.left = prev;
+			}
+			prev = node;
 
-
+			treeToDLL(node.right )
+		}
 	public static void main(String[] args){
 
 		 int[] arr = { 10, 20, 30, -1, -1, 40, -1, -1, 50, 60, 80, -1, -1, -1, 70, 90, -1, 100, -1, -1, -1 };
 		 Node root = construct(arr);
 		 display(root);
 		 System.out.println(averagelevel(root));
+		 ArrayList<Integer> arr1 = new ArrayList<>();
+		 rootToNodePath(root, arr1,100);
+		 System.out.println(arr1);
 	}
 }
