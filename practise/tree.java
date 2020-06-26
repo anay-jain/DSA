@@ -72,8 +72,8 @@ public class tree{
 		public static void treeToDLL(Node node){
 			if(node == null)  return null;
 			// all left call
-			treeToDLL(node.left, prev)
-			if(prev==null) head= node;
+			treeToDLL(node.left);
+			if(prev==null) head= node;	
 			else{
 				prev.right = node;
 				node.left = prev;
