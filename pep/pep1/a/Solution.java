@@ -29,6 +29,7 @@ public class Solution implements Runnable {
                 }
                 return a;
             }
+    
           public boolean hasGroupsSizeX(int[] deck) {
                 HashMap<Integer,Integer> hm = new HashMap<>();
                 // creating a frequency map
@@ -43,7 +44,7 @@ public class Solution implements Runnable {
               }
                 return gcd!=1;
             }
-            2
+            
     static Throwable uncaught;
  
     BufferedReader in;

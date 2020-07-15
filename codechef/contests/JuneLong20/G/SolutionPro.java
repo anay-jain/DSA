@@ -23,10 +23,9 @@ public class Solution implements Runnable {
         while(t-->0){
 
         }
-
-       
+        
     }
- 
+    
     static Throwable uncaught;
  
     BufferedReader in;
