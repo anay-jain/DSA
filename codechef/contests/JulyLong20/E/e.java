@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class e {
@@ -14,6 +15,7 @@ public class e {
         int t = scn.nextInt();
         while(t-->0){
             int n = scn.nextInt();
+            ArrayList<Integer>
             node[] arr1 = new node[9];
             node[] arr2 = new node[9];
             for(int i =0;i<n;i++){
