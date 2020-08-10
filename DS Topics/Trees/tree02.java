@@ -113,4 +113,10 @@ public class tree02 {
         }
         return li;
     }
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+       TreeNode ans = null ;
+       while(true){
+           
+       }
+    }
 }
