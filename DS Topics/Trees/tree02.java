@@ -114,9 +114,38 @@ public class tree02 {
         return li;
     }
     public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
-       TreeNode ans = null ;
-       while(true){
-           
-       }
+        if(root == null || p == null) return null;
+        
+        TreeNode ans = null ;
+       // first find ans that is its immediate parent if the node movel
+   
+      while(root!=null){
+       if(root.val == p.val){
+           p =  root;
+           break;
+       }   
+       else if(p.val < root.val){
+             ans = root;
+              root = root.left;
+            
+           }
+       else{
+              root = root.right;
+              
+          }
+      }
+      if(p.right !=null){
+          // then find the left most of the right child 
+          TreeNode rt = p.right;
+          while(rt.left!=null){
+               rt = rt.left;
+
+           }
+           return rt;    
+      }
+      else{
+          return ans;
+      }
+
     }
 }
