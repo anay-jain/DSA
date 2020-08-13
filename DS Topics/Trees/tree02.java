@@ -91,7 +91,7 @@ public class tree02 {
         }
         return li;
     }
-    public void bs
+
     
     public List<List<Integer>> verticalTraversal(TreeNode root) {
         if(root == null) return new ArrayList<>();
@@ -148,4 +148,50 @@ public class tree02 {
       }
 
     }
+    public void addLeaves(TreeNode root , List<Integer> li){
+        if(root == null) return;
+        addLeaves(root.left);
+        if(root.left == null && root.right == null) li.add(root.val);
+        addLeaves(root.right);
+    }
+    public List<Integer> boundaryOfBinaryTree(TreeNode root) {
+            if(root == null) return new ArrayList<>();
+            // print root \
+            List<Integer> li = new ArrayList<>();
+            li.add(root.val);
+            if(root.left !=null){
+                TreeNode lt = root;
+                while(lt.left.left!= null){
+                  
+                    lt= lt.left;
+                    li.add(lt.val);
+                }
+            }
+            // print all leaves
+            addLeaves(root,li);
+            // now print right boundary
+            if(root.right!=null){
+                TreeNode tr = root;
+                while(rt.right.right != null){
+                    rt = rt.right;
+                    li.add(tr.val);
+                }
+            }
+            return li;
+        }
+
+        public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+            if(root == null) return null;
+
+            // we will work in post order
+            TreeNode leftDone =  lowestCommonAncestor(root.left, p, q);
+            TreeNode rightDone = lowestCommonAncestor(root.right, p, q);
+            if(leftDone!=null && rightDone!=null)
+                return root;
+            else if (leftDone )
+            
+            
+            }
+
+
 }
