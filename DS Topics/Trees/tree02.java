@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -186,12 +187,61 @@ public class tree02 {
             // we will work in post order
             TreeNode leftDone =  lowestCommonAncestor(root.left, p, q);
             TreeNode rightDone = lowestCommonAncestor(root.right, p, q);
+            if(root.val == p.val || root.val == q.val) return root;
             if(leftDone!=null && rightDone!=null)
                 return root;
-            else if (leftDone )
+            else if (leftDone != null ) return leftDone;
+            else return rightDone;
             
             
             }
+
+
+// ------------------------------------------------------------------------------------------            
+             
+            // LCA -> o(h) solution
+            static HashMap<TreeNode , TreeNode> hmp = new HashMap<>();
+            static HashMap<TreeNode, Integer> hml = new HashMap<>();
+            
+            // preprocessing of nodes to make our parent and levvel hashmap
+
+            public TreeNode traversalPreprocessing(TreeNode root , TreeNode parent , int level ){
+                    if(root == null) return  null;
+                    hmp.put(root, parent);
+                    hml.put(root, level);
+                    traversalPreprocessing(root.left, root, level+1);
+                    traversalPreprocessing(root.right, root, level+1);
+            }
+
+            public TreeNode lowestCommonAncestor02(TreeNode root , TreeNode p ,TreeNode q ){
+            // using  hashmap of parrent and level
+            if(root == null) return null;
+            int levelp = hml.get(p);
+            int levelq = hml.get(q);
+
+            if(levelp > levelq){
+                while(levelp!=levelq){
+                    p = hmp.get(p);
+                    levelp=hml.get(p);
+                }
+
+            }
+            else if(levelq > levelp){
+                while(levelp!=levelq){
+                    q = hmp.get(q);
+                    levelq=hml.get(q);
+                }
+            }
+            while(p!=q){
+                p = hmp.get(p);
+                q = hmp.get(q);
+
+            }
+
+            return p;
+
+
+        }
 
 
 }
