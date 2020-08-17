@@ -243,5 +243,84 @@ public class tree02 {
 
         }
 
+// leetcode 979 distribute coins in binary tree
+static int transfer=0;
+public int distributeCoins_(TreeNode root){
+    if(root == null) return 0;
+
+int left  = distributeCoins_(root.left);
+int right = distributeCoins_(root.right);       
+int ans =  left+right + root.val -1;
+transfer += Math.abs(left);
+transfer += Math.abs(right);
+return ans;
+}
+public int distributeCoins(TreeNode root) {
+transfer=0;
+distributeCoins_(root);
+return transfer;
+
+}
+    // leeetcode 450  delete node from bst
+    public TreeNode deleteNode_(TreeNode root){
+        if(root.left == null && root.right == null){
+            // if both are null
+            return null;
+        }
+        else if(root.left == null){
+            return root.right;
+        }
+        else if (root.right == null){
+            return root.left;
+        }
+        else{
+            // left subtree of root to be placed at left most of the right subtree
+            TreeNode rn = root.right;
+            while(rn.left!=null) rn = rn.left;
+            rn.left = root.left;
+            return root.right;
+        }
+    }
+    
+    
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if(root == null)  return null;
+        if(root.val == key){
+            return  deleteNode_(root);
+        }
+        if(root.val>key){
+            root.left = deleteNode(root.left, key);
+        
+        }
+        else{
+            root.right = deleteNode(root.right, key);
+        }        
+        return root;
+    }
+
+    // 105 construct binary tree from inorder and preoder 
+    
+        static HashMap<Integer, Integer> hmmp = new HashMap<>();
+        public TreeNode buildTree_(int[] preorder , int[] inorder , int ps , int pe , int is , int ie  ){
+            if(ps>pe || is > ie ) return null;
+            // first ele of preorder will be the root
+            TreeNode root = new TreeNode(preorder[ps]);
+            // get the index of the hashMap
+            int idx = hmmp.get(root.val);
+            int count = (idx-1) - ps + 1;
+            root.left = buildTree_(preorder, inorder, ps+1, ps+count, is, idx-1);
+            root.right = buildTree_(preorder, inorder, ps+count+1, pe, idx+1, ie);
+            return root;
+        
+        }
+        public TreeNode buildTree(int[] preorder, int[] inorder) {
+            // make hashmap to store ele and their index
+
+            for(int i =0;i<inorder.length;i++){
+                hmmp.put(inorder[i],i);
+            }
+            int n = preorder.length ;
+            return buildTree_(preorder, inorder, 0, n, 0, n);
+    }
 
 }
