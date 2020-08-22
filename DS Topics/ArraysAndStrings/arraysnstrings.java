@@ -97,9 +97,6 @@ public class arraysnstrings{
         if(num<0 || num>Integer.MAX_VALUE) return -1;
        return flag?num:-1;
    }
-
+   
   
-    public static void main(String[] args){
-
-    }
 }
