@@ -97,6 +97,24 @@ public class arraysnstrings{
         if(num<0 || num>Integer.MAX_VALUE) return -1;
        return flag?num:-1;
    }
-   
+   // LEETCODE  53
+   // kadane's algorithm 
+   public int maxSubArray(int[] nums) {
+       if(nums.length==0) return 0;
+            int csum = nums[0];
+            int osum = nums[0];
+            for(int i=1;i<nums.length;i++){
+                if(csum>=0){
+                    // this means x(-ve) Y(csum) Z(-ve)
+                    csum+=arr[i];
+
+                }
+                else{
+                    cmax=arr[i];
+                }
+                osum = Math.max(osum, csum);
+            }
+            return osum;
+}
   
 }
