@@ -116,5 +116,39 @@ public class arraysnstrings{
             }
             return osum;
 }
+// leetcode  11
+public int maxArea(int[] height) {
+        int i =  0;
+        int j = height.length;
+        int max = 0 ;
+        while(i<j){
+            if(height[i]>height[j]){
+                max = Math.max(max , (j-i)*height[i]);
+                j++;
+                
+            }
+            else{
+                max =  Math.max(max , (j-i)*height[j]);
+                i++;
+            }
+        }
+        return max;
+}
+
+// leetcode 26
+class Solution {
+    public int removeDuplicates(int[] nums) {
+         if (nums.length == 0 ) return 0;
+        int j =0;
+         for(int i =1;i<nums.length;i++){
+             if(nums[i]!=nums[j]){    
+                     j++;
+                     nums[j] =nums[i];
+             }
+         }
+     return j+1;
+ }
+ }
+
   
 }
