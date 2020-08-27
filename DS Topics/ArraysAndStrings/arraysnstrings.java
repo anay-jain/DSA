@@ -136,7 +136,7 @@ public int maxArea(int[] height) {
 }
 
 // leetcode 26
-class Solution {
+
     public int removeDuplicates(int[] nums) {
          if (nums.length == 0 ) return 0;
         int j =0;
@@ -148,7 +148,35 @@ class Solution {
          }
      return j+1;
  }
- }
+ 
+ public int[] productExceptSelf(int[] nums) {
+        int[] prefix = new int[nums.length];
+        prefix[0] = nums[0];
+        for(int i =1;i<nums.length-1;i++){
+            prefix[i] = nums[i]*prefix[i-1];
+        }
+        int suffix=1;
+        for(int i =nums.length-1;i>=1;i--){
+            prefix[i] = prefix[i-1]*suffix;
+            suffix= suffix *nums[i];
+        }
+        prefix[0]=suffix;
+        return prefix;
+}
+// Find the number of jumps to reach X in the number line from zero
+    // LC 754
 
+public int reachNumber(int target) {
+            target = Math.abs(target);
+            int n = Math.sqrt(target*2);
+            if((n*(n+1))/2 < target) n= n+1;
+            int offset = (n*(n+1))/2;
+            int diff = offset - target;
+           while(diff % 2  != 0 ){
+            n = n+1;
+            diff= diff+n;
+        }
+        return n ;
+}
   
 }
