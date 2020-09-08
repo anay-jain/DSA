@@ -178,5 +178,51 @@ public int reachNumber(int target) {
         }
         return n ;
 }
-  
+   // seive of eratosthenes
+public static boolean[] sieve(int n ){
+    // maing a booelean array .
+    boolean[] vis = new boolean[n+1];
+    for(int i=2;i<=(int)Math.sqrt(n);i++){
+        if(vis[i]==false){
+            for(int j=2;j*i<=n;j++){
+                vis[i*j]=true;
+            }
+        }
+    }
+    return vis;
+}
+
+// leetcode 204
+public int countPrimes(int n) {
+    if(n<3) return 0;
+    boolean[] vis = new boolean[n];
+int count = n-2;
+for(int i=2;i<=(int)Math.sqrt(n);i++){
+    if(vis[i]==false){
+        for(int j=2;j*i<n;j++){
+            if(vis[i*j]!=true)count--;
+            vis[i*j]=true;
+            
+        }
+    }
+}
+return count;
+}
+
+// segmented sieve -> prime generator SPOJ
+public static int segSieve(int n , int m ){
+        // run sieve for n^1/2
+    boolean[] vis = sieve((int)Math.sqrt(n));
+    boolean[] arr = new boolean[n-m+1];
+    for(int  i =2;i<=(int)Math.sqrt(n);i++){
+        if(vis[i]==false){
+            // i is a prime number
+            if()
+        }
+    }
+}
+
+pu
+
+
 }
