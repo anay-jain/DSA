@@ -208,21 +208,76 @@ for(int i=2;i<=(int)Math.sqrt(n);i++){
 }
 return count;
 }
-
-// segmented sieve -> prime generator SPOJ
-public static int segSieve(int n , int m ){
-        // run sieve for n^1/2
-    boolean[] vis = sieve((int)Math.sqrt(n));
-    boolean[] arr = new boolean[n-m+1];
-    for(int  i =2;i<=(int)Math.sqrt(n);i++){
-        if(vis[i]==false){
-            // i is a prime number
-            if()
-        }
+// maximum sum in the configuration GFG
+int max_sum(int arr[], int n)
+{
+    // finding prefix sum
+    int ps = 0;
+    for(int i =0;i<n;i++){
+        ps+=arr[i];
     }
+    // finding the cost of inital array
+    int cost = 0 ;
+    for(int i=0;i<n;i++){
+        cost+=(arr[i]*i);
+    }
+    // cost always store the current config cost
+    // maxcost stores the highest
+    int maxcost = cost;
+    for(int i=0;i<n;i++){
+        cost = cost - ps + arr[i]*n;
+        maxcost = Math.max(maxcost,cost);
+    }
+    return maxcost;
+
+
 }
-
-pu
-
+// search in sorted and rotated arrays
+public int search(int[] nums, int target) {    
+    int pivot = findPivot(nums);
+System.out.println(pivot);
+    int left = bs(nums, 0, pivot, target);
+    int right = bs(nums, pivot+1, nums.length-1, target);
+    if(left!=-1){
+        return left;
+    }   
+    if(right!=-1){
+        return right;
+    } 
+    return -1;
+}
+public int findPivot(int[] arr){
+int si = 0 , ei = arr.length-1;
+while(si<=ei){
+    int mid = (si+ei)/2;
+    if(arr[mid] > arr[(mid-1+arr.length)%arr.length] && arr[mid]>arr[(mid+1)%arr.length]){
+        return mid;
+    }
+    // this works because we are finding the pivot -1 element c<a>b b is pivot but we are finding a
+    else if (arr[si]<=arr[mid]){
+        si = mid+1;
+    }
+    else 
+        ei = mid-1;
+}
+return -1;
+}
+public int bs(int[] nums , int start , int end , int target)
+{
+while(start<=end){
+    int mid = (start+end)/2;
+    if(nums[mid] == target){
+        return mid;
+    }
+    if(nums[mid]>target){
+        end = mid-1;
+    }
+    else{
+        start = mid+1;
+    }
+    
+}
+return -1;
+}
 
 }
