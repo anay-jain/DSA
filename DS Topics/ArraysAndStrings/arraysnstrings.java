@@ -1,3 +1,7 @@
+import java.util.Collection;
+import java.util.Collections;
+import java.util.PriorityQueue;
+
 public class arraysnstrings{
     // leetcode 925 long pressed name
     public boolean isLongPressedName(String name, String typed) {
@@ -246,7 +250,7 @@ System.out.println(pivot);
     } 
     return -1;
 }
-public int findPivot(int[] arr){
+public static int findPivot(int[] arr){
 int si = 0 , ei = arr.length-1;
 while(si<=ei){
     int mid = (si+ei)/2;
@@ -278,6 +282,74 @@ while(start<=end){
     
 }
 return -1;
+}
+
+
+//Given a sorted and rotated array, find if there is a pair with a given sum
+public static boolean pairInSortedRotated(int arr[], int n, int x){
+    // find pivot;
+    int pivot = findPivot(arr);
+    pivot++;
+    int start = pivot;
+    int end = (pivot +n -1)%arr.length;
+    while(start!=end){
+        int sum = arr[start]+ arr[end];
+        if(sum  == x){
+            return true;
+        }
+        else if( sum < x){
+            if(start == n-1) start = -1;
+            start++;
+        }
+        else{
+            if(end == 0) end = n;
+            end--;
+            
+        }
+        
+    }
+    return false;
+
+
+}
+
+//  // get median in running stream of integers
+//  public static int getMedian(int[] arr , int n ){
+//      // make a min and max PQ
+//      PriorityQueue<Integer>minPQ = new PriorityQueue<>();
+//      PriorityQueue<Integer>maxPQ = new PriorityQueue<>(Collections.reverseOrder());
+     
+     
+//  }
+
+// Rearrange positive and negative numbers in O(n) time and O(1) extra space
+
+// perform a quick sort , make a pivot point 
+public static void swap(int[] arr , int i , int j){
+    int temp = arr[i];
+    arr[i] = arr[j];
+    arr[j]= temp;
+}
+public static void rearrange(int[] arr , int n){
+
+    int pivot =0;
+    for(int i=0;i<n;i++){
+        if(arr[i]<0){
+            swap(arr, pivot , i);
+            pivot++;
+        }
+    }
+    if(pivot == n-1 || pivot == n) return ;
+    // now swap accordingly
+    // and the -ve elements will automatically come to the right when +ve gets exhausted
+    int itr =0 ;
+    while(pivot != n && itr <= pivot){
+        if(itr%2==0){
+            swap(arr, itr , pivot);
+            pivot++;
+        }
+        itr+=2;
+  }
 }
 
 }
