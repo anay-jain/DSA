@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.PriorityQueue;
@@ -351,5 +352,39 @@ public static void rearrange(int[] arr , int n){
         itr+=2;
   }
 }
+public static void swap(ArrayList<Integer> arr , int i , int j){
+    int temp = arr.get(i);
+    arr.set(i, arr.get(j));
+    arr.set(j, temp);
+}
+// Three way partitioning of an array around a given range
+    public static ArrayList<Integer> threeWayPartition(ArrayList<Integer> arr , int low , int high){
+          // take two ptr l and r 
+        // [.. , l ...r ...]
+        int l =0; int r =0;
+        System.out.println(arr.size());
+        for(int  i=0;i<arr.size() ; i++){
+           int ele = arr.get(i);
+   
+           if( ele<low){
+               // will be in 1st range
+               // here will swap(i , l )
+               swap(arr , i , l );
+               l++;
+               r++;
+           }
+           else if ( ele >= low && ele <= high){
+               r++;
+               swap(arr, r , i);
+              
+           }
+         
+           }
+           for(int i =0;i< arr.size();i++)
+           System.out.println(arr.get(i));
+           
+           return arr;
+    }
 
+    
 }
