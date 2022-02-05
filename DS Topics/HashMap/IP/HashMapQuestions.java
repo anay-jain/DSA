@@ -432,7 +432,7 @@ public static int gcd(int a , int b){
                 hm.put(deck[i],hm.getOrDefault(deck[i], 0)+1);
             // if(hm.size()==1) return true;
             int gcd = hm.remove(deck[0]);
-          for (int t : hm.keySet()){
+          for (int t : hm.`()){
                int freq = hm.get(t);
                gcd = gcd(gcd,freq);
                if(gcd==1) return false;

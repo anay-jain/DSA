@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -63,6 +64,15 @@ public class Trees{
             li.add(child);
         }
         return li;
+    }
+    static int count = 1;
+    public int pathSum(TreeNode root, int targetSum) {
+        if(root == null )
+        return 0;
+        ArrayList<Integer> alLeft = pathSum(root.left, targetSum);
+        ArrayList<Integer> alRight = pathSum(root.right, targetSum);
+        if(root.val == targetSum) count++;
+    
     }
     public static void main(String[] args){
         System.out.println(numTrees(3));
